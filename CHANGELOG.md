@@ -2,6 +2,25 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.1.0] - 2025-10-25 - Advanced Profit Scanner
+
+### Added
+- **profit-scan-flex.js** - Advanced profit scanner with profiler integration
+  - Automatic caching via `profiler-overrides.json` file
+  - Configurable output limit (default 30 servers)
+  - `--dry` flag for testing without writing cache file
+  - `--only-money` flag to filter servers with no money
+  - Detailed output including hack/grow/weaken times
+  - Override indicator showing which servers use cached data
+  - Smart fallback to live API calls when cache unavailable
+  - Superior to basic profit-scan.js for repeated analysis
+
+### Updated
+- **bitburner-update.js** - Added profit-scan-flex.js to essential downloads
+- **docs/SCRIPT_REFERENCE.md** - Added comprehensive profit-scan-flex.js documentation
+- **README.md** - Added profit-scan-flex.js to analysis tools section
+- **Documentation** - Updated optimization tips to recommend profit-scan-flex.js
+
 ## [1.0.0] - 2025-10-25 - Project Initialization
 
 ### 🎉 Initial Release - Complete Project Reorganization

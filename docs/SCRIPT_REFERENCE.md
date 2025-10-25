@@ -86,6 +86,37 @@ run auto-deploy-all.js 50
 - Hack chance
 - Money per second per thread
 
+### profit-scan-flex.js
+**Purpose**: Advanced profit scanner with caching and profiler integration
+**Usage**: `run profit-scan-flex.js [limit] [--dry] [--only-money]`
+**Parameters**:
+- `limit` - Number of servers to display (default: 30)
+- `--dry` - Don't write profiler-overrides.json file
+- `--only-money` - Only include servers with money
+
+**Features**:
+- **Automatic caching** - Creates and uses `profiler-overrides.json` for faster scans
+- **Detailed output** - Shows hack/grow/weaken times, current security
+- **Override indicator** - Shows which servers use cached timing data
+- **Smart fallback** - Uses live API calls if cache unavailable
+
+**Examples**:
+```bash
+run profit-scan-flex.js                    # Use cached timings, show top 30
+run profit-scan-flex.js 50                 # Show top 50 servers
+run profit-scan-flex.js --only-money       # Only servers with money
+run profit-scan-flex.js 100 --dry          # Don't write cache file
+run profit-scan-flex.js 50 --only-money    # Combine flags
+```
+
+**Output Columns**:
+- OVR - Whether cached timing data was used (YES/blank)
+- Server name and root access
+- RAM, max money, min/current security
+- Hack/Grow/Weaken times (in seconds)
+- Hack chance percentage
+- Money per second per thread (idealized)
+
 ### production-monitor.js
 **Purpose**: Measure player money change over time
 **Usage**: `run production-monitor.js [seconds]`

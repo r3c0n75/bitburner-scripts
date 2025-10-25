@@ -24,8 +24,11 @@ A comprehensive collection of Bitburner automation scripts for efficient hacking
 
 ### Basic Usage
 ```bash
-# Find profitable targets
+# Find profitable targets (basic)
 run profit-scan.js
+
+# Find profitable targets (advanced with caching)
+run profit-scan-flex.js
 
 # Deploy simple batcher to all servers
 run simple-batcher.js joesguns
@@ -51,6 +54,7 @@ run auto-deploy-all.js
 
 ### Analysis & Monitoring
 - `profit-scan.js` - Find most profitable targets
+- `profit-scan-flex.js` - Advanced profit scanner with caching 🆕
 - `production-monitor.js` - Monitor money generation
 - `server-info.js` - Display server information
 - `list-procs.js` - List running processes
@@ -121,11 +125,12 @@ run server-info.js
 
 ## 📈 Optimization Tips
 
-1. **Use profit-scan.js** to find the most profitable targets
-2. **Monitor production** with production-monitor.js to verify efficiency
-3. **Batch operations** for maximum resource utilization
-4. **Manage purchased servers** for additional computing power
-5. **Use quiet mode** for automated operations
+1. **Use profit-scan-flex.js** for advanced target analysis with caching (faster on repeat scans)
+2. **Use profit-scan.js** for quick checks without file operations
+3. **Monitor production** with production-monitor.js to verify efficiency
+4. **Batch operations** for maximum resource utilization
+5. **Manage purchased servers** for additional computing power
+6. **Use quiet mode** for automated operations
 
 ## 🚨 Troubleshooting
 
