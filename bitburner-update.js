@@ -39,7 +39,7 @@ export async function main(ns) {
     ],
     
     analysis: [
-      { file: "estimate-production.js", folder: folders.analysis }
+      { file: "estimate-production.js", folder: folders.utils }
     ],
     
     utils: [
