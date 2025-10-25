@@ -138,24 +138,58 @@ git diff --cached --name-only | ForEach-Object {
     Write-Host "  ✓ $_" -ForegroundColor Green
 }
 
+# Check Git identity
+$userName = git config user.name
+$userEmail = git config user.email
+
+if (!$userName -or !$userEmail) {
+    Write-Host "`n⚠️  Git identity not configured!" -ForegroundColor Yellow
+    Write-Host "Please configure your Git identity:" -ForegroundColor Yellow
+    Write-Host ""
+    $name = Read-Host "Enter your name"
+    $email = Read-Host "Enter your email"
+    
+    git config user.name "$name"
+    git config user.email "$email"
+    Write-Host "✓ Git identity configured" -ForegroundColor Green
+}
+
 # Commit
 Write-Host "`n=== Committing changes ===" -ForegroundColor Cyan
-git commit -m $CommitMessage
-Write-Host "✓ Committed: $CommitMessage" -ForegroundColor Green
+try {
+    git commit -m $CommitMessage
+    if ($LASTEXITCODE -ne 0) {
+        throw "Commit failed"
+    }
+    Write-Host "✓ Committed: $CommitMessage" -ForegroundColor Green
+} catch {
+    Write-Host "✗ Commit failed: $_" -ForegroundColor Red
+    exit 1
+}
 
 # Push
 Write-Host "`n=== Pushing to GitHub ===" -ForegroundColor Cyan
 try {
     if ($FirstTime) {
-        git push -u origin $Branch
+        git push -u origin $Branch 2>&1 | Out-String | Write-Host
+        if ($LASTEXITCODE -ne 0) {
+            throw "Push failed with exit code $LASTEXITCODE"
+        }
     } else {
-        git push
+        git push 2>&1 | Out-String | Write-Host
+        if ($LASTEXITCODE -ne 0) {
+            throw "Push failed with exit code $LASTEXITCODE"
+        }
     }
     Write-Host "✓ Successfully pushed to GitHub!" -ForegroundColor Green
 } catch {
-    Write-Host "✗ Push failed. This might be your first push." -ForegroundColor Red
-    Write-Host "Trying: git push -u origin $Branch" -ForegroundColor Yellow
-    git push -u origin $Branch
+    Write-Host "✗ Push failed: $_" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "Common issues:" -ForegroundColor Yellow
+    Write-Host "  1. Authentication required - Use Personal Access Token as password" -ForegroundColor White
+    Write-Host "  2. Branch doesn't exist - Try: git push -u origin $Branch" -ForegroundColor White
+    Write-Host "  3. No commits to push - Check that commit succeeded" -ForegroundColor White
+    exit 1
 }
 
 # Display remote info

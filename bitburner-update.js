@@ -12,7 +12,7 @@ export async function main(ns) {
   // ============================================
   // CONFIGURATION - UPDATE THIS URL
   // ============================================
-  const baseUrl = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main";
+  const baseUrl = "https://github.com/r3c0n75/bitburner-scripts";
   
   // Folder paths in your GitHub repo
   const folders = {
