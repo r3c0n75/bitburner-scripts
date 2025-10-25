@@ -31,6 +31,7 @@ export async function main(ns) {
       { file: "attack-weaken.js", folder: folders.core },
       { file: "simple-batcher.js", folder: folders.batch },
       { file: "profit-scan.js", folder: folders.analysis },
+      { file: "profit-scan-flex.js", folder: folders.analysis },
       { file: "production-monitor.js", folder: folders.analysis }
     ],
     
