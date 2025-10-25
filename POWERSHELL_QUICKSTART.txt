@@ -1,0 +1,149 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║          POWERSHELL GITHUB WORKFLOW - QUICK START CARD                   ║
+║                Keep Your Organized Folders!                              ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  ✨ NEW WAY: NO FLATTENING NEEDED!                                       ║
+║  ────────────────────────────────────                                    ║
+║  Push organized structure → Auto-flatten in Bitburner                    ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  📝 STEP 1: CREATE GITHUB REPO                                           ║
+║  ──────────────────────────────                                          ║
+║  1. Go to: https://github.com/new                                        ║
+║  2. Name: bitburner-scripts                                              ║
+║  3. Visibility: ☑ Private (FREE!)                                        ║
+║  4. Initialize: Leave unchecked                                          ║
+║  5. Create → Copy repo URL                                               ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  🚀 STEP 2: FIRST PUSH (PowerShell)                                      ║
+║  ───────────────────────────────────                                     ║
+║  PS> .\Push-ToGitHub.ps1 `                                               ║
+║        -RepoUrl "https://github.com/USER/bitburner-scripts.git" `        ║
+║        -FirstTime                                                        ║
+║                                                                          ║
+║  ✓ Creates .gitignore                                                    ║
+║  ✓ Initializes Git                                                       ║
+║  ✓ Pushes organized folders                                              ║
+║  ✓ Shows your raw GitHub URL                                             ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  ⚙️  STEP 3: CONFIGURE UPDATE SCRIPT                                     ║
+║  ────────────────────────────────                                        ║
+║  1. Open: bitburner-update.js                                            ║
+║  2. Line 15: Update baseUrl                                              ║
+║     const baseUrl = "https://raw.githubusercontent.com/USER/REPO/main";  ║
+║  3. Save                                                                 ║
+║  4. Push:                                                                ║
+║     PS> .\Push-ToGitHub.ps1 -RepoUrl "URL" -CommitMessage "Config"      ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  🎮 STEP 4: FIRST RUN IN BITBURNER                                       ║
+║  ──────────────────────────────────                                      ║
+║  > wget YOUR_RAW_URL/bitburner-update.js bitburner-update.js             ║
+║  > run bitburner-update.js --all                                         ║
+║                                                                          ║
+║  ✓ Downloads all scripts from organized folders                          ║
+║  ✓ Saves flat to Bitburner home                                          ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  🔄 DAILY WORKFLOW                                                       ║
+║  ────────────────                                                        ║
+║  1. Edit scripts in organized folders                                    ║
+║  2. Push:                                                                ║
+║     PS> .\Push-ToGitHub.ps1 -RepoUrl "URL" -CommitMessage "Changes"     ║
+║  3. In game:                                                             ║
+║     > run bitburner-update.js --all                                      ║
+║  4. Done! 🎉                                                             ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  📦 WHAT GETS PUSHED (Organized!)                                        ║
+║  ──────────────────────────────────                                      ║
+║  GitHub:                        Bitburner:                               ║
+║    core/                          attack-hack.js                         ║
+║      attack-hack.js               attack-grow.js                         ║
+║      attack-grow.js               simple-batcher.js                      ║
+║    batch/                         profit-scan.js                         ║
+║      simple-batcher.js            (all flat)                             ║
+║    analysis/                                                             ║
+║      profit-scan.js                                                      ║
+║                                                                          ║
+║  bitburner-update.js handles the flattening automatically!               ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  💻 POWERSHELL COMMANDS                                                  ║
+║  ────────────────────────                                                ║
+║  # First time                                                            ║
+║  .\Push-ToGitHub.ps1 -RepoUrl "URL" -FirstTime                           ║
+║                                                                          ║
+║  # Regular push                                                          ║
+║  .\Push-ToGitHub.ps1 -RepoUrl "URL" -CommitMessage "Message"            ║
+║                                                                          ║
+║  # Different branch                                                      ║
+║  .\Push-ToGitHub.ps1 -RepoUrl "URL" -Branch "dev"                        ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  🎮 BITBURNER UPDATE COMMANDS                                            ║
+║  ───────────────────────────────                                         ║
+║  run bitburner-update.js --all        # All scripts                      ║
+║  run bitburner-update.js              # Essential only                   ║
+║  run bitburner-update.js --analysis   # Analysis tools                   ║
+║  run bitburner-update.js --utils      # Utilities                        ║
+║  run bitburner-update.js --batch      # Batch scripts                    ║
+║  run bitburner-update.js --deploy     # Deployment scripts               ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  ✅ BENEFITS                                                             ║
+║  ───────────                                                             ║
+║  ✓ Keep organized folders (no flattening!)                               ║
+║  ✓ One command to push                                                   ║
+║  ✓ Full Git version control                                              ║
+║  ✓ Auto-flatten in Bitburner                                             ║
+║  ✓ Better development workflow                                           ║
+║  ✓ Easy collaboration                                                    ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  🆘 TROUBLESHOOTING                                                      ║
+║  ──────────────────                                                      ║
+║  Git not installed?                                                      ║
+║    → Download: https://git-scm.com/download/win                          ║
+║                                                                          ║
+║  Authentication failed?                                                  ║
+║    → Use Personal Access Token as password                               ║
+║    → GitHub Settings → Developer settings → Tokens                       ║
+║                                                                          ║
+║  Download failed in Bitburner?                                           ║
+║    → Check baseUrl in bitburner-update.js                                ║
+║    → Test URL in browser                                                 ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  📚 DOCUMENTATION                                                        ║
+║  ──────────────────                                                      ║
+║  Complete guide:  POWERSHELL_GITHUB_WORKFLOW.md                          ║
+║  Quick summary:   POWERSHELL_DEPLOYMENT_SUMMARY.md                       ║
+║  This card:       POWERSHELL_QUICKSTART.txt                              ║
+║                                                                          ║
+╠══════════════════════════════════════════════════════════════════════════╣
+║                                                                          ║
+║  ✨ WHY THIS WAY IS BETTER                                               ║
+║  ────────────────────────────                                            ║
+║  OLD: Flatten folders → Upload → Download                                ║
+║  NEW: Keep organized → Push → Auto-flatten in game                       ║
+║                                                                          ║
+║  Result: Professional workflow + Organized code!                         ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+                  Keep It Organized! Happy Hacking! 🚀
