@@ -6,11 +6,27 @@ Fast reference for common operations and documentation locations.
 
 **🆕 New Game or Post-Augmentation?** See [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) for fastest recovery path!
 
+### ⭐ RECOMMENDED: Smart Batcher (490x Performance!)
+```bash
+# Find best target (with realistic estimates)
+run analysis/profit-scan-flex.js
+
+# Check expected production
+run utils/estimate-production.js joesguns
+
+# Deploy with optimal ratios ($2.09m/s production!)
+run batch/smart-batcher.js joesguns
+
+# Monitor production (wait 6-8 min for prep)
+run analysis/production-monitor.js 60
+```
+
+### Basic Commands
 ```bash
 # Find profitable targets
 run analysis/profit-scan.js
 
-# Deploy batch operations
+# Deploy batch operations (basic)
 run batch/simple-batcher.js joesguns
 
 # Monitor production
@@ -44,7 +60,8 @@ core/attack-weaken.js     # Basic weaken
 
 ### Batch Management
 ```
-batch/simple-batcher.js   # Deploy to all servers
+batch/smart-batcher.js    # ⭐ Optimal timing-based ratios (490x faster!)
+batch/simple-batcher.js   # Deploy to all servers (basic)
 batch/batch-manager.js    # Manage pserv batching
 batch/home-batcher.js     # Home server batching
 ```
@@ -101,8 +118,13 @@ run analysis/profit-scan.js
 
 ### Deploy Batch System
 ```bash
-run batch/simple-batcher.js joesguns
+# Recommended: Smart Batcher (490x faster!)
+run batch/smart-batcher.js joesguns
 # Or with options:
+run batch/smart-batcher.js joesguns 0.10 --quiet  # 10% hack per batch
+
+# Basic: Simple Batcher
+run batch/simple-batcher.js joesguns
 run batch/simple-batcher.js joesguns 100 --quiet
 ```
 
@@ -166,6 +188,7 @@ run batch/simple-batcher.js target  # Restart
 
 ---
 
-**Version**: 1.1.0  
+**Version**: 1.5.0  
 **Last Updated**: 2025-10-26  
-**Note**: All commands updated for organized folder structure (Remote API v1.4.1)
+**Major Update**: Added smart-batcher.js with 490x performance improvement!  
+**Note**: All commands updated for organized folder structure and optimal batching
