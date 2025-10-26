@@ -2,6 +2,76 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.4.4] - 2025-10-26 - Script Organization & Enhanced Error Handling 📁
+
+### Major Changes
+- **Removed**: `auto-deploy-all.js` - Outdated script using basic continuous hacking
+  - Replaced in all documentation with `auto-expand.js` (superior root-and-deploy)
+  - Removed from both `deploy/` folder and `bitburner-update.js` download list
+  
+- **Reorganized**: `home-batcher.js` moved from `deploy/` → `batch/`
+  - Now properly grouped with other batch scripts (`simple-batcher.js`, `batch-manager.js`)
+  - Updated all 9+ documentation files to reflect new location
+  - New usage: `run batch/home-batcher.js [target]`
+
+### Enhanced - home-batcher.js (Major Rewrite) 🚀
+
+**Critical Bug Fixed**:
+- Original version would silently fail to start hack script if RAM ran out
+- Only weaken/grow would run, no money actually hacked
+- No error messages shown to user
+
+**New Features**:
+1. **Conflict Detection** ⚠️
+   - Warns about other scripts competing for RAM (e.g., batch-manager.js)
+   - Shows which scripts are running and their thread counts
+   
+2. **Detailed RAM Analysis** 📊
+   - Shows available vs needed RAM with precise calculations
+   - Displays thread allocation breakdown (h/g/w)
+   - Pre-validates RAM before attempting to start scripts
+   
+3. **Explicit Failure Reporting** 🚨
+   - Checks RAM availability before EACH script execution
+   - Reports exactly which scripts failed and why
+   - Shows needed vs available RAM for failed scripts
+   
+4. **Smart Summary** ✅
+   - Clear success/failure counts
+   - Helpful recommendations if partial failure occurs
+   - Professional formatted output with visual indicators
+
+**Example Output**:
+```
+⚠ WARNING: 1 other script(s) running on home:
+  - batch/batch-manager.js (1 threads)
+  This may cause RAM conflicts!
+
+Available RAM: 502.10GB / 512.00GB
+Needed RAM: 496.95GB
+
+✓ Started core/attack-weaken.js with 87 threads
+✓ Started core/attack-grow.js with 128 threads
+✓ Started core/attack-hack.js with 71 threads
+
+✓ SUCCESS: All 3 helper scripts started!
+```
+
+### Documentation Updates
+- Updated all references to `auto-deploy-all.js` → `auto-expand.js`
+- Updated all references to `deploy/home-batcher.js` → `batch/home-batcher.js`
+- Files updated: bitburner-update.js, QUICK_REFERENCE.md, README.md, CHANGELOG.md,
+  SCRIPT_REFERENCE.md, PROJECT_STRUCTURE.md, DETAILED_CHANGES.md, 
+  ERROR_HANDLING_IMPROVEMENTS.md, NEW_GAME_QUICKSTART.md, replace-pservs-no-copy.js
+
+### Impact
+✅ Cleaner folder organization with logical script grouping  
+✅ No more silent failures - complete transparency  
+✅ Better diagnostics for troubleshooting RAM issues  
+✅ Enterprise-grade error handling and reporting  
+
+---
+
 ## [1.4.3] - 2025-10-26 - Intelligent Quiet Mode Logging 🔔
 
 ### Added
@@ -378,9 +448,9 @@ if (onlyMoney && (!maxMoney || maxMoney <= 0)) continue;
 - **utils/list-procs.js** - Enhanced with formatted output
 - **utils/list-pservs.js** - Enhanced with comprehensive server status
 
-##### New Deployment Scripts
+##### New Scripts
 - **deploy/deploy-hack-joesguns.js** - Deploy with success/failure tracking
-- **deploy/home-batcher.js** - Home server batch operations with validation
+- **batch/home-batcher.js** - Home server batch operations with validation
 
 #### Enhanced
 

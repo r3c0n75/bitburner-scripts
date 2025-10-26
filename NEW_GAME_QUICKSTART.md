@@ -79,11 +79,11 @@ This guide provides a fast-track action plan for starting fresh games and recove
 
 3. **Deploy Across All Servers**
    ```bash
-   # Auto-deploy to everything you can root
-   run auto-deploy-all.js
+   # Auto-root and deploy to everything accessible
+   run deploy/auto-expand.js
    
    # Monitor the results
-   run production-monitor.js 300
+   run analysis/production-monitor.js 300
    ```
 
 ---
@@ -127,7 +127,7 @@ When you install augmentations, you restart from scratch but with enhanced stats
 1. **Deploy to All Available Servers**
    ```bash
    # You likely have more port openers from previous run
-   run auto-deploy-all.js
+   run deploy/auto-expand.js
    ```
 
 2. **Purchase Servers Early**
@@ -191,8 +191,8 @@ run profit-scan-flex.js
 run simple-batcher.js joesguns
 
 # Step 3: Scale up (5 minutes)
-run auto-deploy-all.js
-run purchase-server-8gb.js
+run deploy/auto-expand.js
+run deploy/purchase-server-8gb.js
 
 # Step 4: Monitor (ongoing)
 run production-monitor.js 300

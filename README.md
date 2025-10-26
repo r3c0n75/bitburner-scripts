@@ -82,8 +82,8 @@ run simple-batcher.js joesguns
 # Monitor production
 run production-monitor.js 60
 
-# Auto-deploy to all rooted servers
-run auto-deploy-all.js
+# Root and deploy to all accessible servers
+run deploy/auto-expand.js
 ```
 
 ## 📁 Script Categories
@@ -96,7 +96,8 @@ run auto-deploy-all.js
 ### Batch Management
 - `simple-batcher.js` - Deploy attack helpers across servers
 - `batch-manager.js` - Ensure batcher runs on purchased servers
-- `auto-deploy-all.js` - Deploy scripts to all rooted servers
+- `home-batcher.js` - Home server batch operations
+- `auto-expand.js` - Root and deploy to all accessible servers
 
 ### Analysis & Monitoring
 - `profit-scan.js` - Find most profitable targets
@@ -138,8 +139,8 @@ run simple-batcher.js joesguns --dry
 # Batch manager with custom settings
 run batch-manager.js joesguns 12 1.25 home --quiet
 
-# Auto-deploy with thread cap
-run auto-deploy-all.js 50
+# Root & deploy with thread cap
+run deploy/auto-expand.js joesguns 50
 ```
 
 ## 📊 Performance Monitoring
@@ -221,7 +222,7 @@ run production-monitor.js 60
 ### Mid Game Optimization
 1. Purchase servers with `purchase-server-8gb.js`
 2. Deploy batch manager with `batch-manager.js`
-3. Scale with `auto-deploy-all.js`
+3. Root & deploy with `auto-expand.js`
 
 ### Late Game Management
 1. Use `global-kill.js` to reset all operations
@@ -239,6 +240,19 @@ run production-monitor.js 60
 
 ## 📝 Version History
 
+### Version 1.4.4 (2025-10-26) - Current 🆕
+**Script Organization & Enhanced Error Handling:**
+
+- ✅ **Script Reorganization** - home-batcher.js moved to batch/ folder for logical grouping
+- ✅ **Deprecated Script Removal** - Removed outdated auto-deploy-all.js 
+- ✅ **Enhanced home-batcher.js** - Complete rewrite with enterprise-grade diagnostics
+  - Conflict detection for RAM competition
+  - Detailed RAM analysis and pre-checks
+  - Explicit failure reporting (no more silent failures!)
+  - Smart summaries with helpful recommendations
+- ✅ **Critical Bug Fix** - home-batcher.js now properly reports when hack script fails to start
+- ✅ **Documentation Updates** - All 9+ docs updated to reflect new organization
+
 ### Version 1.0.0 (2025-10-25)
 **Initial organized release with comprehensive improvements:**
 
@@ -251,7 +265,7 @@ run production-monitor.js 60
 - ✅ **Better validation** - Pre-execution checks prevent downstream errors
 - ✅ **Improved feedback** - Clear, actionable error messages
 
-See [CHANGELOG.md](CHANGELOG.md) for complete details.
+See [CHANGELOG.md](CHANGELOG.md) for complete version history.
 
 ---
 

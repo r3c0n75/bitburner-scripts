@@ -137,6 +137,6 @@ export async function main(ns) {
   ns.tprint(`New total RAM: ${ns.nFormat(replaced * targetRAM, "0.00b")}`);
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint("");
-  ns.tprint("Don't forget to redeploy your scripts!");
-  ns.tprint("Example: run deploy/auto-deploy-all.js");
+  ns.tprint("✓ Your batch system will auto-scale to use the new RAM!");
+  ns.tprint("  (batch-manager.js automatically detects and uses increased capacity)");
 }

@@ -200,7 +200,7 @@ run production-monitor.js 300
 
 ### home-batcher.js
 **Purpose**: Home server batch operations
-**Usage**: `run home-batcher.js [target]`
+**Usage**: `run batch/home-batcher.js [target]`
 **Parameters**:
 - `target` - Server to attack (default: joesguns)
 
