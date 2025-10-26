@@ -381,7 +381,7 @@ try {
 
 ## 7. Enhanced RAM Validation
 
-### Home Batcher (`deploy/home-batcher.js`)
+### Home Batcher (`batch/home-batcher.js`)
 
 **Improvement**:
 ```javascript

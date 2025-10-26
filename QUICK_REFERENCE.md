@@ -46,6 +46,7 @@ core/attack-weaken.js     # Basic weaken
 ```
 batch/simple-batcher.js   # Deploy to all servers
 batch/batch-manager.js    # Manage pserv batching
+batch/home-batcher.js     # Home server batching
 ```
 
 ### Analysis
@@ -65,10 +66,9 @@ utils/estimate-production.js  # Production estimates
 
 ### Deployment
 ```
-deploy/auto-deploy-all.js        # Deploy to all rooted
+deploy/auto-expand.js            # Root & deploy to all servers
 deploy/purchase-server-8gb.js    # Buy server
 deploy/replace-pservs-no-copy.js # Replace pservs
-deploy/home-batcher.js           # Home batching
 deploy/deploy-hack-joesguns.js   # Deploy joesguns
 deploy/hack-joesguns.js          # Joesguns script
 deploy/hack-n00dles.js           # N00dles script

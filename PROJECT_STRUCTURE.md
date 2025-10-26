@@ -14,7 +14,8 @@ bitburner-scripts/
 │   └── attack-weaken.js               # Basic weaken operation
 ├── batch/                             # Batch management scripts
 │   ├── simple-batcher.js              # Deploy helpers across servers
-│   └── batch-manager.js               # Ensure batcher runs on pservs
+│   ├── batch-manager.js               # Ensure batcher runs on pservs
+│   └── home-batcher.js                # Home server batch operations
 ├── analysis/                          # Analysis and monitoring
 │   ├── profit-scan.js                 # Find profitable targets
 │   └── production-monitor.js          # Monitor money generation
@@ -25,11 +26,10 @@ bitburner-scripts/
 │   ├── server-info.js                 # Display server information
 │   └── estimate-production.js         # Estimate production rates
 ├── deploy/                             # Deployment scripts
-│   ├── auto-deploy-all.js             # Deploy to all rooted servers
+│   ├── auto-expand.js                 # Root and deploy to all servers
 │   ├── purchase-server-8gb.js         # Buy 8GB servers
 │   ├── replace-pservs-no-copy.js      # Replace purchased servers
-│   ├── home-batcher.js                # Home server batch operations
-│   ├── deploy-hack-joesguns.js         # Deploy joesguns hack script
+│   ├── deploy-hack-joesguns.js        # Deploy joesguns hack script
 │   ├── hack-joesguns.js               # Alternative joesguns hack script
 │   └── hack-n00dles.js                # Early game hack script
 ├── config/                            # Configuration files
@@ -51,6 +51,7 @@ Basic attack operations that form the foundation of all batch operations:
 Advanced batch operations for deploying and managing attack scripts:
 - **simple-batcher.js** - Deploy attack helpers across all servers
 - **batch-manager.js** - Ensure batcher runs on purchased servers
+- **home-batcher.js** - Home server batch operations
 
 ### Analysis & Monitoring (`analysis/`)
 Tools for analyzing performance and finding optimal targets:
@@ -67,10 +68,9 @@ General utility scripts for system management:
 
 ### Deployment (`deploy/`)
 Scripts for deploying and managing server operations:
-- **auto-deploy-all.js** - Deploy to all rooted servers
+- **auto-expand.js** - Root and deploy to all servers
 - **purchase-server-8gb.js** - Buy 8GB servers
 - **replace-pservs-no-copy.js** - Replace purchased servers
-- **home-batcher.js** - Home server batch operations
 - **deploy-hack-joesguns.js** - Deploy joesguns hack script
 - **hack-joesguns.js** - Alternative joesguns hack script
 - **hack-n00dles.js** - Early game hack script

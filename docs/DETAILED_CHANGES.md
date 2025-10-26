@@ -476,7 +476,7 @@ ns.tprint(`\nDeployment complete: ${deployed} successful, ${failed} failed`);
 ---
 
 ### home-batcher.js (NEW)
-**Location**: `deploy/home-batcher.js`
+**Location**: `batch/home-batcher.js`
 
 **New Script Features**:
 - Home server optimization
