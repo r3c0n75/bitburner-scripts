@@ -2,6 +2,27 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.4.2] - 2025-10-26 - Batch Manager Path Fix 🔧
+
+### Fixed
+- **batch-manager.js Script Path Reference** - Fixed incorrect path to simple-batcher.js
+  - Changed from `"simple-batcher.js"` to `"batch/simple-batcher.js"`
+  - Resolves "scp failed" error when batch-manager attempts to copy batcher script
+  - Updated in all locations: scripts/, bitburner-remote-api/src/, bitburner-remote-api/dist/
+
+### Technical Details
+- **Issue**: batch-manager.js was looking for simple-batcher.js in root directory instead of batch/ subdirectory
+- **Root Cause**: Script reference didn't account for organized folder structure
+- **Solution**: Updated batcher constant to include full path: `batch/simple-batcher.js`
+- **Result**: batch-manager.js can now successfully locate and copy simple-batcher.js to target servers
+
+### Impact
+✅ Batch manager now works correctly with folder-organized structure  
+✅ Eliminates "scp failed" errors during batch system initialization  
+✅ Maintains consistency with Remote API folder organization  
+
+---
+
 ## [1.4.1] - 2025-10-26 - Remote API Path Compatibility Fixes 🔧
 
 ### Fixed
