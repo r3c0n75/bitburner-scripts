@@ -8,14 +8,14 @@ Fast reference for common operations and documentation locations.
 
 ### ⭐ RECOMMENDED: Smart Batcher (490x Performance!)
 ```bash
-# Find best target (with realistic estimates)
-run analysis/profit-scan-flex.js
+# Find best target by POTENTIAL (find hidden gems!)
+run analysis/profit-scan-flex.js --optimal
 
 # Check expected production
-run utils/estimate-production.js joesguns
+run utils/estimate-production.js sigma-cosmetics
 
 # Deploy with optimal ratios ($2.09m/s production!)
-run batch/smart-batcher.js joesguns
+run batch/smart-batcher.js sigma-cosmetics
 
 # Monitor production (wait 6-8 min for prep)
 run analysis/production-monitor.js 60

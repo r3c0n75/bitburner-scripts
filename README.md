@@ -70,14 +70,17 @@ See **[Remote API Daily Workflow](REMOTE_API_DAILY_WORKFLOW.md)** for complete g
 # Find profitable targets (basic)
 run profit-scan.js
 
-# Find profitable targets (advanced with caching, DEFAULT: only money servers)
+# Find profitable targets (advanced, DEFAULT: only money servers)
 run profit-scan-flex.js
+
+# Find targets by POTENTIAL (find hidden gems with massive upside!)
+run profit-scan-flex.js --optimal
 
 # Show ALL servers including purchased servers
 run profit-scan-flex.js --all
 
-# Deploy simple batcher to all servers
-run simple-batcher.js joesguns
+# Deploy smart batcher with optimal ratios (490x faster!)
+run batch/smart-batcher.js sigma-cosmetics
 
 # Monitor production
 run production-monitor.js 60
