@@ -1,15 +1,16 @@
 /** profit-scan-flex.js
  * One-step profit scanner:
- *  - uses profiler-overrides.json if present
- *  - if not present, auto-generates overrides for rooted hosts and writes profiler-overrides.json
+ *  - always generates fresh timing data from rooted hosts (no caching)
  *  - by default, filters out zero-money servers (purchased servers, home, darkweb)
+ *  - use --save to write profiler-overrides.json for manual use
  *
  * Usage:
- *   run profit-scan-flex.js [limit] [--dry] [--all]
+ *   run profit-scan-flex.js [limit] [--save] [--all]
  * Examples:
- *   run profit-scan-flex.js            # default: show only money servers, print top 30
- *   run profit-scan-flex.js 50 --dry   # don't write file, print top 50 using live timings
+ *   run profit-scan-flex.js            # default: show only money servers, print top 30 with fresh timings
+ *   run profit-scan-flex.js 50         # print top 50 with fresh timings
  *   run profit-scan-flex.js --all      # show ALL servers including purchased servers
+ *   run profit-scan-flex.js --save     # write profiler-overrides.json for manual use
  */
 
 /** @param {NS} ns */
@@ -30,35 +31,18 @@ export async function main(ns) {
   }
   for (const a of args) flags.add(String(a));
 
-  const dry = flags.has("--dry");
+  const saveFile = flags.has("--save");
   const showAll = flags.has("--all");
   // Default behavior: filter out zero-money servers (unless --all is specified)
   const onlyMoney = !showAll;
   const fname = "profiler-overrides.json";
 
-  // Try to read existing overrides from the local host
-  let overrides = {};
-  let usedOverridesFile = false;
-  try {
-    if (ns.fileExists(fname, ns.getHostname())) {
-      const raw = ns.read(fname);
-      if (raw && raw.trim()) {
-        overrides = JSON.parse(raw);
-        usedOverridesFile = true;
-        ns.tprint(`profit-scan-flex: using overrides from ${fname}`);
-      } else {
-        ns.tprint(`profit-scan-flex: ${fname} present but empty — will regenerate if needed`);
-      }
-    } else {
-      ns.tprint(`profit-scan-flex: ${fname} not found on ${ns.getHostname()} — will generate overrides now`);
-    }
-  } catch (e) {
-    ns.tprint(`profit-scan-flex: error reading/parsing ${fname}: ${e} — will regenerate`);
-    overrides = {};
-  }
+  // Always generate fresh timing data (no caching)
+  ns.tprint(`profit-scan-flex: generating fresh timing data from rooted hosts...`);
 
-  // If no overrides present (or empty), generate them from reachable rooted hosts
-  if (!usedOverridesFile) {
+  // Generate fresh overrides from reachable rooted hosts
+  let overrides = {};
+  {
     // BFS reachable hosts from "home"
     const visited = new Set();
     const q = ["home"];
@@ -98,24 +82,19 @@ export async function main(ns) {
       }
     }
 
-    ns.tprint(`profit-scan-flex: generated ${count} override entries from rooted hosts (filtering=${onlyMoney ? 'money-only' : 'all-servers'})`);
+    ns.tprint(`profit-scan-flex: generated ${count} timing entries from rooted hosts (filtering=${onlyMoney ? 'money-only' : 'all-servers'})`);
 
-    if (!dry) {
+    // Use fresh data in-memory
+    overrides = result;
+
+    // Optionally save to file if --save flag is used
+    if (saveFile) {
       try {
         ns.write(fname, JSON.stringify(result, null, 2), "w");
         ns.tprint(`profit-scan-flex: Wrote ${fname} with ${Object.keys(result).length} entries on ${ns.getHostname()}`);
-        overrides = result;
-        usedOverridesFile = true;
       } catch (e) {
         ns.tprint(`profit-scan-flex: ERROR writing ${fname}: ${e}`);
-        // fall back to using the generated object in-memory (don't require file)
-        overrides = result;
-        usedOverridesFile = true;
       }
-    } else {
-      overrides = result;
-      usedOverridesFile = true;
-      ns.tprint("profit-scan-flex: dry run — not writing file, using generated timings in-memory for this run");
     }
   }
 
@@ -145,15 +124,15 @@ export async function main(ns) {
       const maxRam = ns.getServerMaxRam(h);
       const rooted = ns.hasRootAccess(h) ? "YES" : "NO";
 
-      // prefer override values if present for host
+      // Use fresh timing data from generated overrides
       let hackTimeMs, growTimeMs, weakenTimeMs;
-      const hasOverride = overrides && Object.prototype.hasOwnProperty.call(overrides, h);
-      if (hasOverride) {
+      if (overrides && Object.prototype.hasOwnProperty.call(overrides, h)) {
         const o = overrides[h];
-        hackTimeMs = Number(o.hackTimeMs) || ns.getHackTime(h);
-        growTimeMs = Number(o.growTimeMs) || ns.getGrowTime(h);
-        weakenTimeMs = Number(o.weakenTimeMs) || ns.getWeakenTime(h);
+        hackTimeMs = Number(o.hackTimeMs);
+        growTimeMs = Number(o.growTimeMs);
+        weakenTimeMs = Number(o.weakenTimeMs);
       } else {
+        // Fallback to NS API if not in generated data (shouldn't happen)
         hackTimeMs = ns.getHackTime(h);
         growTimeMs = ns.getGrowTime(h);
         weakenTimeMs = ns.getWeakenTime(h);
@@ -178,8 +157,7 @@ export async function main(ns) {
         weakenTimeMs,
         fracPerThread,
         chance,
-        perThreadPerSec,
-        usedOverride: !!hasOverride
+        perThreadPerSec
       });
     } catch (e) {
       // ignore hosts we can't query
@@ -189,23 +167,32 @@ export async function main(ns) {
   // sort & print
   rows.sort((a, b) => b.perThreadPerSec - a.perThreadPerSec);
 
-  ns.tprint("Top targets by expected money/sec per thread (idealized):");
-  ns.tprint("OVR | server | rooted | RAM | maxMoney | minSec | curSec | hackTime(s) | growTime(s) | weakenTime(s) | hackChance | $/s/thread");
+  ns.tprint("");
+  ns.tprint("═══════════════════════════════════════════════════════════════════════");
+  ns.tprint("  TOP PROFIT TARGETS (by expected $/sec per thread - fresh data)");
+  ns.tprint("═══════════════════════════════════════════════════════════════════════");
+  ns.tprint("");
 
   const show = Math.min(limit, rows.length);
   for (let i = 0; i < show; ++i) {
     const r = rows[i];
-    const ovr = r.usedOverride ? "YES" : "   ";
-    ns.tprint(
-      `${ovr} | ${r.host} | ${r.rooted} | ${r.maxRam}GB | ${formatNumber(ns, r.maxMoney)} | ${r.minSec} | ${r.curSec} | ` +
-      `${(r.hackTimeMs/1000).toFixed(3)} | ${(r.growTimeMs/1000).toFixed(3)} | ${(r.weakenTimeMs/1000).toFixed(3)} | ` +
-      `${(r.chance*100).toFixed(2)}% | ${formatNumber(ns, r.perThreadPerSec)}`
-    );
+    const rank = String(i + 1).padStart(2, ' ');
+    const hostName = r.host.padEnd(20);
+    const rootStatus = r.rooted === "YES" ? "✓" : "✗";
+    const ram = String(r.maxRam + "GB").padStart(6);
+    const hackChance = (r.chance * 100).toFixed(1) + "%";
+    const perThreadIncome = formatNumber(ns, r.perThreadPerSec);
+    
+    ns.tprint(`${rank}. ${hostName} [${rootStatus}] ${ram} RAM`);
+    ns.tprint(`    Max Money: ${formatNumber(ns, r.maxMoney).padEnd(12)} | Security: ${r.curSec.toFixed(1)}/${r.minSec} | Hack Chance: ${hackChance}`);
+    ns.tprint(`    Timing: H=${(r.hackTimeMs/1000).toFixed(1)}s G=${(r.growTimeMs/1000).toFixed(1)}s W=${(r.weakenTimeMs/1000).toFixed(1)}s | Income/thread: ${perThreadIncome}`);
+    ns.tprint("");
   }
 
-  ns.tprint(`(showing ${show} of ${rows.length} reachable hosts)`);
-  ns.tprint("");
-  ns.tprint(`Notes: - This per-thread $/s is idealized. Use with a timing-aware batcher for realized income.`);
+  ns.tprint("───────────────────────────────────────────────────────────────────────");
+  ns.tprint(`Showing ${show} of ${rows.length} reachable hosts with money`);
+  ns.tprint(`Note: Income values are idealized. Use timing-aware batcher for actual results.`);
+  ns.tprint("═══════════════════════════════════════════════════════════════════════");
 }
 
 /** helper formatting */
