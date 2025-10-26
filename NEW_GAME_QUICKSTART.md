@@ -232,6 +232,96 @@ run simple-batcher.js NEW_TARGET
 
 ---
 
+## 🔧 Deployment Scripts Explained
+
+Understanding the different deployment scripts and when to use each one:
+
+### simple-batcher.js - Your Main Workhorse
+**What it does**: Coordinates HWGW (Hack-Weaken-Grow-Weaken) batch attacks with precise timing  
+**Runs on**: Home server (or wherever you run it from)  
+**Best for**: Single-target focused income generation  
+
+```bash
+run batch/simple-batcher.js joesguns
+```
+
+### auto-expand.js - Network Sweep & Deployment
+**What it does**: 
+- Automatically roots ALL accessible servers in the network
+- Deploys `hack-universal.js` (basic continuous hacking) to every rooted server
+- Runs ONCE then exits
+
+**Best for**: Early/mid-game rapid expansion across 50+ servers  
+
+```bash
+run deploy/auto-expand.js joesguns
+```
+
+**Key Features**:
+- One-time network scan and deployment
+- Spreads basic hacking widely across all available servers
+- Like "planting seeds everywhere" for steady passive income
+
+### batch-manager.js - Batch Operation Supervisor
+**What it does**: 
+- Ensures `simple-batcher.js` runs continuously on a specific purchased server
+- Monitors and auto-restarts if it stops
+- Runs FOREVER in a loop
+
+**Best for**: Mid/late-game when you have purchased servers with high RAM  
+
+```bash
+run batch/batch-manager.js joesguns 12 1.25 pserv-0 --quiet
+```
+
+**Key Features**:
+- Continuous monitoring and management
+- Coordinates sophisticated batch attacks
+- Like "tending a prize-winning plant" for maximum yield
+
+### When to Use Which?
+
+| Game Stage | Recommended Strategy |
+|------------|---------------------|
+| **Early Game** (Hack 1-100) | `simple-batcher.js` on home targeting n00dles/foodnstuff |
+| **Mid Game** (Hack 100-300) | `auto-expand.js` to deploy across all rooted servers |
+| **Late Game** (Hack 300+) | `batch-manager.js` on purchased servers for optimized batching |
+| **Optimal Setup** | ALL THREE: auto-expand for breadth + batch-manager for depth |
+
+### Why You Need Both auto-expand.js AND batch-manager.js
+
+They serve **completely different purposes**:
+
+```
+auto-expand.js          →  Spreads basic hacking across 50+ servers
+                           (Broad network coverage, steady passive income)
+
+batch-manager.js        →  Maintains one powerful batch coordinator  
+                           (Focused optimization, maximum profit per target)
+```
+
+**Typical Workflow**:
+1. **Run once**: `auto-expand.js joesguns` - Deploys basic scripts everywhere
+2. **Run continuously**: `batch-manager.js joesguns 12 1.25 pserv-0` - Optimized batching on your best server
+
+### Script Comparison: hack-universal.js vs simple-batcher.js
+
+**hack-universal.js** (deployed by auto-expand):
+- Simple sequential: hack → grow → weaken
+- Low RAM requirement
+- Works on any rooted server
+- Basic income generation
+
+**simple-batcher.js** (managed by batch-manager):
+- Coordinated HWGW timing cycles
+- Requires more RAM
+- Sophisticated scheduling
+- Maximum profit optimization
+
+**Result**: Use auto-expand for quantity, batch-manager for quality!
+
+---
+
 ## 💡 Pro Tips
 
 ### For Post-Augmentation Players
