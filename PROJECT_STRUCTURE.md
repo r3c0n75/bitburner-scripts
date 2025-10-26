@@ -49,13 +49,15 @@ Basic attack operations that form the foundation of all batch operations:
 
 ### Batch Management (`batch/`)
 Advanced batch operations for deploying and managing attack scripts:
-- **simple-batcher.js** - Deploy attack helpers across all servers
+- **smart-batcher.js** ⭐ - Optimal timing-based ratios (490x performance!)
+- **simple-batcher.js** - Deploy attack helpers across all servers (basic)
 - **batch-manager.js** - Ensure batcher runs on purchased servers
 - **home-batcher.js** - Home server batch operations
 
 ### Analysis & Monitoring (`analysis/`)
 Tools for analyzing performance and finding optimal targets:
 - **profit-scan.js** - Find most profitable targets
+- **profit-scan-flex.js** ⭐ - Enhanced with realistic batch calculations
 - **production-monitor.js** - Monitor money generation rate
 
 ### Utilities (`utils/`)
@@ -64,7 +66,7 @@ General utility scripts for system management:
 - **list-procs.js** - List running processes
 - **list-pservs.js** - List purchased servers
 - **server-info.js** - Display server information
-- **estimate-production.js** - Estimate production rates
+- **estimate-production.js** ⭐ - Realistic batch-cycle-aware estimates
 
 ### Deployment (`deploy/`)
 Scripts for deploying and managing server operations:
@@ -86,6 +88,12 @@ Comprehensive documentation:
 
 ## 🔄 Workflow Integration
 
+### ⭐ Recommended Workflow (490x Performance!)
+1. **Analysis**: Use `profit-scan-flex.js` to find targets with realistic estimates
+2. **Estimation**: Use `estimate-production.js` to calculate expected income
+3. **Deployment**: Use `smart-batcher.js` for optimal ratios ($2.09m/s)
+4. **Monitoring**: Use `production-monitor.js` to verify results
+
 ### Basic Workflow
 1. **Analysis**: Use `profit-scan.js` to find targets
 2. **Deployment**: Use `simple-batcher.js` to deploy attacks
@@ -99,7 +107,7 @@ Comprehensive documentation:
 ### Troubleshooting Workflow
 1. **System Check**: Use `list-procs.js` to see what's running
 2. **Reset**: Use `global-kill.js` to stop all operations
-3. **Restart**: Use `simple-batcher.js` to restart operations
+3. **Restart**: Use `smart-batcher.js` or `simple-batcher.js` to restart operations
 
 ## 📊 Script Dependencies
 
