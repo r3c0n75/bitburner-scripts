@@ -1,5 +1,6 @@
 /** estimate-production.js
- * Estimate production rates for different configurations.
+ * Estimate REALISTIC production rates accounting for batch cycles.
+ * This provides estimates that should match actual measured production.
  * Usage: run estimate-production.js [target]
  */
 
@@ -9,6 +10,7 @@ export async function main(ns) {
   
   try {
     const maxMoney = ns.getServerMaxMoney(target);
+    const currentMoney = ns.getServerMoneyAvailable(target);
     const hackTime = ns.getHackTime(target);
     const growTime = ns.getGrowTime(target);
     const weakenTime = ns.getWeakenTime(target);
@@ -17,37 +19,60 @@ export async function main(ns) {
     
     ns.tprint(`\n=== Production Estimate for ${target} ===`);
     ns.tprint(`Max Money: ${ns.nFormat(maxMoney, "$0.00a")}`);
+    ns.tprint(`Current Money: ${ns.nFormat(currentMoney, "$0.00a")} (${((currentMoney/maxMoney)*100).toFixed(1)}%)`);
     ns.tprint(`Hack Time: ${(hackTime/1000).toFixed(2)}s`);
     ns.tprint(`Grow Time: ${(growTime/1000).toFixed(2)}s`);
     ns.tprint(`Weaken Time: ${(weakenTime/1000).toFixed(2)}s`);
     ns.tprint(`Hack Chance: ${(hackChance*100).toFixed(1)}%`);
     ns.tprint(`Hack Percent: ${(hackPercent*100).toFixed(2)}%`);
     
-    // Calculate expected values
-    const expectedPerHack = maxMoney * hackPercent * hackChance;
-    const moneyPerSecond = expectedPerHack / (hackTime / 1000);
+    // Calculate batch cycle timing
+    const batchTime = Math.max(hackTime, growTime, weakenTime);
+    const batchInterval = batchTime * 1.25; // 25% safety buffer
+    const batchesPerSecond = 1000 / batchInterval;
+    const batchesPerMinute = 60000 / batchInterval;
     
-    ns.tprint(`\nExpected per hack: ${ns.nFormat(expectedPerHack, "$0.00a")}`);
-    ns.tprint(`Money per second: ${ns.nFormat(moneyPerSecond, "$0.00a")}/s`);
+    // Calculate realistic earnings per batch
+    // In a batch: hack earns money, grow/weaken earn nothing
+    const moneyPerHack = maxMoney * hackPercent * hackChance;
     
-    // Estimate for different thread counts
-    ns.tprint(`\n=== Production Estimates ===`);
+    ns.tprint(`\n=== Batch Cycle Analysis ===`);
+    ns.tprint(`Batch Cycle Time: ${(batchTime/1000).toFixed(2)}s`);
+    ns.tprint(`Safe Interval: ${(batchInterval/1000).toFixed(2)}s`);
+    ns.tprint(`Max Batches/min: ${batchesPerMinute.toFixed(2)}`);
+    ns.tprint(`Money per Hack Thread: ${ns.nFormat(moneyPerHack, "$0.00a")}`);
+    
+    // Calculate realistic production rates for different thread counts
+    ns.tprint(`\n=== Realistic Production Estimates ===`);
+    ns.tprint(`(Based on full batch cycles with grow/weaken overhead)`);
+    
     for (const threads of [1, 5, 10, 25, 50, 100]) {
-      const totalPerSecond = moneyPerSecond * threads;
-      const totalPerMinute = totalPerSecond * 60;
-      const totalPerHour = totalPerMinute * 60;
+      // Total money earned per batch cycle (all hack threads)
+      const moneyPerBatch = moneyPerHack * threads;
       
-      ns.tprint(`${threads} threads: ${ns.nFormat(totalPerSecond, "$0.00a")}/s, ${ns.nFormat(totalPerMinute, "$0.00a")}/min, ${ns.nFormat(totalPerHour, "$0.00a")}/hr`);
+      // Income rate accounting for batch timing
+      const moneyPerSecond = moneyPerBatch * batchesPerSecond;
+      const moneyPerMinute = moneyPerBatch * batchesPerMinute;
+      const moneyPerHour = moneyPerMinute * 60;
+      
+      ns.tprint(`${threads} hack threads: ${ns.nFormat(moneyPerSecond, "$0.00a")}/s, ${ns.nFormat(moneyPerMinute, "$0.00a")}/min, ${ns.nFormat(moneyPerHour, "$0.00a")}/hr`);
     }
     
-    // Calculate batch timing
-    const batchTime = Math.max(hackTime, growTime, weakenTime);
-    const batchInterval = batchTime * 1.25; // 25% buffer
+    // Show theoretical maximum (if you could hack continuously)
+    const theoreticalMaxPerSecond = moneyPerHack / (hackTime / 1000);
+    const batchEfficiency = (moneyPerHack * batchesPerSecond) / theoreticalMaxPerSecond * 100;
     
-    ns.tprint(`\n=== Batch Timing ===`);
-    ns.tprint(`Batch Time: ${(batchTime/1000).toFixed(2)}s`);
-    ns.tprint(`Recommended Interval: ${(batchInterval/1000).toFixed(2)}s`);
-    ns.tprint(`Batches per minute: ${(60000/batchInterval).toFixed(1)}`);
+    ns.tprint(`\n=== Efficiency Analysis ===`);
+    ns.tprint(`Theoretical max (continuous hack): ${ns.nFormat(theoreticalMaxPerSecond, "$0.00a")}/s`);
+    ns.tprint(`Realistic rate (batch cycle): ${ns.nFormat(moneyPerHack * batchesPerSecond, "$0.00a")}/s`);
+    ns.tprint(`Batch efficiency: ${batchEfficiency.toFixed(1)}%`);
+    ns.tprint(`\nNote: Batch efficiency < 100% is normal due to grow/weaken overhead.`);
+    
+    // Warning if server isn't prepped
+    if (currentMoney < maxMoney * 0.95) {
+      ns.tprint(`\n⚠️  WARNING: Server is only at ${((currentMoney/maxMoney)*100).toFixed(1)}% of max money.`);
+      ns.tprint(`Actual earnings may be lower until server is fully grown.`);
+    }
     
   } catch (e) {
     ns.tprint(`Error estimating production for ${target}: ${e}`);

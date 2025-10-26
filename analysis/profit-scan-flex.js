@@ -142,8 +142,14 @@ export async function main(ns) {
       const fracPerThread = ns.hackAnalyze(h);
       const chance = ns.hackAnalyzeChance(h);
 
-      // per-thread expected money per second (idealized)
-      const perThreadPerSec = (maxMoney * fracPerThread * chance) / (hackTimeMs / 1000);
+      // Calculate realistic batch cycle income (not theoretical continuous hack)
+      const batchCycleTimeMs = Math.max(hackTimeMs, growTimeMs, weakenTimeMs);
+      const batchIntervalMs = batchCycleTimeMs * 1.25; // 25% safety buffer
+      const batchesPerSecond = 1000 / batchIntervalMs;
+      const moneyPerHack = maxMoney * fracPerThread * chance;
+      
+      // per-thread expected money per second (realistic batch cycle)
+      const perThreadPerSec = moneyPerHack * batchesPerSecond;
 
       rows.push({
         host: h,
@@ -191,7 +197,8 @@ export async function main(ns) {
 
   ns.tprint("───────────────────────────────────────────────────────────────────────");
   ns.tprint(`Showing ${show} of ${rows.length} reachable hosts with money`);
-  ns.tprint(`Note: Income values are idealized. Use timing-aware batcher for actual results.`);
+  ns.tprint(`Note: Income values account for realistic batch cycles (grow/weaken overhead).`);
+  ns.tprint(`These estimates should match actual production with proper batching.`);
   ns.tprint("═══════════════════════════════════════════════════════════════════════");
 }
 
