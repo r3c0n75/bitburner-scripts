@@ -19,7 +19,7 @@ This guide provides a fast-track action plan for starting fresh games and recove
 2. **Install Scripts**
    ```bash
    # If using GitHub deployment:
-   wget https://raw.githubusercontent.com/YOUR-USERNAME/bitburner-scripts/main/bitburner-update.js bitburner-update.js
+   wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
    run bitburner-update.js
    
    # Otherwise, copy scripts manually to home
@@ -96,7 +96,7 @@ When you install augmentations, you restart from scratch but with enhanced stats
 1. **Restore Your Scripts**
    ```bash
    # If using GitHub (RECOMMENDED):
-   wget https://raw.githubusercontent.com/YOUR-USERNAME/bitburner-scripts/main/bitburner-update.js bitburner-update.js
+   wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
    run bitburner-update.js
    
    # Scripts downloaded in 10-30 seconds!
@@ -181,7 +181,7 @@ When you install augmentations, you restart from scratch but with enhanced stats
 ### Absolute Fastest Recovery (Copy-Paste This)
 ```bash
 # Step 1: Get scripts (10 seconds)
-wget https://raw.githubusercontent.com/YOUR-USERNAME/bitburner-scripts/main/bitburner-update.js bitburner-update.js
+wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
 run bitburner-update.js
 
 # Step 2: Find & attack target (30 seconds)
