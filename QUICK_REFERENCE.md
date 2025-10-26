@@ -21,6 +21,17 @@ run batch/smart-batcher.js sigma-cosmetics
 run analysis/production-monitor.js 60
 ```
 
+### 🔮 FORMULAS.EXE ENHANCED (Perfect Accuracy!)
+```bash
+# EXACT target rankings (requires Formulas.exe $5b)
+run analysis/f-profit-scan-flex.js --optimal
+
+# EXACT production predictions (zero error!)
+run utils/f-estimate-production.js silver-helix
+
+# See FORMULAS_ENHANCED_SCRIPTS.md for details
+```
+
 ### Basic Commands
 ```bash
 # Find profitable targets
@@ -69,6 +80,8 @@ batch/home-batcher.js     # Home server batching
 ### Analysis
 ```
 analysis/profit-scan.js          # Find best targets
+analysis/profit-scan-flex.js     # Enhanced target scanner
+analysis/f-profit-scan-flex.js   # 🔮 EXACT calculations (Formulas.exe)
 analysis/production-monitor.js   # Track production
 ```
 
@@ -78,8 +91,10 @@ utils/global-kill.js       # Kill all scripts
 utils/list-procs.js        # List processes
 utils/list-pservs.js       # List pservs
 utils/server-info.js       # Server details
-utils/estimate-production.js  # Production estimates
+utils/estimate-production.js   # Production estimates
+utils/f-estimate-production.js # 🔮 EXACT production (Formulas.exe)
 utils/share-ram.js         # Share RAM for faction rep bonus
+utils/test-formulas.js     # Test Formulas.exe installation
 ```
 
 ### Deployment

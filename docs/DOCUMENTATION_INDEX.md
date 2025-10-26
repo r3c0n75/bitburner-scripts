@@ -75,6 +75,33 @@ Complete index of all documentation for the Bitburner script collection.
 
 ## 🏗️ Technical Documentation
 
+### [FORMULAS_ENHANCED_SCRIPTS.md](FORMULAS_ENHANCED_SCRIPTS.md) 🔮 NEW!
+**Formulas.exe Enhanced Scripts Guide**
+- f-profit-scan-flex.js - EXACT target selection (zero error)
+- f-estimate-production.js - Perfect income predictions
+- Comparison: estimates vs exact formulas
+- Recommended workflow for perfect optimization
+- Real-world impact and benefits
+- Technical details on formula calculations
+- When to use formula scripts vs regular scripts
+
+**When to use**: After purchasing Formulas.exe ($5b) for perfect accuracy in all calculations
+
+---
+
+### [SCRIPTS_USING_FORMULAS.md](SCRIPTS_USING_FORMULAS.md) 🔮 NEW!
+**Complete Formula Scripts Reference**
+- Complete list of scripts requiring Formulas.exe
+- Detailed breakdown of formulas used in each script
+- Comparison table: regular vs formula scripts
+- Recommended workflow with formula scripts
+- Technical details on how Formulas.exe works
+- File locations and naming conventions
+
+**When to use**: Reference guide for which scripts need Formulas.exe and what they calculate
+
+---
+
 ### [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕
 **Faction Reputation RAM Sharing Guide**
 - What is RAM sharing and how it works
@@ -217,6 +244,8 @@ Complete index of all documentation for the Bitburner script collection.
 | Task | Documentation |
 |------|---------------|
 | New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
+| Perfect accuracy with Formulas.exe | [FORMULAS_ENHANCED_SCRIPTS.md](FORMULAS_ENHANCED_SCRIPTS.md) 🔮 |
+| Which scripts use Formulas.exe | [SCRIPTS_USING_FORMULAS.md](SCRIPTS_USING_FORMULAS.md) 🔮 |
 | Boost faction reputation | [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕 |
 | Find best profit targets | [PROFIT_SCAN_OPTIMAL_MODE.md](PROFIT_SCAN_OPTIMAL_MODE.md) 🆕 |
 | Setup dev environment | [REMOTE_API_SETUP.md](REMOTE_API_SETUP.md) ⚡ |
@@ -306,4 +335,4 @@ README.md (Start Here)
 ---
 
 **Last Updated**: 2025-10-26  
-**Version**: 1.6.0
+**Version**: 1.7.0

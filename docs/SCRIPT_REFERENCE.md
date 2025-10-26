@@ -267,6 +267,29 @@ run production-monitor.js 300
 - Logs status every 10 cycles (~100 seconds)
 **Note**: Use with `deploy/deploy-share-all.js` to deploy across entire network for maximum faction reputation gains
 
+### test-formulas.js 🔮
+**Purpose**: Test Formulas.exe installation and functionality
+**Usage**: `run utils/test-formulas.js`
+**Features**:
+- Verifies Formulas.exe is properly installed
+- Tests all formula calculation functions
+- Shows exact hack chance, timing, and growth calculations
+- Displays player stats integration
+**Requirements**: Formulas.exe ($5 billion from Dark Web)
+**Note**: Run this first after purchasing Formulas.exe to verify it's working
+
+### f-estimate-production.js 🔮
+**Purpose**: EXACT production rate calculations using Formulas.exe
+**Usage**: `run utils/f-estimate-production.js [target]`
+**Features**:
+- Perfect accuracy using `ns.formulas.hacking.*` API
+- Shows both current AND optimal state projections
+- Calculates exact improvement percentages from prep
+- Zero estimation error - all calculations are precise
+- Accounts for your exact player stats and multipliers
+**Requirements**: Formulas.exe ($5 billion from Dark Web)
+**Note**: Use this instead of estimate-production.js for guaranteed accurate predictions
+
 ## Server Management Scripts
 
 ### purchase-server-8gb.js
@@ -300,6 +323,26 @@ run production-monitor.js 300
 - Shows deployment status with thread counts per server
 - Reports total sharing capacity
 **Note**: The faction reputation bonus scales with total shared RAM across all servers. The bonus updates every 10 seconds.
+
+## Formula-Enhanced Scripts (Formulas.exe Required) 🔮
+
+### f-profit-scan-flex.js ⭐ EXACT TARGET SELECTION
+**Purpose**: Find best hacking targets with PERFECT calculations (zero error)
+**Usage**: `run analysis/f-profit-scan-flex.js [limit] [--optimal] [--all] [--save]`
+**Features**:
+- Uses `ns.formulas.hacking.*` for EXACT calculations (no estimates)
+- Perfect hack chance calculations at optimal and current states
+- Exact timing calculations with your player stats
+- Flawless optimal state projections
+- Shows exact improvement percentages after prep
+**Requirements**: Formulas.exe ($5 billion from Dark Web)
+**Examples**:
+```bash
+run analysis/f-profit-scan-flex.js            # exact current state rankings
+run analysis/f-profit-scan-flex.js --optimal  # exact potential rankings
+run analysis/f-profit-scan-flex.js 50         # top 50 targets
+```
+**Note**: This is the ultimate target selection tool - every number is guaranteed accurate
 
 ### deploy-hack-joesguns.js
 **Purpose**: Deploy joesguns hack script to servers

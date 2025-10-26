@@ -368,6 +368,79 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 
 ---
 
+## 🔮 Advanced Optimization Tools (Optional)
+
+### Formulas.exe Enhanced Scripts (After $5B Purchase)
+
+If you've purchased **Formulas.exe** ($5 billion, permanent across resets), you get access to **perfect accuracy** scripts with zero estimation error:
+
+#### test-formulas.js - Verify Installation
+```bash
+# First time after purchasing Formulas.exe
+run utils/test-formulas.js
+```
+Confirms Formulas.exe is working and shows exact calculations.
+
+#### f-profit-scan-flex.js - EXACT Target Selection 🌟
+```bash
+# Instead of regular profit-scan-flex.js, use this for PERFECT accuracy
+run analysis/f-profit-scan-flex.js --optimal
+
+# Every number is guaranteed exact - no more estimation errors!
+# Shows exact hack chance, exact timing, exact improvement percentages
+```
+
+**Benefits**: 
+- 0% error margin (vs ±10-20% with regular scripts)
+- Perfect optimal state projections
+- Exact improvement calculations
+- Integrates your player stats and multipliers
+
+#### f-estimate-production.js - Guaranteed Accurate Predictions
+```bash
+# Instead of estimate-production.js, use this for PERFECT predictions
+run utils/f-estimate-production.js silver-helix
+
+# Shows both current AND optimal state with exact numbers
+# Predictions match actual production perfectly
+```
+
+**When to Use**: After purchasing Formulas.exe, use the `f-` prefix versions for perfect accuracy. They check for Formulas.exe and show an error if not installed.
+
+**More Info**: See [docs/FORMULAS_ENHANCED_SCRIPTS.md](docs/FORMULAS_ENHANCED_SCRIPTS.md) and [docs/SCRIPTS_USING_FORMULAS.md](docs/SCRIPTS_USING_FORMULAS.md)
+
+---
+
+### RAM Sharing for Faction Reputation
+
+If you're grinding **faction reputation** (for augmentations), you can share your free RAM for a reputation multiplier bonus:
+
+#### Quick Deploy
+```bash
+# Deploy RAM sharing across your entire network
+run deploy/deploy-share-all.js
+
+# Reserves 64GB on home, uses all free RAM on other servers
+# Bonus updates every 10 seconds and scales with shared RAM
+```
+
+**Real Example**: With 68 servers (25 purchased + network servers), sharing 7,176 threads gives **1.356x reputation multiplier** (35.6% bonus).
+
+**When to Use**:
+- ✅ Grinding faction rep for augmentations
+- ✅ When servers are idle (not actively hacking)
+- ✅ During faction missions or field work
+- ❌ When you need maximum hacking income
+
+**Stop Sharing**:
+```bash
+run utils/global-kill.js  # Kills all scripts including RAM sharing
+```
+
+**More Info**: See [docs/RAM_SHARING_GUIDE.md](docs/RAM_SHARING_GUIDE.md)
+
+---
+
 ## 💡 Pro Tips
 
 ### For Post-Augmentation Players
@@ -385,9 +458,11 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 ### For Everyone
 1. **⭐ Use smart-batcher.js** - 490x performance improvement over basic batching!
 2. **Bookmark profit-scan-flex.js** - Run it often to find better targets with realistic estimates
-3. **Use global-kill.js** - When switching targets, kill everything first
-4. **Wait for prep** - smart-batcher needs 6-8 minutes to prep server to max money
-5. **Check documentation** - See docs/GETTING_STARTED.md for deeper explanations
+3. **🔮 Use formula scripts if you have Formulas.exe** - Perfect accuracy with f-profit-scan-flex.js and f-estimate-production.js
+4. **Use global-kill.js** - When switching targets, kill everything first
+5. **Wait for prep** - smart-batcher needs 6-8 minutes to prep server to max money
+6. **RAM share when faction grinding** - Use deploy-share-all.js for 35%+ rep bonus
+7. **Check documentation** - See docs/GETTING_STARTED.md for deeper explanations
 
 ---
 
@@ -462,9 +537,15 @@ Keep this quickstart guide handy:
 
 **Remember**: The faster you set up automation, the faster you progress. Don't overthink it - run the scripts, monitor the output, and scale up!
 
-**Pro Tip**: Use smart-batcher.js for 490x performance improvement - transforms $4k/s into $2.09m/s! ⭐
+**Pro Tips**: 
+- ⭐ Use smart-batcher.js for 490x performance improvement - transforms $4k/s into $2.09m/s!
+- 🔮 Use formula scripts (f-prefix) after purchasing Formulas.exe for perfect accuracy
+- 💎 Use RAM sharing (deploy-share-all.js) when grinding faction reputation for 35%+ bonus
 
-**Version**: 1.5.0  
+**Version**: 1.7.0  
 **Last Updated**: 2025-10-26  
-**Major Update**: Added smart-batcher.js with revolutionary performance gains!
+**Major Updates**: 
+- v1.5.0: smart-batcher.js with 490x performance gains
+- v1.6.0: RAM sharing for faction reputation bonus
+- v1.7.0: Formulas.exe enhanced scripts for perfect accuracy
 

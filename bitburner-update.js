@@ -32,6 +32,7 @@ export async function main(ns) {
       { file: "simple-batcher.js", folder: folders.batch },
       { file: "profit-scan.js", folder: folders.analysis },
       { file: "profit-scan-flex.js", folder: folders.analysis },
+      { file: "f-profit-scan-flex.js", folder: folders.analysis },
       { file: "production-monitor.js", folder: folders.analysis }
     ],
     
@@ -48,7 +49,9 @@ export async function main(ns) {
       { file: "list-procs.js", folder: folders.utils },
       { file: "list-pservs.js", folder: folders.utils },
       { file: "server-info.js", folder: folders.utils },
-      { file: "share-ram.js", folder: folders.utils }
+      { file: "share-ram.js", folder: folders.utils },
+      { file: "test-formulas.js", folder: folders.utils },
+      { file: "f-estimate-production.js", folder: folders.utils }
     ],
     
     deploy: [
