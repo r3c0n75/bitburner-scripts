@@ -10,13 +10,13 @@
 # Navigate to Remote API workspace
 cd C:\Users\YourUsername\bitburner\bitburner-remote-api
 
-# Start the server (leave this running all day)
-npm run watch
+# Start the file sync (leave this running all day)
+npm run watch:remote
 ```
 
 **Expected output:**
 ```
-[watch:remote] Server is ready, running on 12525!
+Server is ready, running on 12525!
 ```
 
 **💡 Tip:** Minimize this PowerShell window - don't close it!
@@ -205,7 +205,7 @@ cd scripts
 
 **Option A: Quick Wrap (30 seconds)**
 ```powershell
-# Just stop the server (Ctrl+C in npm run watch window)
+# Just stop the server (Ctrl+C in npm run watch:remote window)
 # Your work is saved locally, continue tomorrow
 ```
 
@@ -239,7 +239,7 @@ In Bitburner:
 ✅ Done!
 ```
 
-The `npm run watch` server stays running through sleep cycles.
+The `npm run watch:remote` server stays running through sleep cycles.
 
 ### If Server Stops
 
@@ -248,7 +248,7 @@ The `npm run watch` server stays running through sleep cycles.
 
 ```powershell
 cd C:\Users\YourUsername\bitburner\bitburner-remote-api
-npm run watch
+npm run watch:remote
 ```
 
 Then reconnect in Bitburner (Options → Remote API → Connect)
@@ -306,7 +306,7 @@ Total: 3 minutes
 **Start Development:**
 ```powershell
 cd C:\Users\YourUsername\bitburner\bitburner-remote-api
-npm run watch
+npm run watch:remote
 # In Bitburner: Options → Remote API → Connect
 ```
 
@@ -330,7 +330,7 @@ In Bitburner: Options → Remote API → Connect
 
 - **Left monitor:** VS Code (Remote API workspace)
 - **Right monitor:** Bitburner (for instant testing)
-- **Bottom:** PowerShell with `npm run watch` (minimized)
+- **Bottom:** PowerShell with `npm run watch:remote` (minimized)
 
 ### 2. Use Git in Remote API Workspace Too
 
@@ -387,9 +387,9 @@ Those TypeScript warnings in the console? Ignore them completely. Your JavaScrip
 ### Files Not Syncing
 
 **Check:**
-1. Is `npm run watch` still running?
+1. Is `npm run watch:remote` still running?
 2. Does Bitburner show "Connected"?
-3. Is file saved in `src/` folder (not `dist/`)?
+3. Is file saved in `src/` folder?
 
 **Fix:**
 - Reconnect: Options → Remote API → Connect

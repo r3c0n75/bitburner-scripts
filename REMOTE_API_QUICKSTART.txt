@@ -49,11 +49,11 @@
 
    2. START THE SYNC TOOL
       ┌────────────────────────────────────────────────────────────────────┐
-      │ npm run watch
+      │ npm run watch:remote
       └────────────────────────────────────────────────────────────────────┘
       
       Expected output:
-      ✅ Remote file API listening on port 12525
+      ✅ Server is ready, running on 12525!
 
    3. CONNECT BITBURNER
       In-game steps:
@@ -76,7 +76,7 @@
 
    MORNING:
    1. cd bitburner-dev
-   2. npm run watch
+   2. npm run watch:remote
    3. In Bitburner: Options → Remote API → Connect
 
    DURING DAY:
@@ -109,24 +109,24 @@
 └──────────────────────────────────────────────────────────────────────────┘
 
    ❌ "Failed to connect"
-      → Verify npm run watch is running
+      → Verify npm run watch:remote is running
       → Check port 12525 is shown in console
       → Use "localhost" not "127.0.0.1"
 
    ❌ "Scripts not syncing"
       → Check Remote API shows "Connected" in-game
       → Verify files are in src/ directory
-      → Look for errors in npm run watch console
+      → Look for errors in npm run watch:remote console
 
    ❌ "Connection lost after sleep"
       → In Bitburner: Options → Remote API → Connect (again)
-      → No need to restart npm run watch
+      → No need to restart npm run watch:remote
 
 ┌──────────────────────────────────────────────────────────────────────────┐
 │ 💡 PRO TIPS                                                              │
 └──────────────────────────────────────────────────────────────────────────┘
 
-   ✅ Keep npm run watch running in minimized window
+   ✅ Keep npm run watch:remote running in minimized window
    ✅ Continue using GitHub for version control
    ✅ Use Remote API for development, GitHub for distribution
    ✅ TypeScript is optional - .js files work too!

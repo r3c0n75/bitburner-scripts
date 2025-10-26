@@ -87,12 +87,12 @@ The Remote API sync tools (TypeScript Template, Viteburner, etc.) are **Node.js 
 
 2. **Start the Remote API Tool**
    ```powershell
-   npm run watch
+   npm run watch:remote
    ```
    
    You should see:
    ```
-   Remote file API listening on port 12525
+   Server is ready, running on 12525!
    ```
 
 3. **Connect Bitburner to Remote API**
@@ -237,7 +237,7 @@ node_modules/
 1. **Morning Setup**
    ```powershell
    cd bitburner-dev
-   npm run watch
+   npm run watch:remote
    ```
    
 2. **In Bitburner**: Options → Remote API → Connect
@@ -284,7 +284,7 @@ To move your current scripts to Remote API:
 
 4. **Start Syncing**
    ```powershell
-   npm run watch
+   npm run watch:remote
    ```
 
 ## 🎮 Using Remote API with Bitburner
@@ -323,7 +323,7 @@ src/
 **Problem:** "Failed to connect to Remote API"
 
 **Solutions:**
-1. Verify the tool is running (`npm run watch`)
+1. Verify the tool is running (`npm run watch:remote`)
 2. Check the port in console output
 3. Make sure hostname is `localhost` (not `127.0.0.1`)
 4. Try restarting the tool
@@ -417,7 +417,7 @@ git commit -m "Fix memory leak in batch-manager"
 
 ### 4. Keep Tool Running
 
-Leave `npm run watch` running while coding:
+Leave `npm run watch:remote` running while coding:
 - Minimizes console window
 - No need to restart between edits
 - Only restart if errors occur
@@ -512,7 +512,7 @@ export async function main(ns: NS) {
 ```powershell
 # Start Remote API
 cd bitburner-dev
-npm run watch
+npm run watch:remote
 
 # In Bitburner: Options → Remote API → Connect
 # Hostname: localhost

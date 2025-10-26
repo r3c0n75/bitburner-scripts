@@ -39,10 +39,10 @@
    Step 1: Start Server
    ┌────────────────────────────────────────────────────────────────────┐
    │ cd C:\Users\YourUsername\bitburner\bitburner-remote-api       │
-   │ npm run watch                                                       │
+   │ npm run watch:remote                                                │
    └────────────────────────────────────────────────────────────────────┘
    
-   Expected: "[watch:remote] Server is ready, running on 12525!"
+   Expected: "Server is ready, running on 12525!"
    (Minimize this window, keep it running all day)
 
    Step 2: Connect Bitburner
@@ -103,7 +103,7 @@
    → Server stays running, just reconnect!
 
    Problem: Forgot to start server
-   → npm run watch (in bitburner-remote-api folder)
+   → npm run watch:remote (in bitburner-remote-api folder)
    → Reconnect in Bitburner
 
    Problem: File not syncing
@@ -163,7 +163,7 @@
       (Copies all your scripts to Remote API workspace)
    
    2. Server is already running? Keep it running!
-      Not running? Start it: npm run watch
+      Not running? Start it: npm run watch:remote
    
    3. Test your real scripts:
       run analysis/profit-scan-flex.js
