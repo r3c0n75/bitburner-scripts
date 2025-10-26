@@ -17,12 +17,18 @@ export async function main(ns) {
   const capArg = ns.args.length > 1 ? Number(ns.args[1]) : Infinity;
   const capThreads = Number.isFinite(capArg) && capArg > 0 ? Math.floor(capArg) : Infinity;
   
-  const script = `hack-${target}.js`;
+  const script = "hack-universal.js";
   
   // Check if the hack script exists
   if (!ns.fileExists(script, "home")) {
     ns.tprint(`ERROR: ${script} not found on home server!`);
-    ns.tprint(`Create it first or use an existing target (e.g., joesguns, n00dles)`);
+    ns.tprint(`Download it first with: run bitburner-update.js --deploy`);
+    return;
+  }
+  
+  // Verify target server exists
+  if (!ns.serverExists(target)) {
+    ns.tprint(`ERROR: Target server "${target}" does not exist!`);
     return;
   }
   
@@ -160,11 +166,11 @@ export async function main(ns) {
     // Kill any existing instances first
     ns.killall(host);
     
-    // Deploy
-    const pid = ns.exec(script, host, threads);
+    // Deploy with target as argument
+    const pid = ns.exec(script, host, threads, target);
     
     if (pid > 0) {
-      ns.tprint(`✓ Deployed ${script} on ${host} (${threads} threads, PID: ${pid})`);
+      ns.tprint(`✓ Deployed ${script} on ${host} targeting ${target} (${threads} threads, PID: ${pid})`);
       deployedCount++;
     } else {
       ns.tprint(`✗ Failed to deploy on ${host}`);
