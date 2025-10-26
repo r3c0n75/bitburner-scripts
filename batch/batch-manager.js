@@ -34,7 +34,7 @@ export async function main(ns) {
   // Forward these flags to simple-batcher.js when launching it
   const forwardFlags = flags.slice(); // array of strings like '--quiet'
 
-  const batcher = "simple-batcher.js";
+  const batcher = "batch/simple-batcher.js";
 
   // Logging helpers: normal info -> ns.print (quiet); warnings/errors -> ns.tprint
   const info = (...parts) => ns.print(parts.join(" "));
