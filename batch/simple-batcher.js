@@ -49,9 +49,9 @@ export async function main(ns) {
   const logError = (...parts) => ns.tprint(parts.join(" "));
 
   const host = ns.getHostname();
-  const hackScript = "attack-hack.js";
-  const growScript = "attack-grow.js";
-  const weakenScript = "attack-weaken.js";
+  const hackScript = "core/attack-hack.js";
+  const growScript = "core/attack-grow.js";
+  const weakenScript = "core/attack-weaken.js";
   const helpers = [hackScript, growScript, weakenScript];
 
   // Ensure helpers exist on the host running the batcher (source for scp)
