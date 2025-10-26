@@ -13,8 +13,9 @@ bitburner-scripts/
 │   ├── attack-grow.js                 # Basic grow operation
 │   └── attack-weaken.js               # Basic weaken operation
 ├── batch/                             # Batch management scripts
+│   ├── smart-batcher.js ⭐            # Optimal timing-based ratios (490x faster!)
 │   ├── simple-batcher.js              # Deploy helpers across servers
-│   ├── batch-manager.js               # Ensure batcher runs on pservs
+│   ├── batch-manager.js ⭐            # Auto-deploy smart-batcher with rooting
 │   └── home-batcher.js                # Home server batch operations
 ├── analysis/                          # Analysis and monitoring
 │   ├── profit-scan.js                 # Find profitable targets
@@ -51,7 +52,7 @@ Basic attack operations that form the foundation of all batch operations:
 Advanced batch operations for deploying and managing attack scripts:
 - **smart-batcher.js** ⭐ - Optimal timing-based ratios (490x performance!)
 - **simple-batcher.js** - Deploy attack helpers across all servers (basic)
-- **batch-manager.js** - Ensure batcher runs on purchased servers
+- **batch-manager.js** ⭐ - Auto-deploy smart-batcher with rooting & intelligent quiet mode
 - **home-batcher.js** - Home server batch operations
 
 ### Analysis & Monitoring (`analysis/`)
@@ -92,6 +93,7 @@ Comprehensive documentation:
 1. **Analysis**: Use `profit-scan-flex.js` to find targets with realistic estimates
 2. **Estimation**: Use `estimate-production.js` to calculate expected income
 3. **Deployment**: Use `smart-batcher.js` for optimal ratios ($2.09m/s)
+   - **Or**: Use `batch-manager.js --quiet` for automated deployment + auto-rooting
 4. **Monitoring**: Use `production-monitor.js` to verify results
 
 ### Basic Workflow
@@ -101,7 +103,7 @@ Comprehensive documentation:
 
 ### Advanced Workflow
 1. **Server Management**: Use `purchase-server-8gb.js` to buy servers
-2. **Batch Management**: Use `batch-manager.js` for automated batching
+2. **Batch Management**: Use `batch-manager.js --quiet` for automated smart-batcher deployment with auto-rooting
 3. **System Monitoring**: Use `list-procs.js` and `list-pservs.js` for status
 
 ### Troubleshooting Workflow

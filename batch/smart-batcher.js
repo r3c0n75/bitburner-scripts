@@ -111,7 +111,8 @@ export async function main(ns) {
   const weakenRatio = weakenThreadsBase / totalThreadsBase;
 
   // Display analysis
-  ns.tprint("\n═══════════════════════════════════════════════════════════════");
+  ns.tprint("");
+  ns.tprint("═══════════════════════════════════════════════════════════════");
   ns.tprint(`  SMART BATCHER: ${target}`);
   ns.tprint("═══════════════════════════════════════════════════════════════");
   ns.tprint(`\n📊 Timing Analysis:`);
@@ -126,10 +127,13 @@ export async function main(ns) {
   ns.tprint(`\n🎯 Target: Hack ${(hackPercent * 100).toFixed(1)}% of server money per batch`);
   ns.tprint(`  Money per hack thread: ${ns.formatNumber(moneyPerHackThread, 2)}`);
   ns.tprint(`  Timing efficiency: ${(batchWindow / (hackTime + growTime + weakenTime) * 100).toFixed(1)}%`);
-  ns.tprint("\n═══════════════════════════════════════════════════════════════");
+  ns.tprint("");
+  ns.tprint("═══════════════════════════════════════════════════════════════");
   
   if (dryRun) {
-    ns.tprint("\n🔍 DRY RUN MODE - No scripts will be started\n");
+    ns.tprint("");
+    ns.tprint("🔍 DRY RUN MODE - No scripts will be started");
+    ns.tprint("");
   }
 
   await ns.sleep(100);
@@ -284,7 +288,8 @@ export async function main(ns) {
   } // end for hosts
 
   // Final summary
-  ns.tprint("\n═══════════════════════════════════════════════════════════════");
+  ns.tprint("");
+  ns.tprint("═══════════════════════════════════════════════════════════════");
   ns.tprint("  DEPLOYMENT SUMMARY");
   ns.tprint("═══════════════════════════════════════════════════════════════");
   ns.tprint(`\n📍 Target Server: ${target}`);
@@ -305,8 +310,10 @@ export async function main(ns) {
   ns.tprint(`  Income rate: ${ns.formatNumber(expectedPerSec * 60, 2)}/min`);
   ns.tprint(`  Income rate: ${ns.formatNumber(expectedPerSec * 3600, 2)}/hr`);
   
-  ns.tprint("\n═══════════════════════════════════════════════════════════════");
+  ns.tprint("");
+  ns.tprint("═══════════════════════════════════════════════════════════════");
   ns.tprint("✅ smart-batcher deployment complete!");
-  ns.tprint("═══════════════════════════════════════════════════════════════\n");
+  ns.tprint("═══════════════════════════════════════════════════════════════");
+  ns.tprint("");
 }
 

@@ -1,18 +1,18 @@
 /** batch-manager.js
- * Enhanced batch manager that roots servers and ensures simple-batcher.js runs on a purchased server.
+ * Enhanced batch manager that roots servers and ensures smart-batcher.js runs on a purchased server.
  *
  * Usage:
- *   run batch-manager.js [target] [capPerHost] [multiplier] [pservHost] [flags...]
+ *   run batch-manager.js [target] [hackPercent] [multiplier] [pservHost] [flags...]
  *
  * Examples:
- *   run batch-manager.js joesguns 12 1.25 home --quiet
+ *   run batch-manager.js joesguns 0.05 1.25 home --quiet
  *   run batch-manager.js joesguns --quiet                 # flags tolerated anywhere
  *   run batch-manager.js --quiet                           # uses defaults, quiet
  *   run batch-manager.js --quiet --no-root                # disable auto-rooting
  *
  * Features:
  *   - Periodically scans and roots new servers (every 10 cycles by default)
- *   - Manages simple-batcher.js on specified host
+ *   - Manages smart-batcher.js on specified host with optimal timing-based ratios
  *   - Auto-restarts batcher if it stops
  */
 
@@ -39,7 +39,7 @@ export async function main(ns) {
 
   // Parse positionals with safe fallbacks
   const target = pos.length > 0 && pos[0] !== undefined ? String(pos[0]) : "joesguns";
-  const capPerHost = pos.length > 1 ? Number(pos[1]) : Infinity;
+  const hackPercent = pos.length > 1 ? Number(pos[1]) : 0.05; // Default 5% hack per batch
   const mult = pos.length > 2 ? Number(pos[2]) : 1.25;
   const pservHost = pos.length > 3 ? String(pos[3]) : "home";
 
@@ -47,10 +47,10 @@ export async function main(ns) {
   const enableRooting = !flags.includes("--no-root");
   const quiet = flags.includes("--quiet");
 
-  // Forward these flags to simple-batcher.js when launching it
+  // Forward these flags to smart-batcher.js when launching it
   const forwardFlags = flags.filter(f => f !== "--no-root"); // Don't forward --no-root
 
-  const batcher = "batch/simple-batcher.js";
+  const batcher = "batch/smart-batcher.js";
 
   // Logging helpers: normal info -> ns.print (quiet); warnings/errors -> ns.tprint
   const info = (...parts) => {
@@ -62,8 +62,9 @@ export async function main(ns) {
   const error = (...parts) => ns.tprint("[ERR] " + parts.join(" "));
 
   // Rooting function - scans network and roots accessible servers
+  // Returns: { newlyRooted: number, totalRooted: number }
   async function rootNewServers() {
-    if (!enableRooting) return;
+    if (!enableRooting) return { newlyRooted: 0, totalRooted: 0 };
 
     try {
       // Scan entire network
@@ -99,13 +100,17 @@ export async function main(ns) {
 
       // Attempt to root servers
       let newlyRooted = 0;
+      let totalRooted = 0;
       
       for (const host of servers) {
         // Skip home
         if (host === "home") continue;
         
-        // Skip already rooted
-        if (ns.hasRootAccess(host)) continue;
+        // Count already rooted
+        if (ns.hasRootAccess(host)) {
+          totalRooted++;
+          continue;
+        }
         
         // Check requirements
         const reqPorts = ns.getServerNumPortsRequired(host);
@@ -127,6 +132,7 @@ export async function main(ns) {
           if (ns.hasRootAccess(host)) {
             important(`✓ Rooted: ${host} (Level ${reqHack}, ${reqPorts} ports)`);
             newlyRooted++;
+            totalRooted++;
           }
         } catch (e) {
           // Silently ignore failures - server might not be ready yet
@@ -136,8 +142,11 @@ export async function main(ns) {
       if (newlyRooted > 0) {
         important(`Rooting scan complete: ${newlyRooted} new server(s) rooted`);
       }
+      
+      return { newlyRooted, totalRooted };
     } catch (e) {
       error(`Rooting scan error: ${e}`);
+      return { newlyRooted: 0, totalRooted: 0 };
     }
   }
 
@@ -157,23 +166,47 @@ export async function main(ns) {
     info(`Batch manager: auto-rooting DISABLED`);
   }
 
+  // Track deployment state
+  let initialDeploymentDone = false;
+  let lastServerCount = 0;
+
   // Initial rooting scan on startup
-  await rootNewServers();
+  const initialRoot = await rootNewServers();
+  lastServerCount = initialRoot.totalRooted;
 
   let cycleCount = 0;
   while (true) {
     try {
       // Periodic rooting scan (every 10 cycles)
       cycleCount++;
+      let newServersFound = false;
+      
       if (cycleCount % 10 === 0) {
-        await rootNewServers();
+        const rootResult = await rootNewServers();
+        if (rootResult.newlyRooted > 0) {
+          newServersFound = true;
+          lastServerCount = rootResult.totalRooted;
+        }
       }
 
-      // See if batcher already running on the chosen pserv
+      // Only deploy if: (1) initial deployment not done, or (2) new servers were found
+      const shouldDeploy = !initialDeploymentDone || newServersFound;
+      
+      if (!shouldDeploy) {
+        // Nothing new, just wait
+        await ns.sleep(intervalMs);
+        continue;
+      }
+
+      // See if batcher already running on the chosen pserv - kill it if we're redeploying
       let procs = [];
       try { procs = ns.ps(pservHost); } catch (e) { procs = []; }
       const already = procs.find(p => p.filename === batcher);
-      if (already) {
+      if (already && newServersFound) {
+        info(`New servers found - killing existing batcher to redeploy...`);
+        try { ns.kill(already.pid); } catch (e) { /* ignore */ }
+        await ns.sleep(100);
+      } else if (already && !initialDeploymentDone) {
         info(`${batcher} already running on ${pservHost} (pid ${already.pid}).`);
         await ns.sleep(intervalMs);
         continue;
@@ -209,10 +242,12 @@ export async function main(ns) {
         continue;
       }
 
-      // Build args to pass to simple-batcher.js: target, capPerHost (if numeric), then forward flags
+      // Build args to pass to smart-batcher.js: target, hackPercent (if valid), then forward flags
       const args = [];
       args.push(target);
-      if (isFinite(capPerHost)) args.push(String(capPerHost));
+      if (isFinite(hackPercent) && hackPercent > 0 && hackPercent <= 1) {
+        args.push(hackPercent);
+      }
       // append forwarded flags (strings)
       for (const f of forwardFlags) args.push(f);
 
@@ -220,6 +255,13 @@ export async function main(ns) {
       const pid = ns.exec(batcher, pservHost, 1, ...args);
       if (pid > 0) {
         info(`Started ${batcher} on ${pservHost} pid=${pid} args=${JSON.stringify(args)}`);
+        // Wait for smart-batcher to complete (it's a one-shot script)
+        await ns.sleep(2000); // Give it time to start
+        // Mark initial deployment as done
+        if (!initialDeploymentDone) {
+          initialDeploymentDone = true;
+          info(`Initial deployment complete. Monitoring for new servers...`);
+        }
       } else {
         error(`Failed to start ${batcher} on ${pservHost} via exec(). Possible causes: insufficient RAM, invalid args, or file missing.`);
         error(`DEBUG: ${pservHost} freeRam=${freeRam.toFixed(2)}GB scriptRam=${scriptRam.toFixed(2)}GB fileExists=${ns.fileExists(batcher, pservHost)}`);
