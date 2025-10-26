@@ -12,9 +12,9 @@ export async function main(ns) {
   ns.disableLog("getServerUsedRam");
 
   const host = "home";
-  const hackScript = "attack-hack.js";
-  const growScript = "attack-grow.js";
-  const weakenScript = "attack-weaken.js";
+  const hackScript = "core/attack-hack.js";
+  const growScript = "core/attack-grow.js";
+  const weakenScript = "core/attack-weaken.js";
   const helpers = [hackScript, growScript, weakenScript];
 
   // Ensure helpers exist
