@@ -133,6 +133,10 @@ export async function main(ns) {
   for (const h of hosts2) {
     try {
       const maxMoney = ns.getServerMaxMoney(h);
+      
+      // Apply --only-money filter to display output
+      if (onlyMoney && (!maxMoney || maxMoney <= 0)) continue;
+      
       const minSec = ns.getServerMinSecurityLevel(h);
       const curSec = ns.getServerSecurityLevel(h);
       const maxRam = ns.getServerMaxRam(h);
