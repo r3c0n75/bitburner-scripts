@@ -2,6 +2,29 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.1.1] - 2025-10-26 - Profit Scanner Filter Enhancement
+
+### Fixed
+- **profit-scan-flex.js** - Enhanced `--only-money` flag functionality
+  - Previously only filtered during override file generation
+  - Now filters both during generation AND display output
+  - Properly hides purchased servers, home, darkweb, and other zero-money servers
+  - Shows only hackable targets (rooted with money) and future targets (not rooted but have money)
+  - Improves output clarity by removing clutter from zero-value servers
+  - Bug fix: Lines 137-138 added display-time filtering that respects `--only-money` flag
+
+### Technical Details
+```javascript
+// Added at line 137-138 in display logic
+if (onlyMoney && (!maxMoney || maxMoney <= 0)) continue;
+```
+
+### Migration Notes
+- No breaking changes
+- Existing profiler-overrides.json files generated with `--only-money` will work correctly
+- Users can regenerate cache with `rm profiler-overrides.json` then run with `--only-money` flag
+- All existing flags and parameters remain unchanged
+
 ## [1.1.0] - 2025-10-25 - Advanced Profit Scanner
 
 ### Added

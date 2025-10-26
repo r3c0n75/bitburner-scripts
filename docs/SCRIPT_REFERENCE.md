@@ -92,26 +92,33 @@ run auto-deploy-all.js 50
 **Parameters**:
 - `limit` - Number of servers to display (default: 30)
 - `--dry` - Don't write profiler-overrides.json file
-- `--only-money` - Only include servers with money
+- `--only-money` - Filter out servers with zero or negative money (hides purchased servers, home, darkweb)
 
 **Features**:
 - **Automatic caching** - Creates and uses `profiler-overrides.json` for faster scans
 - **Detailed output** - Shows hack/grow/weaken times, current security
 - **Override indicator** - Shows which servers use cached timing data
 - **Smart fallback** - Uses live API calls if cache unavailable
+- **Smart filtering** - `--only-money` shows both rooted targets with money AND unrooted future targets
 
 **Examples**:
 ```bash
 run profit-scan-flex.js                    # Use cached timings, show top 30
 run profit-scan-flex.js 50                 # Show top 50 servers
-run profit-scan-flex.js --only-money       # Only servers with money
+run profit-scan-flex.js --only-money       # Only servers with money (recommended)
 run profit-scan-flex.js 100 --dry          # Don't write cache file
 run profit-scan-flex.js 50 --only-money    # Combine flags
 ```
 
+**--only-money Flag Behavior**:
+- **Filters out**: Purchased servers (pserv-*), home, darkweb, any server with maxMoney ≤ 0
+- **Shows**: Currently hackable targets (rooted + money) and future targets (not rooted but have money)
+- **Recommended** for cleaner output focused on profitable targets
+- Works both during cache generation and display output
+
 **Output Columns**:
 - OVR - Whether cached timing data was used (YES/blank)
-- Server name and root access
+- Server name and root access (YES/NO)
 - RAM, max money, min/current security
 - Hack/Grow/Weaken times (in seconds)
 - Hack chance percentage

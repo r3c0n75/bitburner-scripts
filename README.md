@@ -30,6 +30,9 @@ run profit-scan.js
 # Find profitable targets (advanced with caching)
 run profit-scan-flex.js
 
+# Find only servers with money (clean output, recommended)
+run profit-scan-flex.js --only-money
+
 # Deploy simple batcher to all servers
 run simple-batcher.js joesguns
 
@@ -122,15 +125,17 @@ run server-info.js
 - `--quiet` - Reduce output verbosity
 - `--dry` - Show what would happen without executing
 - `--include-home` - Include home server in operations
+- `--only-money` - Filter out zero-money servers (profit-scan-flex.js only)
 
 ## 📈 Optimization Tips
 
-1. **Use profit-scan-flex.js** for advanced target analysis with caching (faster on repeat scans)
-2. **Use profit-scan.js** for quick checks without file operations
-3. **Monitor production** with production-monitor.js to verify efficiency
-4. **Batch operations** for maximum resource utilization
-5. **Manage purchased servers** for additional computing power
-6. **Use quiet mode** for automated operations
+1. **Use profit-scan-flex.js --only-money** for clean target analysis (hides purchased servers, shows only profitable targets)
+2. **Use profit-scan-flex.js** for advanced target analysis with caching (faster on repeat scans)
+3. **Use profit-scan.js** for quick checks without file operations
+4. **Monitor production** with production-monitor.js to verify efficiency
+5. **Batch operations** for maximum resource utilization
+6. **Manage purchased servers** for additional computing power
+7. **Use quiet mode** for automated operations
 
 ## 🚨 Troubleshooting
 
