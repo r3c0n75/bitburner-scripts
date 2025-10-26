@@ -18,12 +18,14 @@ This guide provides a fast-track action plan for starting fresh games and recove
 
 2. **Install Scripts**
    ```bash
-   # If using GitHub deployment:
+   # If using GitHub deployment (recommended for beginners):
    wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
    run bitburner-update.js
    
    # Otherwise, copy scripts manually to home
    ```
+   
+   **💡 Advanced Option**: For faster development with instant sync, see [Remote API Setup Guide](docs/REMOTE_API_SETUP.md)
 
 3. **Find First Target**
    ```bash
