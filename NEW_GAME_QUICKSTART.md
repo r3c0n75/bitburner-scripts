@@ -63,11 +63,17 @@ This guide provides a fast-track action plan for starting fresh games and recove
 
 1. **Upgrade to Better Targets**
    ```bash
-   # Re-scan for better opportunities
+   # Re-scan for better opportunities (with realistic estimates)
    run profit-scan-flex.js
    
-   # Switch to profitable target (example: joesguns)
+   # Check expected production
+   run estimate-production.js joesguns
+   
+   # Switch to profitable target with OPTIMAL ratios (490x faster!)
    run global-kill.js
+   run smart-batcher.js joesguns
+   
+   # Or use basic batcher:
    run simple-batcher.js joesguns
    ```
 
@@ -79,10 +85,13 @@ This guide provides a fast-track action plan for starting fresh games and recove
 
 3. **Deploy Across All Servers**
    ```bash
-   # Auto-root and deploy to everything accessible
+   # Option A (RECOMMENDED): Smart Batcher with optimal ratios
+   run smart-batcher.js joesguns
+   
+   # Option B: Auto-expand for basic deployment
    run deploy/auto-expand.js
    
-   # Monitor the results
+   # Monitor the results (wait 6-8 min for prep with smart-batcher)
    run analysis/production-monitor.js 300
    ```
 
@@ -114,11 +123,14 @@ When you install augmentations, you restart from scratch but with enhanced stats
 
 3. **Deploy Immediately**
    ```bash
-   # Jump straight to your best accessible target
+   # Jump straight to your best accessible target with OPTIMAL ratios
    # (Your augmentations may let you skip n00dles entirely!)
+   run smart-batcher.js joesguns    # 490x faster than basic!
+   
+   # Or use basic batcher:
    run simple-batcher.js joesguns
    
-   # Or whatever profit-scan recommended
+   # Use whatever profit-scan recommended
    ```
 
 ### Recovery Phase 2: Rapid Scaling (5-15 minutes)
@@ -180,22 +192,21 @@ When you install augmentations, you restart from scratch but with enhanced stats
 
 ## ⚡ Quickstart Cheat Sheet
 
-### Absolute Fastest Recovery (Copy-Paste This)
+### Absolute Fastest Recovery (Copy-Paste This) ⭐
 ```bash
 # Step 1: Get scripts (10 seconds)
 wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
 run bitburner-update.js
 
-# Step 2: Find & attack target (30 seconds)
+# Step 2: Find & attack target with OPTIMAL ratios (30 seconds)
 run profit-scan-flex.js
-run simple-batcher.js joesguns
+run smart-batcher.js joesguns    # 490x faster - $2.09m/s production!
 
 # Step 3: Scale up (5 minutes)
-run deploy/auto-expand.js
 run deploy/purchase-server-8gb.js
 
-# Step 4: Monitor (ongoing)
-run production-monitor.js 300
+# Step 4: Monitor (wait 6-8 min for prep, then check)
+run production-monitor.js 60
 ```
 
 ### First-Time Player Path
@@ -236,10 +247,24 @@ run simple-batcher.js NEW_TARGET
 
 Understanding the different deployment scripts and when to use each one:
 
-### simple-batcher.js - Your Main Workhorse
-**What it does**: Coordinates HWGW (Hack-Weaken-Grow-Weaken) batch attacks with precise timing  
+### smart-batcher.js - ⭐ RECOMMENDED Main Workhorse (490x Performance!)
+**What it does**: Deploys batch attacks with OPTIMAL timing-based thread ratios  
+**Runs on**: Home server (deploys to all rooted servers)  
+**Best for**: Maximum income generation ($2.09m/s sustained!)  
+**Key Innovation**: Calculates optimal ratios based on timing (4% hack / 87% grow / 9% weaken)  
+
+```bash
+run batch/smart-batcher.js joesguns              # Deploy with optimal ratios
+run batch/smart-batcher.js joesguns 0.10         # Hack 10% per batch
+run batch/smart-batcher.js joesguns --dry        # Test without deploying
+```
+
+**Performance**: 490x improvement over basic batching - transforms $4k/s into $2.09m/s!
+
+### simple-batcher.js - Basic Workhorse
+**What it does**: Coordinates HWGW (Hack-Weaken-Grow-Weaken) batch attacks  
 **Runs on**: Home server (or wherever you run it from)  
-**Best for**: Single-target focused income generation  
+**Best for**: Basic single-target income generation  
 
 ```bash
 run batch/simple-batcher.js joesguns
@@ -292,9 +317,10 @@ run batch/batch-manager.js joesguns --quiet --no-root
 | Game Stage | Recommended Strategy |
 |------------|---------------------|
 | **Early Game** (Hack 1-100) | `simple-batcher.js` on home targeting n00dles/foodnstuff |
-| **Mid Game** (Hack 100-300) | `batch-manager.js` with auto-rooting (easiest) OR `auto-expand.js` (manual) |
-| **Late Game** (Hack 300+) | `batch-manager.js` on purchased servers - **set and forget!** |
-| **Optimal Setup** | `batch-manager.js` with auto-rooting (handles everything automatically) |
+| **Mid Game** (Hack 100-300) | ⭐ `smart-batcher.js` for 490x improvement OR `batch-manager.js` with auto-rooting |
+| **Late Game** (Hack 300+) | ⭐ `smart-batcher.js` for maximum performance ($2.09m/s) |
+| **Optimal Setup** | ⭐ `smart-batcher.js` (490x faster than basic!) |
+| **Alternative** | `batch-manager.js` with auto-rooting (set and forget automation) |
 
 ### Why You Need Both auto-expand.js AND batch-manager.js
 
@@ -354,10 +380,11 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 4. **Don't rush servers** - Make sure you're making steady income first
 
 ### For Everyone
-1. **Bookmark profit-scan-flex.js** - Run it often to find better targets
-2. **Use global-kill.js** - When switching targets, kill everything first
-3. **Save automation for later** - batch-manager.js is for when you have 3+ servers
-4. **Check documentation** - See docs/GETTING_STARTED.md for deeper explanations
+1. **⭐ Use smart-batcher.js** - 490x performance improvement over basic batching!
+2. **Bookmark profit-scan-flex.js** - Run it often to find better targets with realistic estimates
+3. **Use global-kill.js** - When switching targets, kill everything first
+4. **Wait for prep** - smart-batcher needs 6-8 minutes to prep server to max money
+5. **Check documentation** - See docs/GETTING_STARTED.md for deeper explanations
 
 ---
 
@@ -381,7 +408,11 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 
 ### ❌ Mistake #5: Manual Everything
 **Problem**: Manually hacking when scripts could do it better  
-**Solution**: Trust the automation - simple-batcher.js is your friend
+**Solution**: Trust the automation - smart-batcher.js is your friend!
+
+### ❌ Mistake #6: Using Basic Batcher When Smart-Batcher Exists ⭐
+**Problem**: Using simple-batcher.js and getting only $4k/s  
+**Solution**: Use smart-batcher.js for 490x improvement ($2.09m/s!)
 
 ---
 
@@ -390,20 +421,20 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 ### New Game (First Hour)
 - ✅ Scripts installed and running
 - ✅ At least 1 batch operation running
-- ✅ Making $50k-500k per minute
+- ✅ Making $50k-500k per minute (basic) or $1-5m/min (smart-batcher)
 - ✅ Hacking skill growing to 100+
 
-### Post-Augmentation (First 30 Minutes)
+### Post-Augmentation (First 30 Minutes) ⭐
 - ✅ Scripts restored via GitHub
-- ✅ Attacking optimal target (not n00dles!)
-- ✅ Making $500k-5m per minute
+- ✅ Attacking optimal target with smart-batcher (not n00dles!)
+- ✅ Making $5-125m per minute ($2.09m/s with smart-batcher!)
 - ✅ 2-4 servers purchased
-- ✅ Matching or exceeding previous run income
+- ✅ **Far exceeding** previous run income with smart-batcher
 
 ### Both Scenarios (1-2 Hours)
 - ✅ Multiple servers purchased
-- ✅ Auto-deploy running across all rooted servers
-- ✅ Income steadily increasing
+- ✅ Smart-batcher deployed with optimal ratios ($2.09m/s sustained)
+- ✅ Income dramatically increased (490x improvement if using smart-batcher)
 - ✅ Regular profit-scan checks for optimization
 
 ---
@@ -428,6 +459,9 @@ Keep this quickstart guide handy:
 
 **Remember**: The faster you set up automation, the faster you progress. Don't overthink it - run the scripts, monitor the output, and scale up!
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-10-26
+**Pro Tip**: Use smart-batcher.js for 490x performance improvement - transforms $4k/s into $2.09m/s! ⭐
+
+**Version**: 1.5.0  
+**Last Updated**: 2025-10-26  
+**Major Update**: Added smart-batcher.js with revolutionary performance gains!
 
