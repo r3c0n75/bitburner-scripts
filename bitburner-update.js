@@ -36,8 +36,7 @@ export async function main(ns) {
     ],
     
     batch: [
-      { file: "batch-manager.js", folder: folders.batch },
-      { file: "home-batcher.js", folder: folders.batch }
+      { file: "batch-manager.js", folder: folders.batch }
     ],
     
     analysis: [
@@ -48,17 +47,21 @@ export async function main(ns) {
       { file: "global-kill.js", folder: folders.utils },
       { file: "list-procs.js", folder: folders.utils },
       { file: "list-pservs.js", folder: folders.utils },
-      { file: "server-info.js", folder: folders.utils }
+      { file: "server-info.js", folder: folders.utils },
+      { file: "share-ram.js", folder: folders.utils }
     ],
     
     deploy: [
+      { file: "auto-deploy-all.js", folder: folders.deploy },
       { file: "auto-expand.js", folder: folders.deploy },
       { file: "hack-universal.js", folder: folders.deploy },
       { file: "purchase-server-8gb.js", folder: folders.deploy },
       { file: "replace-pservs-no-copy.js", folder: folders.deploy },
+      { file: "home-batcher.js", folder: folders.deploy },
       { file: "deploy-hack-joesguns.js", folder: folders.deploy },
       { file: "hack-joesguns.js", folder: folders.deploy },
-      { file: "hack-n00dles.js", folder: folders.deploy }
+      { file: "hack-n00dles.js", folder: folders.deploy },
+      { file: "deploy-share-all.js", folder: folders.deploy }
     ]
   };
 

@@ -79,6 +79,7 @@ utils/list-procs.js        # List processes
 utils/list-pservs.js       # List pservs
 utils/server-info.js       # Server details
 utils/estimate-production.js  # Production estimates
+utils/share-ram.js         # Share RAM for faction rep bonus
 ```
 
 ### Deployment
@@ -89,6 +90,7 @@ deploy/replace-pservs-no-copy.js # Replace pservs
 deploy/deploy-hack-joesguns.js   # Deploy joesguns
 deploy/hack-joesguns.js          # Joesguns script
 deploy/hack-n00dles.js           # N00dles script
+deploy/deploy-share-all.js       # Deploy RAM sharing to all servers
 ```
 
 ## 📊 Key Improvements Reference
