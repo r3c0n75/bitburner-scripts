@@ -43,21 +43,34 @@ run simple-batcher.js joesguns --dry
 ```
 
 ### batch-manager.js
-**Purpose**: Ensure simple-batcher.js runs on purchased servers
+**Purpose**: Enhanced batch manager with auto-rooting and intelligent quiet mode
 **Usage**: `run batch-manager.js [target] [capPerHost] [multiplier] [pservHost] [flags...]`
 **Parameters**:
 - `target` - Server to attack (default: joesguns)
 - `capPerHost` - Maximum threads per host (default: Infinity)
 - `multiplier` - Batch timing multiplier (default: 1.25)
 - `pservHost` - Host for batch manager (default: home)
-- `flags` - Flags to forward to simple-batcher.js
+- `flags` - Special flags:
+  - `--quiet` - Suppress routine messages (rooting notifications still shown)
+  - `--no-root` - Disable automatic server rooting
+
+**Features**:
+- Automatically roots new servers every 10 cycles
+- Manages simple-batcher.js continuously
+- Smart logging: important events always visible in quiet mode
+- Auto-restarts batcher if it stops
 
 **Examples**:
 ```bash
 run batch-manager.js joesguns 12 1.25 home --quiet
-run batch-manager.js joesguns --quiet
-run batch-manager.js --quiet
+run batch-manager.js joesguns --quiet --no-root    # Disable auto-rooting
+run batch-manager.js --quiet                        # Use all defaults
 ```
+
+**Quiet Mode Behavior**:
+- With `--quiet`: Rooting notifications visible, routine status hidden
+- Without `--quiet`: All messages display
+- Errors/warnings: Always visible
 
 ### auto-deploy-all.js
 **Purpose**: Deploy hack-joesguns.js to all rooted servers

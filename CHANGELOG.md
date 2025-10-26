@@ -2,6 +2,31 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.4.3] - 2025-10-26 - Intelligent Quiet Mode Logging 🔔
+
+### Added
+- **batch-manager.js Enhanced Logging** - Important events now always visible in quiet mode
+  - New three-tier logging system: `info()`, `important()`, `error()`/`warn()`
+  - Rooting notifications bypass quiet flag: "✓ Rooted: {server} (Level {X}, {Y} ports)"
+  - Summary messages always display: "Rooting scan complete: {N} new server(s) rooted"
+  - Regular operational messages still respect `--quiet` flag
+
+### Technical Details
+- **Enhancement**: Created `important()` logging function that always uses `ns.tprint()`
+- **Rationale**: Server rooting is critical game progression information that shouldn't be hidden
+- **Implementation**: Lines 60, 128, and 137 in batch-manager.js
+- **Behavior**: 
+  - With `--quiet`: Rooting notifications visible, routine status hidden
+  - Without `--quiet`: All messages visible as normal
+  - Errors/warnings: Always visible in both modes
+
+### Impact
+✅ Never miss important rooting notifications in quiet mode  
+✅ Maintain clean output with --quiet for routine operations  
+✅ Better user experience with intelligent message prioritization  
+
+---
+
 ## [1.4.2] - 2025-10-26 - Batch Manager Path Fix 🔧
 
 ### Fixed

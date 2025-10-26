@@ -1,5 +1,5 @@
 /** batch-manager.js
- * Quiet-aware batch manager that ensures simple-batcher.js runs on a purchased server.
+ * Enhanced batch manager that roots servers and ensures simple-batcher.js runs on a purchased server.
  *
  * Usage:
  *   run batch-manager.js [target] [capPerHost] [multiplier] [pservHost] [flags...]
@@ -8,6 +8,12 @@
  *   run batch-manager.js joesguns 12 1.25 home --quiet
  *   run batch-manager.js joesguns --quiet                 # flags tolerated anywhere
  *   run batch-manager.js --quiet                           # uses defaults, quiet
+ *   run batch-manager.js --quiet --no-root                # disable auto-rooting
+ *
+ * Features:
+ *   - Periodically scans and roots new servers (every 10 cycles by default)
+ *   - Manages simple-batcher.js on specified host
+ *   - Auto-restarts batcher if it stops
  */
 
 /** @param {NS} ns */
@@ -16,6 +22,12 @@ export async function main(ns) {
   ns.disableLog("getServerMaxRam");
   ns.disableLog("getServerUsedRam");
   ns.disableLog("scan");
+  ns.disableLog("brutessh");
+  ns.disableLog("ftpcrack");
+  ns.disableLog("relaysmtp");
+  ns.disableLog("httpworm");
+  ns.disableLog("sqlinject");
+  ns.disableLog("nuke");
 
   // Raw args as provided
   const raw = ns.args.slice().map(a => (typeof a === "string" ? a : String(a)));
@@ -31,15 +43,103 @@ export async function main(ns) {
   const mult = pos.length > 2 ? Number(pos[2]) : 1.25;
   const pservHost = pos.length > 3 ? String(pos[3]) : "home";
 
+  // Parse flags
+  const enableRooting = !flags.includes("--no-root");
+  const quiet = flags.includes("--quiet");
+
   // Forward these flags to simple-batcher.js when launching it
-  const forwardFlags = flags.slice(); // array of strings like '--quiet'
+  const forwardFlags = flags.filter(f => f !== "--no-root"); // Don't forward --no-root
 
   const batcher = "batch/simple-batcher.js";
 
   // Logging helpers: normal info -> ns.print (quiet); warnings/errors -> ns.tprint
-  const info = (...parts) => ns.print(parts.join(" "));
+  const info = (...parts) => {
+    const msg = parts.join(" ");
+    if (quiet) ns.print(msg); else ns.tprint(msg);
+  };
+  const important = (...parts) => ns.tprint(parts.join(" ")); // Always show, even in quiet mode
   const warn = (...parts) => ns.tprint("[WARN] " + parts.join(" "));
   const error = (...parts) => ns.tprint("[ERR] " + parts.join(" "));
+
+  // Rooting function - scans network and roots accessible servers
+  async function rootNewServers() {
+    if (!enableRooting) return;
+
+    try {
+      // Scan entire network
+      const visited = new Set();
+      const queue = ["home"];
+      const servers = [];
+      
+      while (queue.length > 0) {
+        const host = queue.shift();
+        if (visited.has(host)) continue;
+        visited.add(host);
+        servers.push(host);
+        
+        const neighbors = ns.scan(host);
+        for (const neighbor of neighbors) {
+          if (!visited.has(neighbor)) {
+            queue.push(neighbor);
+          }
+        }
+      }
+
+      // Check available port-opening programs
+      const programs = [
+        { name: "BruteSSH.exe", fn: ns.brutessh },
+        { name: "FTPCrack.exe", fn: ns.ftpcrack },
+        { name: "relaySMTP.exe", fn: ns.relaysmtp },
+        { name: "HTTPWorm.exe", fn: ns.httpworm },
+        { name: "SQLInject.exe", fn: ns.sqlinject }
+      ];
+      
+      const available = programs.filter(p => ns.fileExists(p.name, "home"));
+      const portCount = available.length;
+
+      // Attempt to root servers
+      let newlyRooted = 0;
+      
+      for (const host of servers) {
+        // Skip home
+        if (host === "home") continue;
+        
+        // Skip already rooted
+        if (ns.hasRootAccess(host)) continue;
+        
+        // Check requirements
+        const reqPorts = ns.getServerNumPortsRequired(host);
+        const reqHack = ns.getServerRequiredHackingLevel(host);
+        const playerHack = ns.getHackingLevel();
+        
+        // Can we root it?
+        if (reqPorts > portCount || reqHack > playerHack) continue;
+        
+        try {
+          // Open ports
+          for (const prog of available) {
+            prog.fn(host);
+          }
+          
+          // Nuke it!
+          ns.nuke(host);
+          
+          if (ns.hasRootAccess(host)) {
+            important(`✓ Rooted: ${host} (Level ${reqHack}, ${reqPorts} ports)`);
+            newlyRooted++;
+          }
+        } catch (e) {
+          // Silently ignore failures - server might not be ready yet
+        }
+      }
+
+      if (newlyRooted > 0) {
+        important(`Rooting scan complete: ${newlyRooted} new server(s) rooted`);
+      }
+    } catch (e) {
+      error(`Rooting scan error: ${e}`);
+    }
+  }
 
   // compute safe interval from target timings
   let hackMs = 10000, growMs = 10000, weakenMs = 10000;
@@ -51,9 +151,24 @@ export async function main(ns) {
 
   info(`Batch manager: target=${target} interval=${(intervalMs/1000).toFixed(2)}s (hack=${(hackMs/1000).toFixed(2)}s)`);
   info(`Batch manager: ensure ${batcher} runs on ${pservHost}. Forwarding flags: ${JSON.stringify(forwardFlags)}`);
+  if (enableRooting) {
+    info(`Batch manager: auto-rooting ENABLED (scan every 10 cycles). Use --no-root to disable.`);
+  } else {
+    info(`Batch manager: auto-rooting DISABLED`);
+  }
 
+  // Initial rooting scan on startup
+  await rootNewServers();
+
+  let cycleCount = 0;
   while (true) {
     try {
+      // Periodic rooting scan (every 10 cycles)
+      cycleCount++;
+      if (cycleCount % 10 === 0) {
+        await rootNewServers();
+      }
+
       // See if batcher already running on the chosen pserv
       let procs = [];
       try { procs = ns.ps(pservHost); } catch (e) { procs = []; }
