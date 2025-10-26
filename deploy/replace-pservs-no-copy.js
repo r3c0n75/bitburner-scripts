@@ -138,5 +138,5 @@ export async function main(ns) {
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint("");
   ns.tprint("Don't forget to redeploy your scripts!");
-  ns.tprint("Example: run auto-deploy-all.js joesguns");
+  ns.tprint("Example: run deploy/auto-deploy-all.js");
 }
