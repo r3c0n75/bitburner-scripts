@@ -75,6 +75,21 @@ Complete index of all documentation for the Bitburner script collection.
 
 ## 🏗️ Technical Documentation
 
+### [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕
+**Faction Reputation RAM Sharing Guide**
+- What is RAM sharing and how it works
+- Quick start deployment commands
+- Understanding reputation multiplier bonus
+- When to use RAM sharing vs hacking
+- RAM management and optimization
+- Integration with other scripts
+- Example scenarios and strategies
+- FAQ and troubleshooting
+
+**When to use**: Maximizing faction reputation gains through RAM sharing
+
+---
+
 ### [PROFIT_SCAN_OPTIMAL_MODE.md](PROFIT_SCAN_OPTIMAL_MODE.md) 🆕
 **Optimal State Profit Scanner Enhancement**
 - `--optimal` flag feature documentation
@@ -202,6 +217,7 @@ Complete index of all documentation for the Bitburner script collection.
 | Task | Documentation |
 |------|---------------|
 | New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
+| Boost faction reputation | [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕 |
 | Find best profit targets | [PROFIT_SCAN_OPTIMAL_MODE.md](PROFIT_SCAN_OPTIMAL_MODE.md) 🆕 |
 | Setup dev environment | [REMOTE_API_SETUP.md](REMOTE_API_SETUP.md) ⚡ |
 | First time setup | [GETTING_STARTED.md](GETTING_STARTED.md) |
@@ -290,4 +306,4 @@ README.md (Start Here)
 ---
 
 **Last Updated**: 2025-10-26  
-**Version**: 1.5.2
+**Version**: 1.6.0

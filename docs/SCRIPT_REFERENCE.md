@@ -257,6 +257,16 @@ run production-monitor.js 300
 - Root access status
 - Available money
 
+### share-ram.js
+**Purpose**: Share free RAM with faction for reputation bonus multiplier
+**Usage**: `run utils/share-ram.js`
+**Features**:
+- Continuously calls `ns.share()` to maintain 10-second reputation bonus
+- Minimal RAM usage (1.6GB per thread)
+- Can run on any server with free RAM
+- Logs status every 10 cycles (~100 seconds)
+**Note**: Use with `deploy/deploy-share-all.js` to deploy across entire network for maximum faction reputation gains
+
 ## Server Management Scripts
 
 ### purchase-server-8gb.js
@@ -279,6 +289,17 @@ run production-monitor.js 300
 - `target` - Server to attack (default: joesguns)
 
 ## Deployment Scripts
+
+### deploy-share-all.js
+**Purpose**: Deploy RAM sharing across entire network for maximum faction reputation bonus
+**Usage**: `run deploy/deploy-share-all.js`
+**Features**:
+- Scans entire network for all rooted servers
+- Deploys `utils/share-ram.js` to maximize reputation bonus
+- Reserves 64GB on home for other operations
+- Shows deployment status with thread counts per server
+- Reports total sharing capacity
+**Note**: The faction reputation bonus scales with total shared RAM across all servers. The bonus updates every 10 seconds.
 
 ### deploy-hack-joesguns.js
 **Purpose**: Deploy joesguns hack script to servers
