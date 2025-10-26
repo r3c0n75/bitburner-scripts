@@ -1,12 +1,26 @@
-# Profit Scanner Enhancement - v1.1.1
+# Profit Scanner Enhancement - v1.2.0
 
 ## Overview
 
-Enhanced `profit-scan-flex.js` to provide comprehensive filtering functionality with the `--only-money` flag, eliminating clutter from zero-value servers in the output.
+Enhanced `profit-scan-flex.js` to filter zero-value servers BY DEFAULT, with new `--all` flag to show everything. This provides the best user experience out of the box.
 
 **Date**: October 26, 2025  
-**Version**: 1.1.1  
+**Version**: 1.2.0  
 **Status**: ✅ Complete and Deployed
+
+---
+
+## Version History
+
+### v1.2.0 - Default Behavior Change
+- **BREAKING CHANGE**: Now filters out zero-money servers by default
+- Added `--all` flag to show ALL servers when needed
+- Removed `--only-money` flag (now default behavior)
+- Significantly improved user experience
+
+### v1.1.1 - Filter Enhancement
+- Enhanced `--only-money` flag to work during both generation and display
+- Fixed incomplete filtering bug
 
 ---
 
@@ -117,28 +131,37 @@ profit-scan-flex.js: (showing 30 of 63 reachable hosts)
 
 ## Usage
 
-### Basic Command
+### Basic Command (v1.2.0+)
 ```bash
-run profit-scan-flex.js --only-money
+# DEFAULT: Shows only money servers
+run profit-scan-flex.js
+```
+
+### Show All Servers
+```bash
+# Show ALL servers including purchased servers
+run profit-scan-flex.js --all
 ```
 
 ### Combined with Other Flags
 ```bash
-# Show top 50 money-bearing servers
-run profit-scan-flex.js 50 --only-money
+# Show top 50 money-bearing servers (default behavior)
+run profit-scan-flex.js 50
 
-# Don't write cache, show only money servers
-run profit-scan-flex.js --dry --only-money
+# Show ALL servers including purchased servers
+run profit-scan-flex.js 50 --all
+
+# Don't write cache, show only money servers (default)
+run profit-scan-flex.js --dry
 ```
 
-### Regenerating Cache
-If you have an old cache file without filtering:
+### Legacy Usage (v1.1.1)
 ```bash
-# Delete old cache
-rm profiler-overrides.json
-
-# Generate new filtered cache
+# Old way (no longer needed)
 run profit-scan-flex.js --only-money
+
+# New way (automatic)
+run profit-scan-flex.js
 ```
 
 ---

@@ -2,13 +2,14 @@
  * One-step profit scanner:
  *  - uses profiler-overrides.json if present
  *  - if not present, auto-generates overrides for rooted hosts and writes profiler-overrides.json
+ *  - by default, filters out zero-money servers (purchased servers, home, darkweb)
  *
  * Usage:
- *   run profit-scan-flex.js [limit] [--dry] [--only-money]
+ *   run profit-scan-flex.js [limit] [--dry] [--all]
  * Examples:
- *   run profit-scan-flex.js            # default: write overrides if missing, print top 30
+ *   run profit-scan-flex.js            # default: show only money servers, print top 30
  *   run profit-scan-flex.js 50 --dry   # don't write file, print top 50 using live timings
- *   run profit-scan-flex.js --only-money
+ *   run profit-scan-flex.js --all      # show ALL servers including purchased servers
  */
 
 /** @param {NS} ns */
@@ -30,7 +31,9 @@ export async function main(ns) {
   for (const a of args) flags.add(String(a));
 
   const dry = flags.has("--dry");
-  const onlyMoney = flags.has("--only-money");
+  const showAll = flags.has("--all");
+  // Default behavior: filter out zero-money servers (unless --all is specified)
+  const onlyMoney = !showAll;
   const fname = "profiler-overrides.json";
 
   // Try to read existing overrides from the local host
@@ -95,7 +98,7 @@ export async function main(ns) {
       }
     }
 
-    ns.tprint(`profit-scan-flex: generated ${count} override entries from rooted hosts (onlyMoney=${onlyMoney})`);
+    ns.tprint(`profit-scan-flex: generated ${count} override entries from rooted hosts (filtering=${onlyMoney ? 'money-only' : 'all-servers'})`);
 
     if (!dry) {
       try {

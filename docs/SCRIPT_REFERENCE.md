@@ -88,33 +88,33 @@ run auto-deploy-all.js 50
 
 ### profit-scan-flex.js
 **Purpose**: Advanced profit scanner with caching and profiler integration
-**Usage**: `run profit-scan-flex.js [limit] [--dry] [--only-money]`
+**Usage**: `run profit-scan-flex.js [limit] [--dry] [--all]`
 **Parameters**:
 - `limit` - Number of servers to display (default: 30)
 - `--dry` - Don't write profiler-overrides.json file
-- `--only-money` - Filter out servers with zero or negative money (hides purchased servers, home, darkweb)
+- `--all` - Show ALL servers including zero-money servers (purchased servers, home, darkweb)
 
 **Features**:
 - **Automatic caching** - Creates and uses `profiler-overrides.json` for faster scans
 - **Detailed output** - Shows hack/grow/weaken times, current security
 - **Override indicator** - Shows which servers use cached timing data
 - **Smart fallback** - Uses live API calls if cache unavailable
-- **Smart filtering** - `--only-money` shows both rooted targets with money AND unrooted future targets
+- **Smart filtering BY DEFAULT** - Automatically hides zero-money servers for clean output
 
 **Examples**:
 ```bash
-run profit-scan-flex.js                    # Use cached timings, show top 30
-run profit-scan-flex.js 50                 # Show top 50 servers
-run profit-scan-flex.js --only-money       # Only servers with money (recommended)
-run profit-scan-flex.js 100 --dry          # Don't write cache file
-run profit-scan-flex.js 50 --only-money    # Combine flags
+run profit-scan-flex.js                    # DEFAULT: Show only money servers, top 30
+run profit-scan-flex.js 50                 # Show top 50 money servers
+run profit-scan-flex.js --all              # Show ALL servers (including purchased/home)
+run profit-scan-flex.js 100 --dry          # Don't write cache file, show money servers
+run profit-scan-flex.js 50 --all --dry     # Combine flags
 ```
 
-**--only-money Flag Behavior**:
-- **Filters out**: Purchased servers (pserv-*), home, darkweb, any server with maxMoney ≤ 0
-- **Shows**: Currently hackable targets (rooted + money) and future targets (not rooted but have money)
-- **Recommended** for cleaner output focused on profitable targets
-- Works both during cache generation and display output
+**Default Filter Behavior**:
+- **Filters out by default**: Purchased servers (pserv-*), home, darkweb, any server with maxMoney ≤ 0
+- **Shows by default**: Currently hackable targets (rooted + money) and future targets (not rooted but have money)
+- **Clean output** - No clutter from zero-value servers
+- **Use `--all` flag** to see everything including purchased servers
 
 **Output Columns**:
 - OVR - Whether cached timing data was used (YES/blank)

@@ -2,6 +2,33 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.2.0] - 2025-10-26 - Profit Scanner Default Behavior Improvement
+
+### Changed
+- **profit-scan-flex.js** - Changed default behavior for better UX
+  - **BREAKING CHANGE**: Now filters out zero-money servers BY DEFAULT
+  - Added `--all` flag to show ALL servers (including purchased servers, home, darkweb)
+  - Removed `--only-money` flag (now the default behavior)
+  - Default output now shows only profitable targets without requiring a flag
+  - Most users want to see only hackable targets, not purchased servers
+  - Significantly improved user experience with cleaner default output
+
+### Technical Details
+```javascript
+// Lines 34-36: New flag logic
+const showAll = flags.has("--all");
+// Default behavior: filter out zero-money servers (unless --all is specified)
+const onlyMoney = !showAll;
+```
+
+### Migration Notes
+- **BREAKING CHANGE**: Default behavior has changed
+- **Before**: `run profit-scan-flex.js` showed ALL servers (including purchased servers)
+- **After**: `run profit-scan-flex.js` shows ONLY money servers (cleaner output)
+- **To see all servers**: Use `run profit-scan-flex.js --all`
+- **Removed flag**: `--only-money` no longer needed (now default behavior)
+- Existing cache files will continue to work
+
 ## [1.1.1] - 2025-10-26 - Profit Scanner Filter Enhancement
 
 ### Fixed

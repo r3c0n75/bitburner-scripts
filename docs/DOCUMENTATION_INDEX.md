@@ -238,4 +238,4 @@ README.md (Start Here)
 ---
 
 **Last Updated**: 2025-10-26  
-**Version**: 1.1.1
+**Version**: 1.2.0
