@@ -8,16 +8,16 @@ Fast reference for common operations and documentation locations.
 
 ```bash
 # Find profitable targets
-run profit-scan.js
+run analysis/profit-scan.js
 
 # Deploy batch operations
-run simple-batcher.js joesguns
+run batch/simple-batcher.js joesguns
 
 # Monitor production
-run production-monitor.js 60
+run analysis/production-monitor.js 60
 
 # Check system status
-run list-procs.js
+run utils/list-procs.js
 ```
 
 ## 📁 File Locations
@@ -95,28 +95,28 @@ deploy/hack-n00dles.js           # N00dles script
 
 ### Find Best Target
 ```bash
-run profit-scan.js
+run analysis/profit-scan.js
 # Look at top results
 ```
 
 ### Deploy Batch System
 ```bash
-run simple-batcher.js joesguns
+run batch/simple-batcher.js joesguns
 # Or with options:
-run simple-batcher.js joesguns 100 --quiet
+run batch/simple-batcher.js joesguns 100 --quiet
 ```
 
 ### Monitor Performance
 ```bash
-run production-monitor.js 300
-run list-procs.js
+run analysis/production-monitor.js 300
+run utils/list-procs.js
 ```
 
 ### Troubleshoot
 ```bash
-run list-procs.js        # See what's running
-run global-kill.js       # Stop everything
-run simple-batcher.js target  # Restart
+run utils/list-procs.js        # See what's running
+run utils/global-kill.js       # Stop everything
+run batch/simple-batcher.js target  # Restart
 ```
 
 ## 📖 Documentation Quick Links
@@ -150,9 +150,9 @@ run simple-batcher.js target  # Restart
 
 ### New Users
 1. README.md (5 min read)
-2. Run profit-scan.js
-3. Run simple-batcher.js target
-4. Watch production-monitor.js
+2. Run analysis/profit-scan.js
+3. Run batch/simple-batcher.js target
+4. Watch analysis/production-monitor.js
 
 ### Experienced Users
 1. docs/SCRIPT_REFERENCE.md for lookups
@@ -166,5 +166,6 @@ run simple-batcher.js target  # Restart
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-10-25
+**Version**: 1.1.0  
+**Last Updated**: 2025-10-26  
+**Note**: All commands updated for organized folder structure (Remote API v1.4.1)
