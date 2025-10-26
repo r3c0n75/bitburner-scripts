@@ -2,6 +2,28 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.4.1] - 2025-10-26 - Remote API Path Compatibility Fixes 🔧
+
+### Fixed
+- **Deployment Script Path References** - Updated 4 scripts for organized folder structure
+  - `auto-expand.js` - Fixed reference to `deploy/hack-universal.js`
+  - `deploy-hack-joesguns.js` - Fixed reference to `deploy/hack-joesguns.js`
+  - `auto-deploy-all.js` - Fixed reference to `deploy/hack-joesguns.js`
+  - `home-batcher.js` - Fixed references to `core/attack-*.js` scripts
+
+### Technical Details
+- **Issue**: Scripts were using flat file paths from old GitHub repo structure
+- **Solution**: Updated all script references to use organized folder paths
+- **Result**: All deployment scripts now work correctly with Remote API folder structure
+- **Testing**: Verified `deploy/auto-expand.js` successfully executes in Bitburner
+
+### Impact
+✅ Remote API Development Workflow fully operational  
+✅ All deployment automation scripts working correctly  
+✅ Folder organization preserved both in development and in-game  
+
+---
+
 ## [1.4.0] - 2025-10-26 - Remote API Development Workflow Integration ⚡
 
 ### Added
