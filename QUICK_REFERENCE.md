@@ -4,6 +4,8 @@ Fast reference for common operations and documentation locations.
 
 ## 🚀 Quick Start Commands
 
+**🆕 New Game or Post-Augmentation?** See [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) for fastest recovery path!
+
 ```bash
 # Find profitable targets
 run profit-scan.js
@@ -22,6 +24,7 @@ run list-procs.js
 
 | What You Need | File Location | Lines |
 |---------------|---------------|-------|
+| Fresh start / augmentation recovery | NEW_GAME_QUICKSTART.md | All 🆕 |
 | Project overview | README.md | Top |
 | Getting started | docs/GETTING_STARTED.md | All |
 | Script usage | docs/SCRIPT_REFERENCE.md | Find script |

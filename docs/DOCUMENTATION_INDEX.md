@@ -4,6 +4,20 @@ Complete index of all documentation for the Bitburner script collection.
 
 ## 📚 Main Documentation
 
+### [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕
+**New Game & Augmentation Recovery Guide**
+- Brand new game startup procedures
+- Post-augmentation fast recovery path
+- Copy-paste quickstart commands
+- Target progression guide
+- 5-minute setup instructions
+- Common mistakes to avoid
+- Success metrics
+
+**When to use**: Starting a new game or recovering after augmentation installation
+
+---
+
 ### [README.md](../README.md)
 **Quick Start Guide and Project Overview**
 - Project features and capabilities
@@ -121,9 +135,14 @@ Complete index of all documentation for the Bitburner script collection.
 ## 🎯 Documentation by Use Case
 
 ### For New Users
-1. **[README.md](../README.md)** - Get project overview
-2. **[GETTING_STARTED.md](GETTING_STARTED.md)** - Follow setup guide
-3. **[SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** - Look up specific scripts
+1. **[NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md)** - Fastest path to getting started 🆕
+2. **[README.md](../README.md)** - Get project overview
+3. **[GETTING_STARTED.md](GETTING_STARTED.md)** - Follow setup guide
+4. **[SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** - Look up specific scripts
+
+### For Post-Augmentation Recovery 🆕
+1. **[NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md)** - Fast recovery guide
+2. **[SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** - Quick script lookup
 
 ### For Experienced Users
 1. **[SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** - Quick script lookup
@@ -153,6 +172,7 @@ Complete index of all documentation for the Bitburner script collection.
 
 | Task | Documentation |
 |------|---------------|
+| New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
 | First time setup | [GETTING_STARTED.md](GETTING_STARTED.md) |
 | Run a script | [SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md) |
 | Fix an error | [ERROR_HANDLING_IMPROVEMENTS.md](ERROR_HANDLING_IMPROVEMENTS.md) |
@@ -187,6 +207,7 @@ Complete index of all documentation for the Bitburner script collection.
 
 ```
 README.md (Start Here)
+├── New Game / Augmentation → NEW_GAME_QUICKSTART.md 🆕
 ├── Quick Start → GETTING_STARTED.md
 │   └── Detailed Usage → SCRIPT_REFERENCE.md
 │

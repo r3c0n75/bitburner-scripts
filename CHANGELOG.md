@@ -2,6 +2,51 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.3.0] - 2025-10-26 - New Game & Augmentation Recovery Quickstart Guide
+
+### Added
+- **NEW_GAME_QUICKSTART.md** - Comprehensive quickstart guide for fresh starts 🆕
+  - Fast-track action plan for brand new game starts
+  - Post-augmentation recovery procedures
+  - Copy-paste commands for 5-minute setup
+  - Target progression guide (when to switch servers)
+  - Success metrics for tracking progress
+  - Common mistakes to avoid
+  - Separate guides for new players vs experienced players
+  - Cheat sheets for fastest recovery paths
+
+### Changed
+- **README.md** - Added prominent link to NEW_GAME_QUICKSTART.md in Quick Start section
+- **QUICK_REFERENCE.md** - Added NEW_GAME_QUICKSTART.md reference at top of quick commands
+- **docs/DOCUMENTATION_INDEX.md** - Added NEW_GAME_QUICKSTART.md to main documentation section
+  - Added "For Post-Augmentation Recovery" use case section
+  - Updated documentation hierarchy diagram
+  - Added to common tasks reference table
+
+### Benefits
+- Answers the critical "What do I do after augmentation?" question
+- Provides clear action plan for fastest recovery
+- Eliminates confusion about starting fresh or recovering
+- Copy-paste commands reduce friction for returning players
+- Success metrics help players verify they're on track
+
+### Documentation Structure
+```
+NEW_GAME_QUICKSTART.md (365 lines)
+├── Brand New Game Guide
+│   ├── Phase 1: First 5 minutes
+│   ├── Phase 2: Early automation (10-30 min)
+│   └── Phase 3: Scaling up (30-60 min)
+├── Post-Augmentation Recovery (FAST PATH)
+│   ├── Recovery Phase 1: Immediate actions (2 min)
+│   ├── Recovery Phase 2: Rapid scaling (5-15 min)
+│   └── Recovery Phase 3: Surpass previous run (15-30 min)
+├── Quickstart Cheat Sheets
+├── Target Progression Guide
+├── Pro Tips (New/Experienced/All players)
+└── Success Metrics
+```
+
 ## [1.2.0] - 2025-10-26 - Profit Scanner Default Behavior Improvement
 
 ### Changed

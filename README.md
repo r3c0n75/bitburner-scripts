@@ -4,6 +4,12 @@ A comprehensive collection of Bitburner automation scripts for efficient hacking
 
 ## 🚀 Quick Start
 
+### 🎮 New to the Game or Just Augmented?
+**See [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md)** for a fast-track guide on:
+- Starting a brand new game from scratch
+- Recovering quickly after augmentation installation
+- Copy-paste commands to get running in under 5 minutes!
+
 ### Installation Options
 
 **Option 1: PowerShell + GitHub (Recommended)** 🌟
@@ -215,6 +221,7 @@ See [CHANGELOG.md](CHANGELOG.md) for complete details.
 ## 🔗 Documentation Links
 
 ### Quick Start
+- **[New Game Quickstart](NEW_GAME_QUICKSTART.md)** - Fast recovery after augmentations & new game guide 🆕
 - **[Quick Reference](QUICK_REFERENCE.md)** - Fast command lookup
 - **[Getting Started Guide](docs/GETTING_STARTED.md)** - Step-by-step setup and usage
 - **[Script Reference](docs/SCRIPT_REFERENCE.md)** - Complete script documentation
