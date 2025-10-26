@@ -63,18 +63,18 @@ This guide provides a fast-track action plan for starting fresh games and recove
 
 1. **Upgrade to Better Targets**
    ```bash
-   # Re-scan for better opportunities (with realistic estimates)
-   run profit-scan-flex.js
+   # Find targets by POTENTIAL (find hidden gems with massive upside!)
+   run profit-scan-flex.js --optimal
    
    # Check expected production
-   run estimate-production.js joesguns
+   run estimate-production.js sigma-cosmetics
    
    # Switch to profitable target with OPTIMAL ratios (490x faster!)
    run global-kill.js
-   run smart-batcher.js joesguns
+   run smart-batcher.js sigma-cosmetics
    
    # Or use basic batcher:
-   run simple-batcher.js joesguns
+   run simple-batcher.js sigma-cosmetics
    ```
 
 2. **Buy Your First Server**
@@ -116,21 +116,22 @@ When you install augmentations, you restart from scratch but with enhanced stats
 2. **Identify Best Starting Target**
    ```bash
    # With augmentations, you likely have higher hacking skill
-   run profit-scan-flex.js
+   # Use --optimal to find targets with massive potential!
+   run profit-scan-flex.js --optimal
    
-   # Note the top 3 targets you can access
+   # Note the top 3 targets you can access (check prep status)
    ```
 
 3. **Deploy Immediately**
    ```bash
    # Jump straight to your best accessible target with OPTIMAL ratios
    # (Your augmentations may let you skip n00dles entirely!)
-   run smart-batcher.js joesguns    # 490x faster than basic!
+   run smart-batcher.js sigma-cosmetics    # 490x faster than basic!
    
    # Or use basic batcher:
-   run simple-batcher.js joesguns
+   run simple-batcher.js sigma-cosmetics
    
-   # Use whatever profit-scan recommended
+   # Use whatever profit-scan --optimal recommended
    ```
 
 ### Recovery Phase 2: Rapid Scaling (5-15 minutes)
@@ -156,8 +157,8 @@ When you install augmentations, you restart from scratch but with enhanced stats
    # Verify your income is growing
    run production-monitor.js 60
    
-   # Check if you need to switch targets
-   run profit-scan-flex.js
+   # Check if you need to switch targets (use --optimal for best results!)
+   run profit-scan-flex.js --optimal
    ```
 
 ### Recovery Phase 3: Surpass Previous Run (15-30 minutes)
@@ -180,12 +181,12 @@ When you install augmentations, you restart from scratch but with enhanced stats
 
 3. **Continuous Optimization**
    ```bash
-   # Every 10-15 minutes, check for better targets
-   run profit-scan-flex.js
+   # Every 10-15 minutes, check for better targets by POTENTIAL
+   run profit-scan-flex.js --optimal
    
    # Switch if you find significantly better options
    run global-kill.js
-   run simple-batcher.js NEW_TARGET
+   run smart-batcher.js NEW_TARGET
    ```
 
 ---

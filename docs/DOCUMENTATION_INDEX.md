@@ -75,6 +75,20 @@ Complete index of all documentation for the Bitburner script collection.
 
 ## 🏗️ Technical Documentation
 
+### [PROFIT_SCAN_OPTIMAL_MODE.md](PROFIT_SCAN_OPTIMAL_MODE.md) 🆕
+**Optimal State Profit Scanner Enhancement**
+- `--optimal` flag feature documentation
+- Current vs potential state rankings
+- Prep status indicators (✓/◐/⚠)
+- Real-world impact and examples
+- Usage guide and workflow
+- Technical implementation details
+- Discovery of "diamond in the rough" targets
+
+**When to use**: Understanding optimal profit scanning and target selection strategy
+
+---
+
 ### [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)
 **Directory Structure and Organization**
 - Complete directory tree
@@ -188,6 +202,7 @@ Complete index of all documentation for the Bitburner script collection.
 | Task | Documentation |
 |------|---------------|
 | New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
+| Find best profit targets | [PROFIT_SCAN_OPTIMAL_MODE.md](PROFIT_SCAN_OPTIMAL_MODE.md) 🆕 |
 | Setup dev environment | [REMOTE_API_SETUP.md](REMOTE_API_SETUP.md) ⚡ |
 | First time setup | [GETTING_STARTED.md](GETTING_STARTED.md) |
 | Run a script | [SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md) |
@@ -275,4 +290,4 @@ README.md (Start Here)
 ---
 
 **Last Updated**: 2025-10-26  
-**Version**: 1.2.0
+**Version**: 1.5.2

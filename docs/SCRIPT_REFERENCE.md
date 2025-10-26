@@ -140,43 +140,76 @@ run smart-batcher.js joesguns --include-home  # Include home server
 - Hack chance
 - Money per second per thread
 
-### profit-scan-flex.js
-**Purpose**: Advanced profit scanner with caching and profiler integration
-**Usage**: `run profit-scan-flex.js [limit] [--dry] [--all]`
+### profit-scan-flex.js ⭐
+**Purpose**: Advanced profit scanner with current and FLEET POTENTIAL rankings
+**Usage**: `run profit-scan-flex.js [limit] [--save] [--all] [--optimal]`
 **Parameters**:
 - `limit` - Number of servers to display (default: 30)
-- `--dry` - Don't write profiler-overrides.json file
+- `--save` - Write profiler-overrides.json timing cache file
 - `--all` - Show ALL servers including zero-money servers (purchased servers, home, darkweb)
+- `--optimal` - Rank by FLEET POTENTIAL (capacity + efficiency) instead of current state
 
 **Features**:
-- **Automatic caching** - Creates and uses `profiler-overrides.json` for faster scans
-- **Detailed output** - Shows hack/grow/weaken times, current security
-- **Override indicator** - Shows which servers use cached timing data
-- **Smart fallback** - Uses live API calls if cache unavailable
-- **Smart filtering BY DEFAULT** - Automatically hides zero-money servers for clean output
+- **Fleet Potential Rankings** 🎯 - Balances capacity + efficiency for large fleets (v1.5.3 fix)
+- **Fleet Score Formula** - Per-thread income × log10(Max Money)
+- **Prep Status Indicators** - See if servers are ready (✓), need light prep (◐), or heavy prep (⚠)
+- **Dual-Mode Display** - Current state (default) or fleet potential (--optimal)
+- **Capacity Awareness** - ⭐ marker highlights max money for fleet planning
+- **Realistic Calculations** - Batch-cycle-aware estimates accounting for grow/weaken overhead
+- **Smart Hints** - Shows potential gains for servers needing prep
+- **Fresh Timing Data** - Always generates current timing from rooted hosts
+- **Smart Filtering** - Automatically hides zero-money servers for clean output
 
 **Examples**:
 ```bash
-run profit-scan-flex.js                    # DEFAULT: Show only money servers, top 30
-run profit-scan-flex.js 50                 # Show top 50 money servers
+run profit-scan-flex.js                    # DEFAULT: Current state, money servers, top 30
+run profit-scan-flex.js --optimal          # Rank by POTENTIAL (find hidden gems!)
+run profit-scan-flex.js 50 --optimal       # Show top 50 by potential
 run profit-scan-flex.js --all              # Show ALL servers (including purchased/home)
-run profit-scan-flex.js 100 --dry          # Don't write cache file, show money servers
-run profit-scan-flex.js 50 --all --dry     # Combine flags
+run profit-scan-flex.js --optimal --save   # Optimal rankings + save timing data
 ```
 
-**Default Filter Behavior**:
-- **Filters out by default**: Purchased servers (pserv-*), home, darkweb, any server with maxMoney ≤ 0
-- **Shows by default**: Currently hackable targets (rooted + money) and future targets (not rooted but have money)
-- **Clean output** - No clutter from zero-value servers
-- **Use `--all` flag** to see everything including purchased servers
+**Ranking Modes**:
+- **Current Mode (default)**: Ranks by as-is performance (current security/money)
+  - Shows what servers produce RIGHT NOW
+  - Hints at potential for servers with 2x+ improvement possible
+  - Best for: Finding immediately profitable targets
+  
+- **Fleet Potential Mode (`--optimal`)**: Ranks by FLEET POTENTIAL (capacity + efficiency)
+  - Uses Fleet Score = Per-thread income × log10(Max Money)
+  - Balances efficiency with max money capacity
+  - Displays ⭐ to emphasize capacity importance
+  - Best for: Large fleets (100-2000 threads) needing high-capacity targets
 
-**Output Columns**:
-- OVR - Whether cached timing data was used (YES/blank)
-- Server name and root access (YES/NO)
-- RAM, max money, min/current security
-- Hack/Grow/Weaken times (in seconds)
+**Prep Status Indicators**:
+- ✓ READY - At/near min security, farm immediately
+- ◐ LIGHT PREP - Needs weakening (security delta > 50% of min)
+- ⚠ HEAVY PREP - Needs significant prep (security delta > 200% of min)
+
+**Real-World Example (v1.5.3 - Fixed)**:
+```
+Current Rankings:           Fleet Potential Rankings:
+1. silver-helix 16.91k/s    1. phantasy        Score: 196k ($600m)
+2. foodnstuff   11.11k/s    2. silver-helix    Score: 167k ($1.13b) ⭐
+3. joesguns     10.83k/s    3. omega-net       Score: 146k ($1.59b) ⭐
+4. sigma-cosmetics 9.70k/s  4. max-hardware    Score: 145k ($250m)
+5. phantasy      7.09k/s    ...
+                            10. sigma-cosmetics Score: 91k  ($57.5m)
+```
+
+**Key Insight**: silver-helix (#2) is often better than phantasy (#1) because:
+- Already at optimal state (no prep time)
+- 2x larger capacity ($1.13b vs $600m)
+- Proven $3.41m/s production
+
+**Output Display**:
+- Server name, root status, RAM capacity
+- Prep status indicator (✓/◐/⚠)
+- Max money, security (current/min with delta)
+- Timing: Hack/Grow/Weaken cycle times
 - Hack chance percentage
-- Money per second per thread (idealized)
+- Income per thread (batch-cycle-aware realistic estimate)
+- Potential after prep (when applicable)
 
 ### production-monitor.js
 **Purpose**: Measure player money change over time

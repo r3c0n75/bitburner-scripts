@@ -2,6 +2,130 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.5.3] - 2025-10-26 - Fleet Potential Ranking Fix 🔧
+
+### FIXED - profit-scan-flex.js (Fleet Potential Score)
+
+**Fixed critical flaw in `--optimal` mode that ranked low-capacity servers too high!**
+
+**The Problem**:
+- Original optimal mode ranked by per-thread income only
+- Favored fast cycle/low max money servers (sigma-cosmetics: $57.5m)
+- Ignored max money capacity (silver-helix: $1.13 BILLION)
+- Result: Recommended targets that saturated quickly with large fleets
+- User experience: sigma-cosmetics produced $1.57m/s vs silver-helix's $3.41m/s (2.2x worse!)
+
+**The Solution - Fleet Potential Score**:
+```
+Fleet Score = Per-thread income × log10(Max Money)
+```
+
+This formula:
+- ✅ Rewards BOTH per-thread efficiency AND max money capacity
+- ✅ Uses logarithmic scale so high-capacity doesn't completely dominate
+- ✅ Ranks targets properly for large server fleets
+- ✅ Identifies targets that can support 100-2000 threads
+
+**Real-World Results**:
+```
+OLD Rankings (broken):          NEW Rankings (fixed):
+1. sigma-cosmetics  30.73k/s    1. silver-helix     155k score ($1.13b)
+   Max: $57.5m                     Max: $1.13b ⭐
+   
+2. phantasy         21.93k/s    2. omega-net        140k score ($1.59b)
+   Max: $600m                      Max: $1.59b ⭐
+   
+3. silver-helix     17.39k/s    3. the-hub          111k score ($4.55b)
+   Max: $1.13b ⭐                  Max: $4.55b ⭐
+```
+
+**New Display**:
+- Shows Fleet Score prominently
+- ⭐ marker emphasizes max money importance
+- Explains formula in footer
+- Per-thread income still visible but not primary ranking
+
+**Benefits**:
+- 🎯 Correctly identifies high-capacity targets for large fleets
+- 💰 Maximizes actual production (not theoretical per-thread)
+- 📊 Prevents target saturation issues
+- 🚀 Ranks silver-helix properly (where it belongs!)
+
+**Updated Files**:
+- Fixed: `bitburner-remote-api/src/analysis/profit-scan-flex.js`
+- Fixed: `scripts/analysis/profit-scan-flex.js`
+
+---
+
+## [1.5.2] - 2025-10-26 - Optimal State Profit Scanner 🎯
+
+### ENHANCED - profit-scan-flex.js (Optimal State Rankings)
+
+**Added `--optimal` flag to rank servers by POTENTIAL instead of current degraded state!**
+
+**The Discovery**:
+- User targeted `silver-helix` despite it ranking low in current state
+- After smart-batcher prep: $34k/s → $3.41m/s (100x improvement!)
+- Root cause: Current rankings misleading due to high security degradation
+- Solution: New `--optimal` mode shows potential at min security
+
+**New Features**:
+1. **Optimal Mode (`--optimal` flag)**:
+   - Ranks by POTENTIAL (min security, max money)
+   - Calculates optimal timing and hack chance at min security
+   - Shows improvement percentage for servers needing prep
+   - Example: "Current: $9.70k/s (217% gain possible)"
+
+2. **Prep Status Indicators**:
+   - ✓ READY - At/near min security, farm immediately
+   - ◐ LIGHT PREP - Needs weakening (Δ security > 50% of min)
+   - ⚠ HEAVY PREP - Needs significant prep (Δ security > 200% of min)
+
+3. **Dual-Mode Display**:
+   - Current mode (default): Shows as-is state with potential hints
+   - Optimal mode (`--optimal`): Rankings by potential with prep requirements
+   - Both modes show batch-cycle-aware realistic estimates
+
+4. **Smart Hints**:
+   - Current mode shows "💡 Potential after prep" for servers with 2x+ gain
+   - Optimal mode shows current vs potential comparison
+   - Security delta displayed: "Security: 10.0/3 (Δ7.0)"
+
+**Real-World Example**:
+```
+Current Rankings:           Optimal Rankings:
+1. silver-helix 16.91k/s    1. sigma-cosmetics 30.73k/s (217% gain!)
+2. foodnstuff   11.11k/s    2. phantasy        21.93k/s (209% gain!)
+3. joesguns     10.83k/s    3. silver-helix    17.39k/s (already prepped)
+4. sigma-cosmetics 9.70k/s  4. max-hardware    16.91k/s (197% gain!)
+```
+
+**Usage**:
+```bash
+# See current state rankings (default)
+run analysis/profit-scan-flex.js
+
+# See potential rankings (find hidden gems!)
+run analysis/profit-scan-flex.js --optimal
+
+# Show top 50 by potential
+run analysis/profit-scan-flex.js 50 --optimal
+
+# Combine with other flags
+run analysis/profit-scan-flex.js --optimal --all --save
+```
+
+**Benefits**:
+- 🎯 Find "diamond in the rough" targets like silver-helix
+- 📊 Understand why some servers perform poorly (high security)
+- 🚀 Identify servers with massive gain potential (500%+ improvements)
+- 💡 Make informed targeting decisions based on potential, not current state
+- 🔍 Discover hidden gems that appear low in current rankings
+
+**Updated Files**:
+- Enhanced: `bitburner-remote-api/src/analysis/profit-scan-flex.js`
+- Enhanced: `scripts/analysis/profit-scan-flex.js`
+
 ## [1.5.1] - 2025-10-26 - Batch Manager Smart Upgrade ⚡
 
 ### CHANGED - batch-manager.js
