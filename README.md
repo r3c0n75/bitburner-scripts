@@ -12,21 +12,58 @@ A comprehensive collection of Bitburner automation scripts for efficient hacking
 
 ### Installation Options
 
-**Option 1: PowerShell + GitHub (Recommended)** 🌟
+**Option 1: Remote API Development (Fastest Development)** ⚡ NEW!
+1. Install Remote API tool (TypeScript Template or Viteburner)
+2. Edit scripts in VS Code with full IntelliSense
+3. Save → Instant sync to Bitburner (2 seconds)
+4. See **[Remote API Setup Guide](docs/REMOTE_API_SETUP.md)** for details
+
+**Why Remote API?**
+- ✅ Instant sync on save (no manual deployment!)
+- ✅ Full VS Code IntelliSense & autocomplete
+- ✅ TypeScript support (optional)
+- ✅ Professional development workflow
+- ✅ Keep organized folder structure
+
+**Option 2: PowerShell + GitHub (Best for Distribution)** 🌟
 1. Run `.\Push-ToGitHub.ps1` to push organized structure to GitHub
 2. Configure `bitburner-update.js` with your GitHub URL
 3. Use `bitburner-update.js` in-game for automatic updates
 4. See **[PowerShell GitHub Workflow](POWERSHELL_GITHUB_WORKFLOW.md)** for details
-
-**Option 2: Manual Copy**
-- Copy all `.js` files to Bitburner home directory (no folders needed)
-- Bitburner doesn't support folder structures in-game
 
 **Why PowerShell Method?**
 - ✅ Keep organized folders (no flattening!)
 - ✅ One command to push updates
 - ✅ Full Git version control
 - ✅ Auto-flatten in Bitburner
+- ✅ Easy sharing via GitHub URLs
+
+**Option 3: Manual Copy**
+- Copy all `.js` files to Bitburner home directory (no folders needed)
+- Bitburner doesn't support folder structures in-game
+
+**💡 Pro Tip:** Use Remote API for daily development + GitHub for version control and sharing!
+
+## 🎯 Dual Workflow (Recommended Setup)
+
+**Active Development** → Remote API (instant sync)  
+**Version Control** → GitHub (backups & sharing)
+
+### Quick Start:
+```powershell
+# Setup (one-time)
+.\Setup-RemoteAPI-Workspace.ps1
+
+# Daily use
+cd bitburner-remote-api
+npm run watch
+# In Bitburner: Options → Remote API → Connect
+
+# End of day (backup)
+.\Sync-ToGitHub.ps1  # (or manually copy stable changes)
+```
+
+See **[Remote API Daily Workflow](REMOTE_API_DAILY_WORKFLOW.md)** for complete guide.
 
 ### Basic Usage
 ```bash
@@ -222,6 +259,7 @@ See [CHANGELOG.md](CHANGELOG.md) for complete details.
 
 ### Quick Start
 - **[New Game Quickstart](NEW_GAME_QUICKSTART.md)** - Fast recovery after augmentations & new game guide 🆕
+- **[Remote API Setup](docs/REMOTE_API_SETUP.md)** - Professional dev workflow with instant sync ⚡ NEW!
 - **[Quick Reference](QUICK_REFERENCE.md)** - Fast command lookup
 - **[Getting Started Guide](docs/GETTING_STARTED.md)** - Step-by-step setup and usage
 - **[Script Reference](docs/SCRIPT_REFERENCE.md)** - Complete script documentation

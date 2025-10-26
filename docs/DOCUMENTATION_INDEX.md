@@ -59,6 +59,20 @@ Complete index of all documentation for the Bitburner script collection.
 
 ---
 
+### [REMOTE_API_SETUP.md](REMOTE_API_SETUP.md) ⚡ NEW!
+**Professional Development Workflow Guide**
+- Remote API installation and setup
+- Instant script synchronization (save → test in 2 seconds)
+- VS Code IntelliSense and autocomplete
+- TypeScript support (optional)
+- Comparison: Remote API vs GitHub method
+- Dual workflow (development + distribution)
+- Troubleshooting guide
+
+**When to use**: Setting up professional development environment for faster iteration
+
+---
+
 ## 🏗️ Technical Documentation
 
 ### [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)
@@ -155,9 +169,10 @@ Complete index of all documentation for the Bitburner script collection.
 3. **[SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** - Script-specific issues
 
 ### For Development
-1. **[DETAILED_CHANGES.md](DETAILED_CHANGES.md)** - Implementation details
-2. **[ERROR_HANDLING_IMPROVEMENTS.md](ERROR_HANDLING_IMPROVEMENTS.md)** - Coding patterns
-3. **[PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)** - Architecture overview
+1. **[REMOTE_API_SETUP.md](REMOTE_API_SETUP.md)** - Professional development workflow ⚡
+2. **[DETAILED_CHANGES.md](DETAILED_CHANGES.md)** - Implementation details
+3. **[ERROR_HANDLING_IMPROVEMENTS.md](ERROR_HANDLING_IMPROVEMENTS.md)** - Coding patterns
+4. **[PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)** - Architecture overview
 
 ### For Project Management
 1. **[CHANGELOG.md](../CHANGELOG.md)** - Version history
@@ -173,6 +188,7 @@ Complete index of all documentation for the Bitburner script collection.
 | Task | Documentation |
 |------|---------------|
 | New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
+| Setup dev environment | [REMOTE_API_SETUP.md](REMOTE_API_SETUP.md) ⚡ |
 | First time setup | [GETTING_STARTED.md](GETTING_STARTED.md) |
 | Run a script | [SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md) |
 | Fix an error | [ERROR_HANDLING_IMPROVEMENTS.md](ERROR_HANDLING_IMPROVEMENTS.md) |
