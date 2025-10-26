@@ -6,7 +6,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
   const target = ns.args[0] || "joesguns";
-  const script = "hack-joesguns.js";
+  const script = "deploy/hack-joesguns.js";
   
   ns.disableLog("sleep");
   ns.disableLog("scan");

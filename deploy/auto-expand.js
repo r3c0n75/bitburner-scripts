@@ -17,7 +17,7 @@ export async function main(ns) {
   const capArg = ns.args.length > 1 ? Number(ns.args[1]) : Infinity;
   const capThreads = Number.isFinite(capArg) && capArg > 0 ? Math.floor(capArg) : Infinity;
   
-  const script = "hack-universal.js";
+  const script = "deploy/hack-universal.js";
   
   // Check if the hack script exists
   if (!ns.fileExists(script, "home")) {

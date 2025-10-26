@@ -6,7 +6,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
   ns.disableLog("sleep");
-  const script = "hack-joesguns.js";
+  const script = "deploy/hack-joesguns.js";
   const capArg = ns.args.length > 0 ? Number(ns.args[0]) : Infinity;
   const capThreads = Number.isFinite(capArg) && capArg > 0 ? Math.floor(capArg) : Infinity;
 
