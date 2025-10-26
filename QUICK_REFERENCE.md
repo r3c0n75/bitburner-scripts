@@ -62,7 +62,7 @@ core/attack-weaken.js     # Basic weaken
 ```
 batch/smart-batcher.js    # ⭐ Optimal timing-based ratios (490x faster!)
 batch/simple-batcher.js   # Deploy to all servers (basic)
-batch/batch-manager.js    # Manage pserv batching
+batch/batch-manager.js    # ⭐ Manage smart-batcher deployment with auto-rooting
 batch/home-batcher.js     # Home server batching
 ```
 

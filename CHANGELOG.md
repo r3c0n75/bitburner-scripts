@@ -2,6 +2,40 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.5.1] - 2025-10-26 - Batch Manager Smart Upgrade ⚡
+
+### CHANGED - batch-manager.js
+**Upgraded to deploy smart-batcher.js instead of simple-batcher.js!**
+
+**Breaking Change**:
+- Parameter change: `capPerHost` → `hackPercent`
+- Old: `run batch-manager.js joesguns 12 1.25 home --quiet` (capPerHost=12)
+- New: `run batch-manager.js joesguns 0.05 1.25 home --quiet` (hackPercent=0.05 = 5%)
+
+**Benefits**:
+- 🚀 Automatically deploys 490x more efficient smart-batcher
+- 💰 Leverages optimal timing-based thread ratios (4% hack / 87% grow / 9% weaken)
+- ⚡ 3-4x faster server preparation
+- 📊 Inherits all smart-batcher intelligence (timing analysis, production estimates)
+
+**Intelligent Quiet Mode** 🤫:
+- Shows full smart-batcher output on initial deployment
+- Then stays silent until new servers are rooted
+- Only redeploys when new servers discovered (not every cycle)
+- Perfect for long-term automated management
+
+**Migration**:
+- Replace second parameter with hack percentage (0.01-1.0, recommended: 0.05)
+- Default behavior maintains 5% hack rate when parameter omitted
+- All flags (--quiet, --no-root) remain unchanged
+
+**Updated Usage**:
+```bash
+run batch-manager.js joesguns 0.05 1.25 home --quiet  # 5% hack rate
+run batch-manager.js joesguns --quiet                 # Uses default 5% hack
+run batch-manager.js --quiet --no-root                # Disable auto-rooting
+```
+
 ## [1.5.0] - 2025-10-26 - Smart Batcher & Production Analysis Revolution 🚀
 
 ### NEW - smart-batcher.js (Game-Changing Performance) 🎯

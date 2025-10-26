@@ -43,11 +43,11 @@ run simple-batcher.js joesguns --dry
 ```
 
 ### batch-manager.js
-**Purpose**: Enhanced batch manager with auto-rooting and intelligent quiet mode
-**Usage**: `run batch-manager.js [target] [capPerHost] [multiplier] [pservHost] [flags...]`
+**Purpose**: Enhanced batch manager with auto-rooting and intelligent quiet mode - deploys smart-batcher.js
+**Usage**: `run batch-manager.js [target] [hackPercent] [multiplier] [pservHost] [flags...]`
 **Parameters**:
 - `target` - Server to attack (default: joesguns)
-- `capPerHost` - Maximum threads per host (default: Infinity)
+- `hackPercent` - Percentage of server money to hack per batch (default: 0.05 = 5%)
 - `multiplier` - Batch timing multiplier (default: 1.25)
 - `pservHost` - Host for batch manager (default: home)
 - `flags` - Special flags:
@@ -55,22 +55,26 @@ run simple-batcher.js joesguns --dry
   - `--no-root` - Disable automatic server rooting
 
 **Features**:
-- Automatically roots new servers every 10 cycles
-- Manages simple-batcher.js continuously
-- Smart logging: important events always visible in quiet mode
-- Auto-restarts batcher if it stops
+- 🚀 Automatically deploys 490x more efficient smart-batcher
+- 🔄 Monitors for new servers every 10 cycles
+- 🎯 Only redeploys when new servers are rooted (not every cycle)
+- 🤫 Intelligent quiet mode: full output once, then silent until changes
+- 💰 Leverages optimal timing-based thread ratios (4% hack / 87% grow / 9% weaken)
+- ⚡ 3-4x faster server preparation
 
 **Examples**:
 ```bash
-run batch-manager.js joesguns 12 1.25 home --quiet
-run batch-manager.js joesguns --quiet --no-root    # Disable auto-rooting
-run batch-manager.js --quiet                        # Use all defaults
+run batch-manager.js joesguns 0.05 1.25 home --quiet  # Recommended
+run batch-manager.js joesguns --quiet --no-root       # Disable auto-rooting
+run batch-manager.js --quiet                          # Use all defaults (5% hack)
 ```
 
-**Quiet Mode Behavior**:
-- With `--quiet`: Rooting notifications visible, routine status hidden
-- Without `--quiet`: All messages display
-- Errors/warnings: Always visible
+**Intelligent Quiet Mode Behavior** 🤫:
+- **Initial deployment**: Shows full smart-batcher output (timing, ratios, summary)
+- **Continuous monitoring**: Stays completely silent while monitoring
+- **New servers rooted**: Shows rooting notifications + triggers full redeployment
+- **Perfect for**: Long-term automated management while you level up
+- Errors/warnings: Always visible regardless of quiet mode
 
 ### smart-batcher.js ⭐ RECOMMENDED
 **Purpose**: Intelligent batch deployment with optimal timing-based thread ratios
