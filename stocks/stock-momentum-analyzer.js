@@ -6,14 +6,21 @@
  * Example: run stocks/stock-momentum-analyzer.js 10
  * 
  * Requirements:
- * - TIX API Access ($5 billion)
- * - Does NOT require 4S Market Data
+ * - TIX API Access ($5 billion) - REQUIRED
+ * - 4S Market Data ($25 billion) - OPTIONAL but highly recommended
  * 
  * This script:
  * - Collects price data over multiple cycles
  * - Calculates momentum for each stock
  * - Shows BUY/HOLD/AVOID recommendations
+ * - If 4S Data available: Shows forecast alignment and confidence scoring
  * - Does NOT execute any trades (safe to run)
+ * 
+ * Enhanced Features with 4S Data:
+ * - Forecast alignment analysis (momentum vs forecast)
+ * - Confidence scoring (HIGH/MEDIUM/LOW)
+ * - Trap detection (momentum contradicts forecast)
+ * - Smart sorting by confidence level
  */
 
 const BUY_MOMENTUM_THRESHOLD = 3;
@@ -31,12 +38,18 @@ export async function main(ns) {
 
   const cyclesToRun = ns.args[0] || 5; // Default: 5 cycles (30 seconds at 6s/cycle)
   const refreshRate = 6000; // 6 seconds to match market updates
+  const has4S = ns.stock.has4SDataTIXAPI();
   
   ns.tprint(`${"═".repeat(70)}`);
   ns.tprint(`MOMENTUM ANALYSIS PREVIEW - NO TRADES EXECUTED`);
   ns.tprint(`${"═".repeat(70)}`);
   ns.tprint(`Collecting price data over ${cyclesToRun} cycles (${(cyclesToRun * refreshRate / 1000).toFixed(0)} seconds)...`);
   ns.tprint(`This will show you what stocks have momentum WITHOUT buying anything.`);
+  if (has4S) {
+    ns.tprint(`4S Market Data: ✅ ENABLED - Forecasts will be shown with alignment analysis`);
+  } else {
+    ns.tprint(`4S Market Data: ❌ NOT AVAILABLE - Momentum-only analysis ($25b for forecasts)`);
+  }
   ns.tprint(`${"═".repeat(70)}`);
 
   const symbols = ns.stock.getSymbols();
@@ -92,6 +105,15 @@ export async function main(ns) {
       tooVolatile: priceVolatility > 10 // >10% price swings in our data
     };
     
+    // Add forecast data if available
+    if (has4S) {
+      analysis.forecast = ns.stock.getForecast(symbol);
+      analysis.forecastBullish = analysis.forecast > 0.5;
+      analysis.momentumBullish = momentum.positive > momentum.negative;
+      analysis.aligned = analysis.forecastBullish === analysis.momentumBullish;
+      analysis.confidence = calculateConfidence(analysis);
+    }
+    
     // Categorize
     if (analysis.tooVolatile) {
       recommendations.avoid.push(analysis);
@@ -105,7 +127,7 @@ export async function main(ns) {
   }
 
   // Display recommendations
-  displayRecommendations(ns, recommendations);
+  displayRecommendations(ns, recommendations, has4S);
 }
 
 function updatePriceHistory(symbol, price) {
@@ -153,8 +175,29 @@ function calculatePriceVolatility(symbol) {
   return ((max - min) / avg) * 100;
 }
 
+function calculateConfidence(analysis) {
+  // Calculate confidence score based on momentum and forecast alignment
+  const { momentum, forecast, aligned } = analysis;
+  
+  if (!aligned) {
+    return "LOW"; // Momentum contradicts forecast = low confidence
+  }
+  
+  // High confidence if momentum is strong AND forecast is decisive
+  const momentumStrength = Math.max(momentum.positive, momentum.negative);
+  const forecastStrength = Math.abs(forecast - 0.5); // Distance from 50%
+  
+  if (momentumStrength >= 4 && forecastStrength >= 0.15) {
+    return "HIGH"; // 4+ momentum + 65%+ forecast = high confidence
+  } else if (momentumStrength >= 3 && forecastStrength >= 0.08) {
+    return "MEDIUM"; // 3+ momentum + 58%+ forecast = medium confidence
+  }
+  
+  return "LOW";
+}
+
 /** @param {NS} ns */
-function displayRecommendations(ns, rec) {
+function displayRecommendations(ns, rec, has4S) {
   const totalAnalyzed = rec.strongBuy.length + rec.buy.length + rec.hold.length + rec.avoid.length;
   
   ns.tprint(`Total Stocks Analyzed: ${totalAnalyzed}`);
@@ -167,13 +210,31 @@ function displayRecommendations(ns, rec) {
     ns.tprint(`🔥 STRONG BUY (4+ positive movements)`);
     ns.tprint(`${"═".repeat(70)}`);
     
-    rec.strongBuy.sort((a, b) => b.priceChange - a.priceChange);
+    rec.strongBuy.sort((a, b) => {
+      // Sort by confidence first (if has4S), then price change
+      if (has4S && a.confidence !== b.confidence) {
+        const confOrder = { "HIGH": 3, "MEDIUM": 2, "LOW": 1 };
+        return confOrder[b.confidence] - confOrder[a.confidence];
+      }
+      return b.priceChange - a.priceChange;
+    });
     
     for (const stock of rec.strongBuy) {
       ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓ | ` +
                 `Change: ${stock.priceChange > 0 ? "+" : ""}${stock.priceChange.toFixed(2)}% | ` +
                 `Swing: ${stock.priceVolatility.toFixed(1)}%`);
+      
+      if (has4S) {
+        const forecastPct = (stock.forecast * 100).toFixed(0);
+        const forecastDir = stock.forecastBullish ? "↑" : "↓";
+        const alignIcon = stock.aligned ? "✅" : "⚠️";
+        const confidenceColor = stock.confidence === "HIGH" ? "🟢" : stock.confidence === "MEDIUM" ? "🟡" : "🔴";
+        
+        ns.tprint(`         📊 Forecast: ${forecastPct}% ${forecastDir} | ` +
+                  `Alignment: ${alignIcon} ${stock.aligned ? "CONFIRMS" : "CONTRADICTS"} | ` +
+                  `Confidence: ${confidenceColor} ${stock.confidence}`);
+      }
     }
   }
   
@@ -184,13 +245,31 @@ function displayRecommendations(ns, rec) {
     ns.tprint(`✅ BUY (3+ positive movements)`);
     ns.tprint(`${"═".repeat(70)}`);
     
-    rec.buy.sort((a, b) => b.priceChange - a.priceChange);
+    rec.buy.sort((a, b) => {
+      // Sort by confidence first (if has4S), then price change
+      if (has4S && a.confidence !== b.confidence) {
+        const confOrder = { "HIGH": 3, "MEDIUM": 2, "LOW": 1 };
+        return confOrder[b.confidence] - confOrder[a.confidence];
+      }
+      return b.priceChange - a.priceChange;
+    });
     
     for (const stock of rec.buy) {
       ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓ | ` +
                 `Change: ${stock.priceChange > 0 ? "+" : ""}${stock.priceChange.toFixed(2)}% | ` +
                 `Swing: ${stock.priceVolatility.toFixed(1)}%`);
+      
+      if (has4S) {
+        const forecastPct = (stock.forecast * 100).toFixed(0);
+        const forecastDir = stock.forecastBullish ? "↑" : "↓";
+        const alignIcon = stock.aligned ? "✅" : "⚠️";
+        const confidenceColor = stock.confidence === "HIGH" ? "🟢" : stock.confidence === "MEDIUM" ? "🟡" : "🔴";
+        
+        ns.tprint(`         📊 Forecast: ${forecastPct}% ${forecastDir} | ` +
+                  `Alignment: ${alignIcon} ${stock.aligned ? "CONFIRMS" : "CONTRADICTS"} | ` +
+                  `Confidence: ${confidenceColor} ${stock.confidence}`);
+      }
     }
   }
   
@@ -241,20 +320,41 @@ function displayRecommendations(ns, rec) {
   
   if (buyableCount > 0) {
     ns.tprint(`✅ ${buyableCount} stocks with positive momentum detected!`);
+    
+    if (has4S) {
+      // Count high confidence stocks
+      const highConfidence = [...rec.strongBuy, ...rec.buy].filter(s => s.confidence === "HIGH").length;
+      const mediumConfidence = [...rec.strongBuy, ...rec.buy].filter(s => s.confidence === "MEDIUM").length;
+      const lowConfidence = [...rec.strongBuy, ...rec.buy].filter(s => s.confidence === "LOW").length;
+      
+      ns.tprint(`\n📊 Forecast Analysis:`);
+      ns.tprint(`  🟢 HIGH Confidence: ${highConfidence} (momentum + forecast aligned strongly)`);
+      ns.tprint(`  🟡 MEDIUM Confidence: ${mediumConfidence} (momentum + forecast aligned)`);
+      ns.tprint(`  🔴 LOW Confidence: ${lowConfidence} (momentum contradicts forecast - CAUTION!)`);
+      ns.tprint(`\nRecommendation: Prioritize HIGH confidence stocks for best results.`);
+    } else {
+      ns.tprint(`\n💡 TIP: Get 4S Market Data ($25b) to see forecast alignment analysis!`);
+      ns.tprint(`   This helps identify which momentum signals are most reliable.`);
+    }
+    
     ns.tprint(`\nThe momentum trader would buy these stocks now.`);
     ns.tprint(`\nTo start automated trading:`);
-    ns.tprint(`  run stocks/stock-trader-momentum.js 1000000000 6000`);
+    ns.tprint(`  run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000`);
   } else {
     ns.tprint(`⏸️  No stocks with strong positive momentum right now.`);
     ns.tprint(`\nMarket conditions may not be ideal for momentum trading.`);
     ns.tprint(`Recommendations:`);
     ns.tprint(`  - Wait and run this analyzer again in 5-10 minutes`);
-    ns.tprint(`  - Consider saving up for 4S Market Data ($25b) for forecast-based trading`);
+    if (!has4S) {
+      ns.tprint(`  - Consider saving up for 4S Market Data ($25b) for forecast-based trading`);
+    } else {
+      ns.tprint(`  - Use forecast-based trading instead: run stocks/stock-trader-basic.js`);
+    }
   }
   
   ns.tprint(`\nTo re-analyze momentum:`);
   ns.tprint(`  run stocks/stock-momentum-analyzer.js [cycles]`);
-  ns.tprint(`  (Default 10 cycles = 60 seconds of data collection)`);
+  ns.tprint(`  (Default 5 cycles = 30 seconds of data collection)`);
   ns.tprint(`${"═".repeat(70)}`);
 }
 

@@ -131,7 +131,7 @@ run stocks/stock-trader-advanced.js 100000000000 4000
 ---
 
 ### 4. stock-monitor.js - Portfolio Dashboard
-**Purpose**: Real-time monitoring of active positions (NO trading)
+**Purpose**: Real-time monitoring of active positions with 4S intelligence (NO trading)
 
 ```bash
 # Start monitoring with default 3s refresh
@@ -146,7 +146,24 @@ run stocks/stock-monitor.js 2000
 - Position-by-position breakdown
 - Profit/loss tracking
 - Performance metrics (peak value, drawdown, session returns)
-- Forecast indicators (with 4S Data)
+- **NEW: Real-time forecast display with alignment indicators**
+- **NEW: Volatility analysis (HIGH/MED/LOW risk levels)**
+- **NEW: Single-line compact format - twice as many positions visible**
+
+**4S Data Integration** (when available):
+```
+Symbol Type    Shares    Entry    Current        P/L   Return   Forecast   Volatility
+──────────────────────────────────────────────────────────────────────────────────────────
+NVMD   LONG     82.9k   $24.1k     $27.7k    $293.3m   +14.7%     ↑56% ✓   0.8% (LOW)
+FLCM   LONG     365.0    $8.0k     $14.4k      $2.3m   +80.4%     ↑68% ✓   1.3% (LOW)
+OMGA   LONG      1.6k    $2.0k      $2.0k    -$85.2k    -2.6%     ↓45% ⚠   1.0% (LOW)
+```
+
+**Intelligence Features**:
+- **✓ Indicator**: Position aligned with forecast (good!)
+- **⚠ Indicator**: Position contradicts forecast (warning - consider exiting!)
+- **Volatility Levels**: LOW (<2%), MED (2-5%), HIGH (>5%)
+- **Forecast Direction**: ↑ (bullish), ↓ (bearish), → (neutral)
 
 **Best For**:
 - Monitoring automated traders
@@ -157,37 +174,39 @@ run stocks/stock-monitor.js 2000
 ---
 
 ### 5. stock-trader-momentum.js - Momentum Trading (NO 4S Data!) 🆕
-**Purpose**: Automated trading based on price momentum WITHOUT needing 4S Market Data
+**Purpose**: Automated momentum trading WITHOUT needing 4S Market Data
 
-**Strategy**:
-- Track price changes over last 5 cycles
-- Buy when 3+ positive price movements (upward momentum)
-- Sell when 3+ negative price movements (downward momentum)
-- Sell when profit target reached (configurable)
-- Skip stocks with >10% price swings (too risky)
+**Strategy (MOMENTUM with RISK MANAGEMENT)**:
+- Track price changes over last 5 cycles (30 seconds)
+- Buy when 4+ POSITIVE price movements (riding the rally)
+- Sell ONLY when profit target reached OR stop loss triggered
+- Follows upward trends - holds positions until exit conditions met
+- Skip stocks with >3% price swings (too volatile)
 
 ```bash
-# Conservative: 5 stocks, $1b capital, 5% profit target
-run stocks/stock-trader-momentum.js 5 1000000000 0.05 6000
+# Conservative: 5 stocks, $1b capital, 5% profit target, 5% stop loss
+run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000
 
-# Moderate: 10 stocks, $2b capital, 10% profit target
-run stocks/stock-trader-momentum.js 10 2000000000 0.10 6000
+# Moderate: 10 stocks, $2b capital, 10% profit target, 5% stop loss
+run stocks/stock-trader-momentum.js 10 2000000000 0.10 0.05 6000
 
-# Aggressive: 3 stocks, $500m capital, 3% profit target (quick profits)
-run stocks/stock-trader-momentum.js 3 500000000 0.03 6000
+# Aggressive: 3 stocks, $500m capital, 3% profit target, no stop loss
+run stocks/stock-trader-momentum.js 3 500000000 0.03 1.0 6000
 ```
 
 **Parameters**:
 - `max-stocks`: Maximum number of different stocks to buy (e.g., 5, 10)
 - `total-capital`: Total money to invest across ALL stocks (e.g., 1000000000 = $1b)
-- `profit-target`: Profit % to auto-sell at (e.g., 0.05 = 5%, 0.10 = 10%, 0.15 = 15%)
+- `profit-target`: Profit % to auto-sell at (e.g., 0.03 = 3%, 0.05 = 5%, 0.10 = 10%)
+- `stop-loss`: Loss % to auto-sell at (e.g., 0.05 = 5%, 0.10 = 10%, 1.0 = no stop loss)
 - `refresh-rate-ms`: How often to check market (default: 6000 = 6 seconds)
 
 **Best For**: 
 - Players without 4S Market Data ($25 billion savings!)
 - Early-game trading (only need TIX API $5 billion)
-- Trending markets with clear momentum
-- Risk management with profit targets
+- Momentum trading philosophy
+- "Ride the trend" strategies
+- Trend-following with defined exits
 
 **Requirements**:
 - TIX API Access ($5 billion)
@@ -195,15 +214,15 @@ run stocks/stock-trader-momentum.js 3 500000000 0.03 6000
 
 ---
 
-### 6. stock-momentum-analyzer.js - Preview Momentum 🆕
-**Purpose**: Analyze momentum patterns WITHOUT making trades
+### 6. stock-momentum-analyzer.js - Preview Momentum with Forecast Intelligence 🆕✨
+**Purpose**: Analyze momentum patterns WITHOUT making trades + VALIDATE with 4S forecasts
 
 ```bash
-# Analyze momentum over 10 cycles (60 seconds)
+# Analyze momentum over 5 cycles (30 seconds) - default
 run stocks/stock-momentum-analyzer.js
 
-# Longer analysis period (20 cycles = 120 seconds)
-run stocks/stock-momentum-analyzer.js 20
+# Longer analysis period (10 cycles = 60 seconds)
+run stocks/stock-momentum-analyzer.js 10
 ```
 
 **Features**:
@@ -212,13 +231,35 @@ run stocks/stock-momentum-analyzer.js 20
 - Identifies buy signals (3+ positive movements)
 - Shows momentum and price change for each stock
 - Calculates price volatility
-- Recommends which stocks the momentum trader would buy
+- **NEW: Forecast alignment analysis** (requires 4S Data)
+- **NEW: Confidence scoring** (HIGH/MEDIUM/LOW)
+- **NEW: Trap detection** (momentum contradicts forecast)
+- **NEW: Smart sorting** (prioritizes high-confidence trades)
+
+**Enhanced Display (with 4S Data)**:
+```
+OMTK @ $68.61k | Momentum: 3↑ 1↓ | Change: +0.21%
+       📊 Forecast: 65% ↑ | Alignment: ✅ CONFIRMS | Confidence: 🟡 MEDIUM
+
+OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
+       📊 Forecast: 44% ↓ | Alignment: ⚠️ CONTRADICTS | Confidence: 🔴 LOW
+```
+
+**Confidence Levels**:
+- **🟢 HIGH**: Strong momentum (4+) + Strong forecast (65%+) = Both agree strongly
+- **🟡 MEDIUM**: Good momentum (3+) + Good forecast (58%+) = Both agree
+- **🔴 LOW**: Momentum contradicts forecast = **TRAP WARNING!**
+
+**Requirements**:
+- TIX API Access ($5 billion) - REQUIRED
+- 4S Market Data ($25 billion) - OPTIONAL but highly recommended for forecast validation
 
 **Best For**:
-- Testing momentum strategy before risking capital
-- Learning what momentum looks like
-- Finding the right time to start trading
-- Understanding market conditions
+- **Validating momentum signals** - See which trends are real vs temporary
+- **Preventing trap trades** - Avoid buying stocks about to reverse
+- **Testing strategy** - Preview before risking capital
+- **Learning patterns** - See how momentum relates to forecasts
+- **Finding optimal entry** - Wait for HIGH confidence opportunities
 
 ---
 
@@ -363,19 +404,22 @@ run stocks/stock-momentum-analyzer.js 20
 
 ## Script Performance Comparison
 
-| Feature | Basic | Advanced | Momentum | Monitor |
-|---------|-------|----------|----------|---------|
-| Long Positions | ✓ | ✓ | ✓ | N/A |
-| Short Positions | ✗ | ✓ | ✗ | N/A |
-| Stop-Loss | ✗ | ✓ | ✗ | N/A |
-| Profit Targets | ✗ | ✗ | ✓ | N/A |
-| Dynamic Sizing | ✗ | ✓ | ✗ | N/A |
-| Makes Trades | ✓ | ✓ | ✓ | ✗ |
-| Portfolio View | ✓ | ✓ | ✓ | ✓ |
-| Requires 4S Data | ✓ | ✓ | ✗ | - |
-| Difficulty | Easy | Advanced | Easy | Easy |
-| Min Capital | $10b | $50b | $5b | Any |
-| Expected Return | 20-50% | 50-150% | 10-40% | N/A |
+| Feature | Basic | Advanced | Momentum | Analyzer | Monitor |
+|---------|-------|----------|----------|----------|---------|
+| Long Positions | ✓ | ✓ | ✓ | N/A | N/A |
+| Short Positions | ✗ | ✓ | ✗ | N/A | N/A |
+| Stop-Loss | ✗ | ✓ | ✓ | N/A | N/A |
+| Profit Targets | ✗ | ✗ | ✓ | N/A | N/A |
+| Dynamic Sizing | ✗ | ✓ | ✗ | N/A | N/A |
+| Makes Trades | ✓ | ✓ | ✓ | ✗ | ✗ |
+| Portfolio View | ✓ | ✓ | ✓ | ✗ | ✓ |
+| Forecast Integration | ✓ | ✓ | ✗ | ✓ (optional) | ✓ |
+| Trap Detection | ✗ | ✗ | ✗ | ✓ | ✗ |
+| Confidence Scoring | ✗ | ✗ | ✗ | ✓ | ✗ |
+| Requires 4S Data | ✓ | ✓ | ✗ | - | - |
+| Difficulty | Easy | Advanced | Easy | Easy | Easy |
+| Min Capital | $10b | $50b | $5b | $5b | Any |
+| Expected Return | 20-50% | 50-150% | 10-40% | N/A | N/A |
 
 ## Troubleshooting
 
@@ -486,11 +530,11 @@ run stocks/stock-trader-basic.js 1000000000
 # Advanced trading ($50b portfolio, requires 4S + Shorts)
 run stocks/stock-trader-advanced.js 50000000000
 
-# Momentum trading (NO 4S Data needed!)
-run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000
+# Momentum trading (NO 4S Data needed! 5 stocks, $1b, 10% profit, 5% stop loss)
+run stocks/stock-trader-momentum.js 5 1000000000 0.10 0.05 6000
 
-# Preview momentum before trading
-run stocks/stock-momentum-analyzer.js 10
+# Preview momentum with forecast intelligence (5 cycles = 30 seconds, auto-detects 4S Data)
+run stocks/stock-momentum-analyzer.js 5
 
 # Monitor performance
 run stocks/stock-monitor.js 3000

@@ -113,9 +113,9 @@ deploy/deploy-share-all.js       # Deploy RAM sharing to all servers
 stocks/stock-info.js             # View market data & portfolio
 stocks/stock-trader-basic.js     # Simple automated trading (forecast)
 stocks/stock-trader-advanced.js  # Advanced trading with shorts
-stocks/stock-trader-momentum.js  # Momentum trading (NO 4S Data!) 🆕
-stocks/stock-momentum-analyzer.js # Preview momentum 🆕
-stocks/stock-monitor.js          # Real-time portfolio monitor
+stocks/stock-trader-momentum.js  # Momentum trading: Ride rallies (NO 4S Data!) 🆕
+stocks/stock-momentum-analyzer.js # Preview with forecast intelligence (auto-detects 4S) 🆕✨
+stocks/stock-monitor.js          # Real-time monitor: forecasts + volatility (4S enhanced) 🆕✨
 ```
 
 ## 📊 Key Improvements Reference
@@ -142,9 +142,11 @@ stocks/stock-monitor.js          # Real-time portfolio monitor
 # View market overview
 run stocks/stock-info.js
 
+# Momentum analysis (with forecast intelligence if 4S Data available) 🆕✨
+run stocks/stock-momentum-analyzer.js 5                       # Shows confidence scores & trap detection
+
 # Momentum trading (NO 4S Data - $5b only!) 🆕
-run stocks/stock-momentum-analyzer.js 10
-run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000
+run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000  # 5% profit, 5% stop loss
 
 # Forecast-based trading (requires 4S Data $6b)
 run stocks/stock-trader-basic.js 1000000000
