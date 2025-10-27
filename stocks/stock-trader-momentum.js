@@ -1,7 +1,7 @@
 /** stock-trader-momentum.js
- * Contrarian/Value-based stock trading WITHOUT 4S Market Data requirement.
+ * Momentum-based stock trading WITHOUT 4S Market Data requirement.
  * 
- * Strategy: Buy stocks on dips (negative momentum), hold until profit target or stop loss.
+ * Strategy: Buy stocks on upward momentum (rallies), hold until profit target or stop loss.
  * Uses price history tracking instead of forecasts.
  * 
  * Usage: run stocks/stock-trader-momentum.js [max-stocks] [total-capital] [profit-target] [stop-loss] [refresh-rate-ms]
@@ -18,15 +18,15 @@
  * - TIX API Access ($5 billion)
  * - Does NOT require 4S Market Data (saves $25 billion!)
  * 
- * Strategy (CONTRARIAN/VALUE with RISK MANAGEMENT):
+ * Strategy (MOMENTUM with RISK MANAGEMENT):
  * - Track price changes over last 5 cycles
- * - Buy if 4+ NEGATIVE price movements (buying strong dips)
+ * - Buy if 4+ POSITIVE price movements (riding the momentum/rally)
  * - Sell ONLY when profit target reached OR stop loss triggered
- * - Ignores rally signals (holds until target or stop loss)
+ * - Follows upward trends (holds until target or stop loss)
  * - Accounts for $100k commission per transaction
  */
 
-const BUY_MOMENTUM_THRESHOLD = 4;    // Need this many NEGATIVE movements to buy (contrarian)
+const BUY_MOMENTUM_THRESHOLD = 4;    // Need this many POSITIVE movements to buy (momentum)
 const HISTORY_LENGTH = 5;             // Track last 5 price points
 const COMMISSION = 100000;            // Stock transaction commission
 const MAX_PRICE_SWING = 3;            // Skip stocks with >3% price swings (too risky)
@@ -88,17 +88,17 @@ export async function main(ns) {
   ns.tail();
   
       ns.print(`${"═".repeat(70)}`);
-      ns.print(`CONTRARIAN STOCK TRADER - STARTING`);
+      ns.print(`MOMENTUM STOCK TRADER - STARTING`);
       ns.print(`${"═".repeat(70)}`);
-      ns.print(`Strategy: Buy dips, hold until profit target or stop loss`);
+      ns.print(`Strategy: Ride momentum, hold until profit target or stop loss`);
       ns.print(`Max Different Stocks: ${maxStocks}`);
       ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
       ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")} (after ${ns.nFormat(COMMISSION, "$0.00a")} commission)`);
       ns.print(`Profit Target: +${(profitTarget * 100).toFixed(1)}% (take profit)`);
       ns.print(`Stop Loss: -${(stopLoss * 100).toFixed(1)}% (limit losses)`);
       ns.print(`Refresh Rate: ${refreshRate}ms`);
-      ns.print(`Buy Signal: ${BUY_MOMENTUM_THRESHOLD}+ NEGATIVE movements (buy the dip)`);
-      ns.print(`Sell: Only on profit target or stop loss (ignores rallies)`);
+      ns.print(`Buy Signal: ${BUY_MOMENTUM_THRESHOLD}+ POSITIVE movements (ride the rally)`);
+      ns.print(`Sell: Only on profit target or stop loss`);
       ns.print(`Max Price Swing: ${MAX_PRICE_SWING}%`);
       ns.print(`${"═".repeat(70)}\n`);
 
@@ -166,7 +166,7 @@ export async function main(ns) {
             }
           }
           // Check if we should buy (only if under max stocks limit)
-          else if (negativeMovements >= BUY_MOMENTUM_THRESHOLD) {
+          else if (positiveMovements >= BUY_MOMENTUM_THRESHOLD) {
         // Count current positions
         const currentPositions = symbols.filter(s => {
           const [shares] = ns.stock.getPosition(s);
@@ -193,7 +193,7 @@ export async function main(ns) {
             actionsThisCycle++;
             
             ns.print(`✓ BUY ${symbol}: ${ns.nFormat(sharesToBuy, "0.0a")} shares @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-            ns.print(`  Contrarian Buy: ${positiveMovements}↑ ${negativeMovements}↓ (buying the dip) | Swing: ${priceSwing.toFixed(1)}% | Total Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+            ns.print(`  Momentum Buy: ${positiveMovements}↑ ${negativeMovements}↓ (riding the rally) | Swing: ${priceSwing.toFixed(1)}% | Total Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
             ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
           }
         }
@@ -275,11 +275,11 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted, cycleCount) {
       invested += longShares * longPrice;
     }
     
-    // Count stocks with strong dip opportunities (contrarian buys)
+    // Count stocks with strong momentum opportunities (momentum buys)
     if (priceHistory[symbol] && priceHistory[symbol].length >= HISTORY_LENGTH) {
       const momentum = calculateMomentum(symbol);
       const priceSwing = calculatePriceSwing(symbol);
-      if (momentum.negative >= BUY_MOMENTUM_THRESHOLD && priceSwing <= MAX_PRICE_SWING) {
+      if (momentum.positive >= BUY_MOMENTUM_THRESHOLD && priceSwing <= MAX_PRICE_SWING) {
         strongMomentumCount++;
       }
     }
@@ -296,7 +296,7 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted, cycleCount) {
   }
   
   ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
-  ns.print(`Strong Dip Opportunities: ${strongMomentumCount} (potential contrarian buys)`);
+  ns.print(`Strong Momentum Opportunities: ${strongMomentumCount} (potential momentum buys)`);
   
   if (cycleCount < HISTORY_LENGTH) {
     ns.print(`\n⏳ Collecting price data: ${dataCollectionProgress.toFixed(0)}% complete`);

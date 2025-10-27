@@ -37,14 +37,14 @@ export async function main(ns) {
   ns.clearLog();
   ns.tail();
   
-  ns.print(`${"═".repeat(70)}`);
+  ns.print(`${"═".repeat(50)}`);
   ns.print(`BASIC STOCK TRADER - STARTING`);
-  ns.print(`${"═".repeat(70)}`);
+  ns.print(`${"═".repeat(50)}`);
   ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")}`);
   ns.print(`Refresh Rate: ${refreshRate}ms`);
   ns.print(`Buy Threshold: ${(BUY_THRESHOLD * 100).toFixed(0)}% forecast`);
   ns.print(`Sell Threshold: ${(SELL_THRESHOLD * 100).toFixed(0)}% forecast`);
-  ns.print(`${"═".repeat(70)}\n`);
+  ns.print(`${"═".repeat(50)}\n`);
 
   let cycleCount = 0;
   let totalProfit = 0;
@@ -133,7 +133,7 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted) {
   if (positionCount > 0) {
     const unrealizedProfit = portfolioValue - invested;
     
-    ns.print(`\n${"─".repeat(70)}`);
+    ns.print(`\n${"─".repeat(50)}`);
     ns.print(`Portfolio: ${positionCount} positions | Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
     ns.print(`Unrealized P/L: ${ns.nFormat(unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
     ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);

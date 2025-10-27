@@ -2,27 +2,31 @@
 
 Complete automation suite for Bitburner including optimal batch operations, profit analysis, and stock market trading.
 
-## 🆕 What's New - Version 1.8.1
+## 🆕 What's New - Version 1.8.2
 
-**NEW: Momentum Trading with Profit Targets!** 🎯📈
+**NEW: Stock Momentum Analyzer 4S Data Enhancement!** 🎯✨
+
+Enhanced `stock-momentum-analyzer.js` with forecast intelligence - now auto-detects 4S Data and provides confidence scoring, trap detection, and forecast alignment analysis to prevent false positive trades!
+
+**Version 1.8.1: Momentum Trading with Risk Management!** 🎯📈
 
 Added 2 NEW momentum trading scripts that DON'T require 4S Market Data:
-- `stock-trader-momentum.js` - Trade based on price momentum (NO 4S Data!)
-- `stock-momentum-analyzer.js` - Preview momentum before trading
+- `stock-trader-momentum.js` - Momentum trading: Ride rallies, hold for profit target (NO 4S Data!)
+- `stock-momentum-analyzer.js` - Preview with forecast intelligence (auto-detects 4S) 🆕✨
 
 Plus 4 original scripts:
 - `stock-info.js` - Market intelligence and portfolio viewing
 - `stock-trader-basic.js` - Simple automated trading ($10-50b capital)
 - `stock-trader-advanced.js` - Professional trading with shorts ($50b+ capital)
-- `stock-monitor.js` - Real-time portfolio monitoring
+- `stock-monitor.js` - Real-time portfolio monitoring with 4S forecasts & volatility 🆕✨
 
 **See [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) for complete guide!**
 
 Quick start (momentum - cheapest):
 ```bash
-run stocks/stock-momentum-analyzer.js 10                    # Scout momentum
-run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000 # Trade with 10% profit target
-run stocks/stock-monitor.js                                 # Monitor performance
+run stocks/stock-momentum-analyzer.js 5                        # Forecast intelligence + trap detection
+run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000  # Trade: 5% profit, 5% stop loss
+run stocks/stock-monitor.js                                    # Monitor performance
 ```
 
 **Requirements**: 
@@ -89,7 +93,7 @@ scripts/
 │   ├── stock-trader-basic.js  Automated trading (forecast)
 │   ├── stock-trader-advanced.js Advanced strategies (shorts)
 │   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
-│   ├── stock-momentum-analyzer.js Preview momentum 🆕
+│   ├── stock-momentum-analyzer.js Forecast intelligence analyzer 🆕✨
 │   └── stock-monitor.js       Portfolio monitoring
 └── docs/              # Documentation
     ├── STOCK_TRADING_GUIDE.md      🆕 Complete trading guide
@@ -128,9 +132,9 @@ run analysis/production-monitor.js 60
 # View market overview
 run stocks/stock-info.js
 
-# Momentum trading (NO 4S Data - $5b only!)
-run stocks/stock-momentum-analyzer.js 10
-run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000
+# Momentum trading (forecast intelligence if 4S Data available) 🆕✨
+run stocks/stock-momentum-analyzer.js 10                   # Confidence scoring + trap detection
+run stocks/stock-trader-momentum.js 5 1000000000 0.10 0.05 6000  # 10% profit, 5% stop loss
 
 # Forecast-based trading (requires 4S Data $6b)
 run stocks/stock-trader-basic.js 1000000000
@@ -225,9 +229,9 @@ See [docs/REMOTE_API_SETUP.md](docs/REMOTE_API_SETUP.md) for development setup
 ### Scenario 3: Stock Trading - Momentum (Cheaper!)
 ```bash
 1. Purchase TIX API ($5b only - no 4S Data!)
-2. run stocks/stock-momentum-analyzer.js 10                  # Scout momentum
-3. run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000 # Trade with 10% target
-4. run stocks/stock-monitor.js                                # Watch profits
+2. run stocks/stock-momentum-analyzer.js 10                      # Forecast intelligence (optional 4S)
+3. run stocks/stock-trader-momentum.js 5 1000000000 0.10 0.05 6000 # Momentum: 10% profit, 5% stop
+4. run stocks/stock-monitor.js                                    # Watch profits
 ```
 
 ### Scenario 3b: Stock Trading - Forecast (Better Returns)

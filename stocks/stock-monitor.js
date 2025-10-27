@@ -51,6 +51,7 @@ export async function main(ns) {
       const askPrice = ns.stock.getAskPrice(symbol);
       const bidPrice = ns.stock.getBidPrice(symbol);
       const forecast = has4S ? ns.stock.getForecast(symbol) : 0.5;
+      const volatility = has4S ? ns.stock.getVolatility(symbol) : 0;
       
       if (longShares > 0) {
         const currentValue = longShares * bidPrice;
@@ -70,7 +71,8 @@ export async function main(ns) {
           value: currentValue,
           profit,
           returnPct,
-          forecast
+          forecast,
+          volatility
         });
       }
       
@@ -92,7 +94,8 @@ export async function main(ns) {
           value: currentValue,
           profit,
           returnPct,
-          forecast
+          forecast,
+          volatility
         });
       }
     }
@@ -120,6 +123,7 @@ export async function main(ns) {
     // Display dashboard
     ns.print(`${"═".repeat(50)}`);
     ns.print(`STOCK PORTFOLIO MONITOR - ${now.toLocaleTimeString()}`);
+    if (has4S) ns.print(`[4S Market Data: ACTIVE - Forecast & Volatility Available]`);
     ns.print(`${"═".repeat(50)}`);
     ns.print(`Active Positions: ${positions.length}`);
     ns.print(`Portfolio Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
@@ -139,32 +143,56 @@ export async function main(ns) {
       
       // Header
       if (has4S) {
-        ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
-          "Symbol", "Type", "Shares", "Entry", "Current", "P/L", "Return"));
+        ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s %10s %12s",
+          "Symbol", "Type", "Shares", "Entry", "Current", "P/L", "Return", "Forecast", "Volatility"));
       } else {
         ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
           "Symbol", "Type", "Shares", "Entry", "Current", "P/L", "Return"));
       }
-      ns.print(`${"─".repeat(50)}`);
+      ns.print(`${"─".repeat(has4S ? 85 : 50)}`);
       
       for (const pos of positions) {
         const profitColor = pos.profit > 0 ? "+" : "";
         const returnStr = `${profitColor}${pos.returnPct.toFixed(1)}%`;
         
-        ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
-          pos.symbol,
-          pos.type,
-          ns.nFormat(pos.shares, "0.0a"),
-          ns.nFormat(pos.entryPrice, "$0.0a"),
-          ns.nFormat(pos.currentPrice, "$0.0a"),
-          ns.nFormat(pos.profit, "$0.0a"),
-          returnStr
-        ));
-        
         if (has4S) {
+          // Forecast direction and strength
           const fcStr = pos.forecast > 0.5 ? `↑${(pos.forecast * 100).toFixed(0)}%` : 
                        pos.forecast < 0.5 ? `↓${(pos.forecast * 100).toFixed(0)}%` : "→50%";
-          ns.print(`  Forecast: ${fcStr}`);
+          
+          // Position alignment check
+          let alignment = "";
+          if (pos.type === "LONG" && pos.forecast > 0.5) alignment = "✓";
+          else if (pos.type === "SHORT" && pos.forecast < 0.5) alignment = "✓";
+          else if (pos.forecast !== 0.5) alignment = "⚠";
+          
+          // Volatility indicator
+          const volStr = pos.volatility > 0.05 ? "HIGH" : 
+                        pos.volatility > 0.02 ? "MED" : "LOW";
+          const volPct = (pos.volatility * 100).toFixed(1);
+          const volDisplay = `${volPct}% (${volStr})`;
+          
+          ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s %10s %12s",
+            pos.symbol,
+            pos.type,
+            ns.nFormat(pos.shares, "0.0a"),
+            ns.nFormat(pos.entryPrice, "$0.0a"),
+            ns.nFormat(pos.currentPrice, "$0.0a"),
+            ns.nFormat(pos.profit, "$0.0a"),
+            returnStr,
+            `${fcStr} ${alignment}`,
+            volDisplay
+          ));
+        } else {
+          ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
+            pos.symbol,
+            pos.type,
+            ns.nFormat(pos.shares, "0.0a"),
+            ns.nFormat(pos.entryPrice, "$0.0a"),
+            ns.nFormat(pos.currentPrice, "$0.0a"),
+            ns.nFormat(pos.profit, "$0.0a"),
+            returnStr
+          ));
         }
       }
     } else {
