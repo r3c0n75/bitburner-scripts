@@ -118,14 +118,14 @@ export async function main(ns) {
     positions.sort((a, b) => b.profit - a.profit);
     
     // Display dashboard
-    ns.print(`${"═".repeat(70)}`);
+    ns.print(`${"═".repeat(50)}`);
     ns.print(`STOCK PORTFOLIO MONITOR - ${now.toLocaleTimeString()}`);
-    ns.print(`${"═".repeat(70)}`);
+    ns.print(`${"═".repeat(50)}`);
     ns.print(`Active Positions: ${positions.length}`);
     ns.print(`Portfolio Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
     ns.print(`Total Invested: ${ns.nFormat(invested, "$0.00a")}`);
     ns.print(`Cash Available: ${ns.nFormat(ns.getServerMoneyAvailable("home"), "$0.00a")}`);
-    ns.print(`${"─".repeat(70)}`);
+    ns.print(`${"─".repeat(50)}`);
     ns.print(`Unrealized P/L: ${ns.nFormat(totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
     ns.print(`Session Return: ${sessionReturn > 0 ? "+" : ""}${sessionReturn.toFixed(2)}%`);
     ns.print(`Peak Value: ${ns.nFormat(peakValue, "$0.00a")}`);
@@ -133,9 +133,9 @@ export async function main(ns) {
     ns.print(`Runtime: ${runTime.toFixed(1)} minutes`);
     
     if (positions.length > 0) {
-      ns.print(`\n${"═".repeat(70)}`);
+      ns.print(`\n${"═".repeat(50)}`);
       ns.print(`POSITIONS`);
-      ns.print(`${"─".repeat(70)}`);
+      ns.print(`${"─".repeat(50)}`);
       
       // Header
       if (has4S) {
@@ -145,7 +145,7 @@ export async function main(ns) {
         ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
           "Symbol", "Type", "Shares", "Entry", "Current", "P/L", "Return"));
       }
-      ns.print(`${"─".repeat(70)}`);
+      ns.print(`${"─".repeat(50)}`);
       
       for (const pos of positions) {
         const profitColor = pos.profit > 0 ? "+" : "";
@@ -171,7 +171,7 @@ export async function main(ns) {
       ns.print(`\nNo active positions.`);
     }
     
-    ns.print(`\n${"═".repeat(70)}`);
+    ns.print(`\n${"═".repeat(50)}`);
     ns.print(`Next update in ${(refreshRate / 1000).toFixed(1)}s...`);
     
     await ns.sleep(refreshRate);

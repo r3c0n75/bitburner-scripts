@@ -20,16 +20,16 @@
  * 
  * Strategy (CONTRARIAN/VALUE with RISK MANAGEMENT):
  * - Track price changes over last 5 cycles
- * - Buy if 5+ NEGATIVE price movements (buying strong dips)
+ * - Buy if 4+ NEGATIVE price movements (buying strong dips)
  * - Sell ONLY when profit target reached OR stop loss triggered
  * - Ignores rally signals (holds until target or stop loss)
  * - Accounts for $100k commission per transaction
  */
 
-const BUY_MOMENTUM_THRESHOLD = 5;    // Need this many NEGATIVE movements to buy (contrarian)
+const BUY_MOMENTUM_THRESHOLD = 4;    // Need this many NEGATIVE movements to buy (contrarian)
 const HISTORY_LENGTH = 5;             // Track last 5 price points
 const COMMISSION = 100000;            // Stock transaction commission
-const MAX_PRICE_SWING = 10;           // Skip stocks with >10% price swings (too risky)
+const MAX_PRICE_SWING = 3;            // Skip stocks with >3% price swings (too risky)
 
 // Global price history storage
 const priceHistory = {};
@@ -55,7 +55,7 @@ export async function main(ns) {
       // Parse parameters
       const maxStocks = ns.args[0] || 10;           // Default: Buy up to 10 different stocks
       const totalCapital = ns.args[1] || 1e9;       // Default: $1 billion total investment
-      const profitTarget = ns.args[2] || 0.15;      // Default: 15% profit target
+      const profitTarget = ns.args[2] || 0.05;      // Default: 5% profit target (more achievable)
       const stopLoss = ns.args[3] || 0.05;          // Default: 5% stop loss
       const refreshRate = ns.args[4] || 6000;       // Default: 6 seconds
       

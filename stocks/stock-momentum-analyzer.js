@@ -29,7 +29,7 @@ export async function main(ns) {
     return;
   }
 
-  const cyclesToRun = ns.args[0] || 10; // Default: 10 cycles (60 seconds at 6s/cycle)
+  const cyclesToRun = ns.args[0] || 5; // Default: 5 cycles (30 seconds at 6s/cycle)
   const refreshRate = 6000; // 6 seconds to match market updates
   
   ns.tprint(`${"═".repeat(70)}`);
