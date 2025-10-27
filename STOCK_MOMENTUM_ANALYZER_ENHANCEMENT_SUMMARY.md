@@ -35,7 +35,7 @@ All scripts verified identical between both locations using SHA256 hash:
 ```javascript
 const has4S = ns.stock.has4SDataTIXAPI();
 ```
-- Automatically detects if player has $25 billion 4S Data upgrade
+- Automatically detects if player has 4S Data upgrade ($1 billion)
 - No configuration required - just works!
 
 #### 2. **Forecast Alignment Analysis**
@@ -224,7 +224,7 @@ run stocks/stock-momentum-analyzer.js 5
 - Good for basic pattern recognition
 - Use as learning tool
 
-**WITH 4S Data ($25B+ budget):**
+**WITH 4S Data ($6B budget: TIX + 4S):**
 ```bash
 run stocks/stock-momentum-analyzer.js 10
 ```
@@ -294,7 +294,7 @@ run stocks/stock-momentum-analyzer.js 10
 
 ### Long-Term Strategy
 
-1. **Save for 4S Data** ($25B)
+1. **Save for 4S Data** ($1B)
    - Unlock full forecast validation
    - Dramatically improve success rate
    - See the "why" behind momentum

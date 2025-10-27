@@ -28,7 +28,7 @@ OMGA   LONG      1.6k    $2.0k      $2.0k    -$85.2k    -2.6%     ↓45% ⚠   1
 
 **Intelligence Features**:
 - **Forecast Column**: Shows direction (↑↓→) and percentage with alignment indicator
-  - ✓ = LONG with bullish forecast OR SHORT with bearish forecast (good!)
+  - ✓ = Position aligns with forecast (good!)
   - ⚠ = Position contradicts forecast (may need to exit!)
 - **Volatility Column**: Shows percentage and risk level
   - LOW: <2% - Stable, predictable movements
@@ -75,7 +75,7 @@ run stocks/stock-monitor.js 3000  # 3-second updates
 - `stocks/stock-momentum-analyzer.js` - Added optional 4S Market Data integration for forecast validation
 
 **Key Features**:
-- **Auto-Detection**: Automatically detects if you have 4S Market Data ($25 billion)
+- **Auto-Detection**: Automatically detects if you have 4S Market Data ($1 billion)
 - **Forecast Alignment Analysis**: Shows whether momentum confirms or contradicts forecast
 - **Confidence Scoring**: HIGH/MEDIUM/LOW based on momentum + forecast agreement
 - **Trap Detection**: Warns when momentum signals are about to reverse (contradicts forecast)
@@ -121,7 +121,7 @@ run stocks/stock-momentum-analyzer.js 10
 
 **Requirements**:
 - TIX API Access ($5 billion) - REQUIRED
-- 4S Market Data ($25 billion) - OPTIONAL (but highly recommended for validation)
+- 4S Market Data ($1 billion) - OPTIONAL (but highly recommended for validation)
 
 **Technical Implementation**:
 - Calculates forecast alignment (momentum direction vs forecast direction)
@@ -149,7 +149,7 @@ run stocks/stock-momentum-analyzer.js 10
 - `stocks/stock-momentum-analyzer.js` - Preview momentum analysis before trading
 
 **Key Features**:
-- **No 4S Data Required**: Saves $25 billion! Uses price history tracking instead of forecasts
+- **No 4S Data Required**: Only needs TIX API! Uses price history tracking instead of forecasts
 - **Momentum Strategy**: Buy stocks on rallies (positive momentum), hold until profit target or stop loss
 - **Profit Target Parameter**: User-configurable profit target (e.g., 0.03 = 3%, 0.05 = 5%, 0.10 = 10%)
 - **Stop Loss Protection**: User-configurable stop loss to limit losses (e.g., 0.05 = 5%, 0.10 = 10%)
@@ -202,7 +202,7 @@ run stocks/stock-momentum-analyzer.js 5
 - Works in any market (no forecast dependency)
 
 **Best For**:
-- Players without $25 billion for 4S Market Data
+- Players without 4S Market Data
 - Early-game automated trading
 - Momentum trading philosophy
 - "Ride the trend" strategies
@@ -226,7 +226,7 @@ run stocks/stock-momentum-analyzer.js 5
 **New Scripts** (4 total):
 - `stocks/stock-info.js` - Market intelligence and portfolio viewing
 - `stocks/stock-trader-basic.js` - Simple automated trading (20-50% daily returns)
-- `stocks/stock-trader-advanced.js` - Professional trading with shorts (50-150% daily returns)
+- `stocks/stock-trader-advanced.js` - Advanced trading with dynamic sizing (30-80% daily returns)
 - `stocks/stock-monitor.js` - Real-time portfolio monitoring dashboard
 
 **New Documentation** (2 files):
@@ -240,7 +240,7 @@ run stocks/stock-momentum-analyzer.js 5
 
 **Features**:
 - Automated buying/selling based on forecasts
-- Long and short positions (advanced)
+- Long positions (short positions version-dependent)
 - Dynamic position sizing
 - Stop-loss protection (-10%)
 - Portfolio limits (10% max per stock)
@@ -250,9 +250,8 @@ run stocks/stock-momentum-analyzer.js 5
 **Prerequisites**:
 - TIX API Access: $5 billion (required)
 - 4S Market Data TIX API: $1 billion (highly recommended)
-- Short Position Access: $25 billion (optional, for advanced)
 
-**Total Cost**: $6 billion minimum, $31 billion for full features
+**Total Cost**: $6 billion for forecast-based trading, $5 billion for momentum-only
 
 **Integration**: Works alongside hacking scripts with no conflicts (~4-5GB RAM per trader)
 

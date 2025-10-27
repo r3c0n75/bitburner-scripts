@@ -17,7 +17,7 @@ Added 2 NEW momentum trading scripts that DON'T require 4S Market Data:
 Plus 4 original scripts:
 - `stock-info.js` - Market intelligence and portfolio viewing
 - `stock-trader-basic.js` - Simple automated trading ($10-50b capital)
-- `stock-trader-advanced.js` - Professional trading with shorts ($50b+ capital)
+- `stock-trader-advanced.js` - Advanced trading with dynamic sizing ($50b+ capital)
 - `stock-monitor.js` - Real-time portfolio monitoring with 4S forecasts & volatility 🆕✨
 
 **See [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) for complete guide!**
@@ -91,7 +91,7 @@ scripts/
 ├── stocks/            # 🆕 Stock trading (TIX API)
 │   ├── stock-info.js          Market intelligence
 │   ├── stock-trader-basic.js  Automated trading (forecast)
-│   ├── stock-trader-advanced.js Advanced strategies (shorts)
+│   ├── stock-trader-advanced.js Advanced strategies (dynamic sizing)
 │   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
 │   ├── stock-momentum-analyzer.js Forecast intelligence analyzer 🆕✨
 │   └── stock-monitor.js       Portfolio monitoring
@@ -196,7 +196,7 @@ See [docs/REMOTE_API_SETUP.md](docs/REMOTE_API_SETUP.md) for development setup
 - **Momentum Trading**: NO 4S Data needed! ($5b only)
 - **Profit Targets**: Configurable profit taking (5%, 10%, 15%)
 - **Automated trading** with multiple strategies
-- Long and short positions (advanced)
+- Long positions (short positions version-dependent)
 - Dynamic position sizing
 - Stop-loss protection
 - Real-time monitoring

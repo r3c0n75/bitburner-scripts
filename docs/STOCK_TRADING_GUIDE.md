@@ -29,15 +29,11 @@ Complete guide to automated stock trading in Bitburner using the TIX (Trade Info
    - Essential for basic and advanced traders
    - Without this, you're trading blind!
 
-4. **Short Position Access** ($25 billion - Optional)
-   - Allows betting against stocks (profit when price falls)
-   - Only needed for advanced trading strategy
-   - Significantly increases profit potential
-
 ### Cost Summary
 - **Minimum (Forecast-Based)**: $6 billion (TIX API + 4S Data)
 - **Minimum (Momentum-Based)**: $5 billion (TIX API only - no 4S Data needed!)
-- **Advanced**: $31 billion (includes Short positions)
+
+**Note**: Some Bitburner versions include short position functionality (betting against stocks), but this is not universally available. All scripts work with long positions only.
 
 ## Script Overview
 
@@ -94,12 +90,12 @@ run stocks/stock-trader-basic.js 2000000000 4000
 
 ---
 
-### 3. stock-trader-advanced.js - Professional Trading
-**Purpose**: Sophisticated strategy with long/short positions and risk management
+### 3. stock-trader-advanced.js - Advanced Trading
+**Purpose**: Enhanced strategy with dynamic position sizing and risk management
 
 **Strategy**:
 - **Long positions**: Buy when forecast > 55%
-- **Short positions**: Sell when forecast < 45%
+- **Short positions**: Sell when forecast < 45% (if available in your game version)
 - **Dynamic sizing**: Bigger positions for stronger forecasts
 - **Stop-loss**: Automatically exit losing trades at -10%
 - **Portfolio limits**: Max 10% per stock for diversification
@@ -123,10 +119,12 @@ run stocks/stock-trader-advanced.js 100000000000 4000
 **Best For**:
 - Experienced traders
 - High capital ($50+ billion)
-- Maximum profit potential
+- Enhanced profit potential with dynamic sizing
 - Active risk management
 
-**Requires**: Short position access ($25 billion upgrade)
+**Requirements**: TIX API ($5b) + 4S Market Data ($1b)
+
+**Note**: Works with long positions only if short positions unavailable in your game version.
 
 ---
 
@@ -202,7 +200,7 @@ run stocks/stock-trader-momentum.js 3 500000000 0.03 1.0 6000
 - `refresh-rate-ms`: How often to check market (default: 6000 = 6 seconds)
 
 **Best For**: 
-- Players without 4S Market Data ($25 billion savings!)
+- Players without 4S Market Data
 - Early-game trading (only need TIX API $5 billion)
 - Momentum trading philosophy
 - "Ride the trend" strategies
@@ -252,7 +250,7 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 
 **Requirements**:
 - TIX API Access ($5 billion) - REQUIRED
-- 4S Market Data ($25 billion) - OPTIONAL but highly recommended for forecast validation
+- 4S Market Data ($1 billion) - OPTIONAL but highly recommended for forecast validation
 
 **Best For**:
 - **Validating momentum signals** - See which trends are real vs temporary
@@ -303,9 +301,9 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 - Focus on high-confidence trades (>60% forecast)
 
 **Stage 3: Professional ($50+ billion capital)**
-- Purchase Short Position access ($25 billion)
-- Switch to `stock-trader-advanced.js`
-- Maximize returns with full strategy arsenal
+- Consider `stock-trader-advanced.js` for enhanced position sizing
+- Dynamic sizing based on forecast confidence
+- Advanced risk management features
 
 ## Trading Strategies
 
@@ -332,10 +330,11 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 - Exit: Forecast < 52% OR loss > 10%
 - Size: Scales with forecast confidence
 
-// Short Positions:
+// Short Positions (if available):
 - Enter: Forecast < 45%
 - Exit: Forecast > 48% OR loss > 10%
 - Size: Scales with forecast confidence
+- Note: Not available in all game versions
 
 // Risk Management:
 - Max 10% portfolio per stock
@@ -391,7 +390,7 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 ✓ **Diversify positions** - Don't bet everything on one stock  
 ✓ **Monitor regularly** - Check for stuck positions or problems  
 ✓ **Scale with capital** - Bigger budget = bigger positions  
-✓ **Consider shorts** - Double your opportunities with bearish trades  
+✓ **Use dynamic sizing** - Let advanced trader scale positions by confidence  
 
 ### Common Mistakes to Avoid
 
@@ -407,7 +406,7 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 | Feature | Basic | Advanced | Momentum | Analyzer | Monitor |
 |---------|-------|----------|----------|----------|---------|
 | Long Positions | ✓ | ✓ | ✓ | N/A | N/A |
-| Short Positions | ✗ | ✓ | ✗ | N/A | N/A |
+| Short Positions | ✗ | Optional* | ✗ | N/A | N/A |
 | Stop-Loss | ✗ | ✓ | ✓ | N/A | N/A |
 | Profit Targets | ✗ | ✗ | ✓ | N/A | N/A |
 | Dynamic Sizing | ✗ | ✓ | ✗ | N/A | N/A |
@@ -419,7 +418,9 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 | Requires 4S Data | ✓ | ✓ | ✗ | - | - |
 | Difficulty | Easy | Advanced | Easy | Easy | Easy |
 | Min Capital | $10b | $50b | $5b | $5b | Any |
-| Expected Return | 20-50% | 50-150% | 10-40% | N/A | N/A |
+| Expected Return | 20-50% | 30-80%* | 10-40% | N/A | N/A |
+
+\* Advanced trader returns depend on whether short positions are available in your game version. Returns shown are for long-only trading.
 
 ## Troubleshooting
 
@@ -430,8 +431,8 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 **Solution**: Purchase 4S Data from WSE for $1 billion  
 **Note**: Essential for profitable trading - don't skip this!
 
-### "Short positions disabled"
-**Solution**: Purchase Short access for $25 billion (only needed for advanced trader)
+### "Short positions disabled" or "not available in this version"
+**Explanation**: Short positions are not available in all Bitburner versions. All trading scripts work correctly with long positions only. The advanced trader will automatically detect and work without shorts if unavailable.
 
 ### Scripts not buying anything
 **Possible Causes**:
@@ -497,9 +498,9 @@ They don't conflict and diversify your income streams!
 
 | Capital | Daily Profit | Notes |
 |---------|--------------|-------|
-| $50b | $25-75b | 50-150% with shorts |
-| $100b | $50-150b | Max diversification |
-| $200b | $80-300b | Market domination |
+| $50b | $15-40b | 30-80% with dynamic sizing |
+| $100b | $30-80b | Max diversification |
+| $200b | $60-160b | Market domination |
 
 **Reality Check**: 
 - Results vary by market conditions
@@ -512,7 +513,7 @@ They don't conflict and diversify your income streams!
 1. **Start Small**: Use basic trader with $1-2 billion per stock
 2. **Learn Patterns**: Run monitor alongside to understand forecasts
 3. **Scale Up**: Increase investment as you gain confidence
-4. **Go Advanced**: Add shorts when you have $50+ billion capital
+4. **Consider Advanced**: Use dynamic sizing when you have $50+ billion capital
 5. **Automate**: Let it run while you focus on other gameplay
 
 ## Quick Reference Commands
