@@ -2,7 +2,8 @@
  * Advanced automated stock trading with portfolio management.
  * 
  * Features:
- * - Long AND short positions
+ * - Long positions with dynamic sizing
+ * - Short positions (if available in your game version)
  * - Dynamic position sizing based on forecast confidence
  * - Stop-loss protection
  * - Portfolio rebalancing
@@ -14,7 +15,9 @@
  * Requirements:
  * - TIX API Access ($5 billion)
  * - 4S Market Data TIX API ($1 billion)
- * - Short position access ($25 billion upgrade)
+ * 
+ * Note: Short positions may not be available in all Bitburner versions.
+ *       Script will work with long positions only if shorts unavailable.
  */
 
 const LONG_THRESHOLD = 0.55;    // Go long if forecast > 55%
@@ -37,7 +40,14 @@ export async function main(ns) {
     return;
   }
 
-  const canShort = ns.stock.has4SData();
+  // Check if short functions are available (version-dependent)
+  let canShort = false;
+  try {
+    canShort = typeof ns.stock.buyShort === 'function' && typeof ns.stock.sellShort === 'function';
+  } catch (e) {
+    canShort = false;
+  }
+  
   const totalInvestment = ns.args[0] || 50e9;  // Default: $50 billion
   const refreshRate = ns.args[1] || 6000;       // Default: 6 seconds
   
@@ -49,10 +59,15 @@ export async function main(ns) {
   ns.print(`ADVANCED STOCK TRADER - STARTING`);
   ns.print(`${"═".repeat(70)}`);
   ns.print(`Total Investment Budget: ${ns.nFormat(totalInvestment, "$0.00a")}`);
-  ns.print(`Short Positions: ${canShort ? "ENABLED" : "DISABLED (need $25b upgrade)"}`);
+  ns.print(`Short Positions: ${canShort ? "ENABLED" : "DISABLED (not available in this version)"}`);
+  if (!canShort) {
+    ns.print(`  Note: Trading long positions only`);
+  }
   ns.print(`Refresh Rate: ${refreshRate}ms`);
   ns.print(`Long Threshold: ${(LONG_THRESHOLD * 100).toFixed(0)}%`);
-  ns.print(`Short Threshold: ${(SHORT_THRESHOLD * 100).toFixed(0)}%`);
+  if (canShort) {
+    ns.print(`Short Threshold: ${(SHORT_THRESHOLD * 100).toFixed(0)}%`);
+  }
   ns.print(`Stop Loss: ${(STOP_LOSS * 100).toFixed(0)}%`);
   ns.print(`${"═".repeat(70)}\n`);
 

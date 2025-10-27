@@ -2,7 +2,7 @@
 
 ## Overview
 
-Successfully implemented a comprehensive automated stock trading system for Bitburner using the TIX (Trade Information eXchange) API. This suite provides everything from basic market viewing to sophisticated algorithmic trading with long/short positions, stop-losses, profit targets, and momentum-based strategies that don't require 4S Market Data.
+Successfully implemented a comprehensive automated stock trading system for Bitburner using the TIX (Trade Information eXchange) API. This suite provides everything from basic market viewing to sophisticated algorithmic trading with dynamic position sizing, stop-losses, profit targets, and momentum-based strategies that don't require 4S Market Data.
 
 **Version**: 1.8.1  
 **Date**: October 27, 2025  
@@ -17,7 +17,7 @@ Successfully implemented a comprehensive automated stock trading system for Bitb
 **Features**:
 - View all available stocks with prices and forecasts
 - Detailed single-stock analysis
-- Current position tracking (long/short)
+- Current position tracking
 - Profit/loss calculations
 - Portfolio summary with total returns
 - Bid/ask spread analysis
@@ -48,7 +48,7 @@ run stocks/stock-info.js FSIG
 **Strategy**:
 - **Buy Signal**: Forecast > 55% (bullish trend)
 - **Sell Signal**: Forecast drops < 50% (trend weakens)
-- **Position Type**: Long positions only (no shorting)
+- **Position Type**: Long positions only
 - **Position Sizing**: Fixed amount per stock
 
 **Features**:
@@ -88,14 +88,15 @@ run stocks/stock-trader-basic.js 2000000000 4000
 
 **Strategy**:
 - **Long Entry**: Forecast > 55%
-- **Short Entry**: Forecast < 45%
+- **Short Entry**: Forecast < 45% (if available in your game version)
 - **Exit Threshold**: Within 2% of neutral (48-52%)
 - **Stop-Loss**: Automatic exit at -10% loss
 - **Position Sizing**: Dynamic based on forecast confidence
 - **Portfolio Limit**: Max 10% per stock for diversification
 
 **Advanced Features**:
-- Long AND short positions (profit from up and down)
+- Long positions with dynamic sizing
+- Short positions (version-dependent)
 - Dynamic position sizing (bigger bets on stronger signals)
 - Stop-loss protection (limit downside risk)
 - Portfolio rebalancing (maintain diversification)
@@ -123,7 +124,8 @@ run stocks/stock-trader-advanced.js 100000000000 4000
 **Requirements**:
 - TIX API Access ($5 billion)
 - 4S Market Data ($1 billion)
-- Short Position Access ($25 billion) - REQUIRED
+
+**Note**: Short positions may not be available in all game versions. Script works with long positions only if shorts unavailable.
 
 ---
 
@@ -174,7 +176,7 @@ run stocks/stock-monitor.js 2000
 **Strategy**:
 - **Buy Signal**: 3+ positive price movements over last 5 cycles
 - **Sell Signal**: 3+ negative movements OR profit target reached
-- **Position Type**: Long positions only (no shorting)
+- **Position Type**: Long positions only
 - **Position Sizing**: Fixed amount per stock with commission accounting
 - **Risk Management**: Skip stocks with >10% price swings
 - **Profit Targets**: User-configurable (e.g., 5%, 10%, 15%)
@@ -207,7 +209,7 @@ run stocks/stock-trader-momentum.js 3 500000000 0.03 6000
 - `refresh-rate-ms`: Market check frequency (default: 6000 = 6 seconds)
 
 **Best For**:
-- Players without 4S Market Data ($25 billion savings!)
+- Players without 4S Market Data
 - Early-game trading ($5 billion TIX API only)
 - Trending markets with clear momentum
 - Quick profit-taking strategies
@@ -376,15 +378,7 @@ Add to momentum setup:
 
 **Total**: $6 billion
 
-### Full Setup ($31 billion)
-Add to minimum setup:
-
-4. **Short Position Access** - $25 billion
-   - Allows shorting stocks (profit from price drops)
-   - Doubles trading opportunities
-   - Required for advanced trader script
-
-**Total Full**: $31 billion
+**Note**: Some Bitburner versions include short position trading, but this is not universally available. All scripts work with long positions only if shorts are unavailable.
 
 ---
 
@@ -457,8 +451,8 @@ Works alongside:
 4. Study position performance
 
 ### Stage 3: Professional ($50b+ capital)
-1. Purchase Short Position access ($25b)
-2. Switch to `stock-trader-advanced.js`
+1. Consider `stock-trader-advanced.js` for enhanced features
+2. Benefit from dynamic position sizing
 3. Utilize full trading arsenal
 4. Maximize returns with diversification
 
@@ -485,7 +479,7 @@ run stocks/stock-monitor.js 3000
 # View specific stock details
 run stocks/stock-info.js FSIG
 
-# Advanced trading (requires $31b total prerequisites)
+# Advanced trading (requires $6b: TIX + 4S Data)
 run stocks/stock-trader-advanced.js 50000000000 6000
 ```
 
@@ -523,9 +517,8 @@ run bitburner-update.js --essential --stocks
 **Solution**: Purchase 4S Data ($1 billion)  
 **Note**: Essential for any profitable trading!
 
-### "Short positions disabled"
-**Solution**: Purchase Short access ($25 billion)  
-**Note**: Only needed for advanced trader
+### "Short positions disabled" or "not available in this version"
+**Explanation**: Short positions are not available in all Bitburner versions. The advanced trader will automatically work with long positions only if shorts are unavailable.
 
 ### Not making trades
 **Causes**:
@@ -587,8 +580,8 @@ run bitburner-update.js --essential --stocks
 ✅ Follows project conventions  
 
 ### Feature Completeness
-✅ Basic trading (long only)  
-✅ Advanced trading (long/short)  
+✅ Basic trading (long positions)  
+✅ Advanced trading (dynamic sizing)  
 ✅ Risk management (stop-loss)  
 ✅ Position sizing (dynamic)  
 ✅ Portfolio monitoring  
@@ -615,7 +608,7 @@ The system is:
 - **Battle-tested**: Robust error handling and validation
 - **Integration-ready**: Works alongside existing hacking systems
 
-Players can now diversify their income streams, maximize profits through both long and short positions, and use professional-grade algorithmic trading strategies - all while the scripts run automatically in the background.
+Players can now diversify their income streams, maximize profits through dynamic position sizing, and use professional-grade algorithmic trading strategies - all while the scripts run automatically in the background.
 
 **Status**: ✅ Complete and ready for deployment!
 
