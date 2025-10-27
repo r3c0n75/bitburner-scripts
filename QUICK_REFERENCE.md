@@ -108,6 +108,16 @@ deploy/hack-n00dles.js           # N00dles script
 deploy/deploy-share-all.js       # Deploy RAM sharing to all servers
 ```
 
+### Stock Trading (TIX API) 📈
+```
+stocks/stock-info.js             # View market data & portfolio
+stocks/stock-trader-basic.js     # Simple automated trading (forecast)
+stocks/stock-trader-advanced.js  # Advanced trading with shorts
+stocks/stock-trader-momentum.js  # Momentum trading (NO 4S Data!) 🆕
+stocks/stock-momentum-analyzer.js # Preview momentum 🆕
+stocks/stock-monitor.js          # Real-time portfolio monitor
+```
+
 ## 📊 Key Improvements Reference
 
 | Improvement | Example Location |
@@ -125,6 +135,24 @@ deploy/deploy-share-all.js       # Deploy RAM sharing to all servers
 1. Read README.md
 2. Follow docs/GETTING_STARTED.md
 3. Copy scripts to game
+```
+
+### Stock Trading
+```bash
+# View market overview
+run stocks/stock-info.js
+
+# Momentum trading (NO 4S Data - $5b only!) 🆕
+run stocks/stock-momentum-analyzer.js 10
+run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000
+
+# Forecast-based trading (requires 4S Data $6b)
+run stocks/stock-trader-basic.js 1000000000
+
+# Monitor portfolio performance
+run stocks/stock-monitor.js
+
+# See docs/STOCK_TRADING_GUIDE.md for complete guide
 ```
 
 ### Find Best Target
@@ -179,10 +207,10 @@ run batch/simple-batcher.js target  # Restart
 
 ## 📝 Documentation Statistics
 
-- **Total Docs**: 9 files
-- **Total Lines**: ~4,400
-- **Scripts Documented**: 18
-- **Code Examples**: 50+
+- **Total Docs**: 10 files
+- **Total Lines**: ~5,100
+- **Scripts Documented**: 22
+- **Code Examples**: 60+
 - **Status**: ✅ Complete
 
 ## 🎉 Quick Wins
@@ -205,7 +233,7 @@ run batch/simple-batcher.js target  # Restart
 
 ---
 
-**Version**: 1.5.0  
-**Last Updated**: 2025-10-26  
-**Major Update**: Added smart-batcher.js with 490x performance improvement!  
+**Version**: 1.8.1  
+**Last Updated**: 2025-10-27  
+**Major Update**: Added momentum trading with profit targets (NO 4S Data needed!)  
 **Note**: All commands updated for organized folder structure and optimal batching
