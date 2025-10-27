@@ -2,23 +2,32 @@
 
 Complete automation suite for Bitburner including optimal batch operations, profit analysis, and stock market trading.
 
-## 🆕 What's New - Version 1.8.2
+## 🆕 What's New - Version 1.8.5
 
-**NEW: Stock Momentum Analyzer 4S Data Enhancement!** 🎯✨
+**NEW: Complete Stock Trading Suite with Portfolio Management!** 💰🔚
 
-Enhanced `stock-momentum-analyzer.js` with forecast intelligence - now auto-detects 4S Data and provides confidence scoring, trap detection, and forecast alignment analysis to prevent false positive trades!
+Latest enhancements to the complete 7-script stock trading system:
 
-**Version 1.8.1: Momentum Trading with Risk Management!** 🎯📈
+**v1.8.5 - Portfolio Liquidation:**
+- `stock-close-all.js` - Close ALL positions with preview mode & safety confirmation 🆕
 
-Added 2 NEW momentum trading scripts that DON'T require 4S Market Data:
-- `stock-trader-momentum.js` - Momentum trading: Ride rallies, hold for profit target (NO 4S Data!)
-- `stock-momentum-analyzer.js` - Preview with forecast intelligence (auto-detects 4S) 🆕✨
+**v1.8.4 - Realized P/L Tracking:**
+- `stock-monitor.js` - Enhanced with realized + unrealized P/L tracking 🆕
 
-Plus 4 original scripts:
-- `stock-info.js` - Market intelligence and portfolio viewing
-- `stock-trader-basic.js` - Simple automated trading ($10-50b capital)
-- `stock-trader-advanced.js` - Advanced trading with dynamic sizing ($50b+ capital)
-- `stock-monitor.js` - Real-time portfolio monitoring with 4S forecasts & volatility 🆕✨
+**v1.8.3 - 4S Data Intelligence:**
+- `stock-monitor.js` - Real-time forecasts, volatility analysis, position alignment 🆕✨
+
+**v1.8.2 - Forecast Intelligence:**
+- `stock-momentum-analyzer.js` - Confidence scoring & trap detection 🆕✨
+
+**Complete Trading Suite (7 scripts):**
+- `stock-info.js` - Market intelligence viewer
+- `stock-trader-basic.js` - Forecast-based trading (requires 4S Data)
+- `stock-trader-advanced.js` - Dynamic sizing with risk management
+- `stock-trader-momentum.js` - Momentum trading (NO 4S Data needed!)
+- `stock-momentum-analyzer.js` - Preview with forecast intelligence
+- `stock-monitor.js` - Real-time portfolio dashboard with realized P/L
+- `stock-close-all.js` - Instant portfolio liquidation with safety
 
 **See [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) for complete guide!**
 
@@ -26,7 +35,8 @@ Quick start (momentum - cheapest):
 ```bash
 run stocks/stock-momentum-analyzer.js 5                        # Forecast intelligence + trap detection
 run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000  # Trade: 5% profit, 5% stop loss
-run stocks/stock-monitor.js                                    # Monitor performance
+run stocks/stock-monitor.js                                    # Monitor: realized + unrealized P/L
+run stocks/stock-close-all.js --confirm                        # Close all positions when done
 ```
 
 **Requirements**: 
@@ -89,12 +99,13 @@ scripts/
 │   ├── auto-expand.js         Root & deploy everywhere
 │   └── purchase-server-8gb.js Buy servers
 ├── stocks/            # 🆕 Stock trading (TIX API)
-│   ├── stock-info.js          Market intelligence
+│   ├── stock-info.js          Market intelligence viewer
 │   ├── stock-trader-basic.js  Automated trading (forecast)
 │   ├── stock-trader-advanced.js Advanced strategies (dynamic sizing)
 │   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
 │   ├── stock-momentum-analyzer.js Forecast intelligence analyzer 🆕✨
-│   └── stock-monitor.js       Portfolio monitoring
+│   ├── stock-monitor.js       Portfolio monitoring (realized P/L) 🆕
+│   └── stock-close-all.js     Portfolio liquidation 🆕
 └── docs/              # Documentation
     ├── STOCK_TRADING_GUIDE.md      🆕 Complete trading guide
     ├── SCRIPT_REFERENCE.md         All scripts documented

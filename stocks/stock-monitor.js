@@ -30,6 +30,8 @@ export async function main(ns) {
   let startTime = Date.now();
   let peakValue = 0;
   let lowestValue = Infinity;
+  let realizedProfitTotal = 0;  // Track realized P/L from closed positions
+  let previousPositions = new Map();  // Track positions from last cycle
   
   while (true) {
     ns.clearLog();
@@ -117,6 +119,23 @@ export async function main(ns) {
     const drawdown = peakValue > 0 ? ((peakValue - portfolioValue) / peakValue) * 100 : 0;
     const runTime = (Date.now() - startTime) / 1000 / 60;  // minutes
     
+    // Detect closed positions and calculate realized P/L
+    const currentPositionKeys = new Set(positions.map(p => `${p.symbol}-${p.type}`));
+    
+    for (const [key, prevPos] of previousPositions) {
+      if (!currentPositionKeys.has(key)) {
+        // Position was closed since last cycle
+        realizedProfitTotal += prevPos.profit;
+        ns.print(`[REALIZED] ${prevPos.symbol} ${prevPos.type}: ${ns.nFormat(prevPos.profit, "$0.00a")} (${prevPos.returnPct > 0 ? "+" : ""}${prevPos.returnPct.toFixed(2)}%)`);
+      }
+    }
+    
+    // Update previous positions for next cycle
+    previousPositions.clear();
+    for (const pos of positions) {
+      previousPositions.set(`${pos.symbol}-${pos.type}`, pos);
+    }
+    
     // Sort positions by profit/loss
     positions.sort((a, b) => b.profit - a.profit);
     
@@ -131,6 +150,8 @@ export async function main(ns) {
     ns.print(`Cash Available: ${ns.nFormat(ns.getServerMoneyAvailable("home"), "$0.00a")}`);
     ns.print(`${"─".repeat(50)}`);
     ns.print(`Unrealized P/L: ${ns.nFormat(totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
+    ns.print(`Realized P/L: ${ns.nFormat(realizedProfitTotal, "$0.00a")} ${realizedProfitTotal > 0 ? "✓" : realizedProfitTotal < 0 ? "✗" : ""}`);
+    ns.print(`Total P/L: ${ns.nFormat(totalProfit + realizedProfitTotal, "$0.00a")}`);
     ns.print(`Session Return: ${sessionReturn > 0 ? "+" : ""}${sessionReturn.toFixed(2)}%`);
     ns.print(`Peak Value: ${ns.nFormat(peakValue, "$0.00a")}`);
     ns.print(`Drawdown: ${drawdown.toFixed(2)}%`);

@@ -74,7 +74,8 @@ export async function main(ns) {
       { file: "stock-trader-advanced.js", folder: folders.stocks },
       { file: "stock-trader-momentum.js", folder: folders.stocks },
       { file: "stock-momentum-analyzer.js", folder: folders.stocks },
-      { file: "stock-monitor.js", folder: folders.stocks }
+      { file: "stock-monitor.js", folder: folders.stocks },
+      { file: "stock-close-all.js", folder: folders.stocks }
     ]
   };
 
