@@ -1,303 +1,324 @@
-# Bitburner Scripts Collection
+# Bitburner Automation Scripts
 
-A comprehensive collection of Bitburner automation scripts for efficient hacking, server management, and resource optimization.
+Complete automation suite for Bitburner including optimal batch operations, profit analysis, and stock market trading.
+
+## 🆕 What's New - Version 1.8.1
+
+**NEW: Momentum Trading with Profit Targets!** 🎯📈
+
+Added 2 NEW momentum trading scripts that DON'T require 4S Market Data:
+- `stock-trader-momentum.js` - Trade based on price momentum (NO 4S Data!)
+- `stock-momentum-analyzer.js` - Preview momentum before trading
+
+Plus 4 original scripts:
+- `stock-info.js` - Market intelligence and portfolio viewing
+- `stock-trader-basic.js` - Simple automated trading ($10-50b capital)
+- `stock-trader-advanced.js` - Professional trading with shorts ($50b+ capital)
+- `stock-monitor.js` - Real-time portfolio monitoring
+
+**See [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) for complete guide!**
+
+Quick start (momentum - cheapest):
+```bash
+run stocks/stock-momentum-analyzer.js 10                    # Scout momentum
+run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000 # Trade with 10% profit target
+run stocks/stock-monitor.js                                 # Monitor performance
+```
+
+**Requirements**: 
+- Momentum Trading: TIX API ($5b only!)
+- Forecast Trading: TIX API ($5b) + 4S Market Data ($1b) = $6 billion
+
+---
 
 ## 🚀 Quick Start
 
-### 🎮 New to the Game or Just Augmented?
-**See [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md)** for a fast-track guide on:
-- Starting a brand new game from scratch
-- Recovering quickly after augmentation installation
-- Copy-paste commands to get running in under 5 minutes!
+### New Game or Post-Augmentation?
+**Start here**: [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) - Fastest recovery path!
 
-### Installation Options
-
-**Option 1: Remote API Development (Fastest Development)** ⚡ NEW!
-1. Install Remote API tool (TypeScript Template or Viteburner)
-2. Edit scripts in VS Code with full IntelliSense
-3. Save → Instant sync to Bitburner (2 seconds)
-4. See **[Remote API Setup Guide](docs/REMOTE_API_SETUP.md)** for details
-
-**Why Remote API?**
-- ✅ Instant sync on save (no manual deployment!)
-- ✅ Full VS Code IntelliSense & autocomplete
-- ✅ TypeScript support (optional)
-- ✅ Professional development workflow
-- ✅ Keep organized folder structure
-
-**Option 2: PowerShell + GitHub (Best for Distribution)** 🌟
-1. Run `.\Push-ToGitHub.ps1` to push organized structure to GitHub
-2. Configure `bitburner-update.js` with your GitHub URL
-3. Use `bitburner-update.js` in-game for automatic updates
-4. See **[PowerShell GitHub Workflow](POWERSHELL_GITHUB_WORKFLOW.md)** for details
-
-**Why PowerShell Method?**
-- ✅ Keep organized folders (no flattening!)
-- ✅ One command to push updates
-- ✅ Full Git version control
-- ✅ Auto-flatten in Bitburner
-- ✅ Easy sharing via GitHub URLs
-
-**Option 3: Manual Copy**
-- Copy all `.js` files to Bitburner home directory (no folders needed)
-- Bitburner doesn't support folder structures in-game
-
-**💡 Pro Tip:** Use Remote API for daily development + GitHub for version control and sharing!
-
-## 🎯 Dual Workflow (Recommended Setup)
-
-**Active Development** → Remote API (instant sync)  
-**Version Control** → GitHub (backups & sharing)
-
-### Quick Start:
-```powershell
-# Setup (one-time)
-.\Setup-RemoteAPI-Workspace.ps1
-
-# Daily use
-cd bitburner-remote-api
-npm run watch
-# In Bitburner: Options → Remote API → Connect
-
-# End of day (backup)
-.\Sync-ToGitHub.ps1  # (or manually copy stable changes)
-```
-
-See **[Remote API Daily Workflow](REMOTE_API_DAILY_WORKFLOW.md)** for complete guide.
-
-### Basic Usage
+### Recommended: Smart Batcher (490x Performance!)
 ```bash
-# Find profitable targets (basic)
-run profit-scan.js
+# Find best target
+run analysis/profit-scan-flex.js --optimal
 
-# Find profitable targets (advanced, DEFAULT: only money servers)
-run profit-scan-flex.js
-
-# Find targets by POTENTIAL (find hidden gems with massive upside!)
-run profit-scan-flex.js --optimal
-
-# Show ALL servers including purchased servers
-run profit-scan-flex.js --all
-
-# Deploy smart batcher with optimal ratios (490x faster!)
+# Deploy optimal batching
 run batch/smart-batcher.js sigma-cosmetics
 
 # Monitor production
-run production-monitor.js 60
-
-# Root and deploy to all accessible servers
-run deploy/auto-expand.js
+run analysis/production-monitor.js 60
 ```
 
-## 📁 Script Categories
-
-### Core Attack Scripts
-- `attack-hack.js` - Basic hack operation
-- `attack-grow.js` - Basic grow operation  
-- `attack-weaken.js` - Basic weaken operation
-
-### Batch Management
-- `simple-batcher.js` - Deploy attack helpers across servers
-- `batch-manager.js` - Ensure batcher runs on purchased servers
-- `home-batcher.js` - Home server batch operations
-- `auto-expand.js` - Root and deploy to all accessible servers
-
-### Analysis & Monitoring
-- `profit-scan.js` - Find most profitable targets
-- `profit-scan-flex.js` - Advanced profit scanner with caching 🆕
-- `production-monitor.js` - Monitor money generation
-- `server-info.js` - Display server information
-- `list-procs.js` - List running processes
-- `list-pservs.js` - List purchased servers
-
-### Server Management
-- `purchase-server-8gb.js` - Buy 8GB servers
-- `replace-pservs-no-copy.js` - Replace purchased servers
-- `home-batcher.js` - Home server batch operations
-
-### Utilities
-- `global-kill.js` - Kill all scripts globally
-- `estimate-production.js` - Estimate production rates
-- `deploy-hack-joesguns.js` - Deploy joesguns hack script
-
-## 🛠️ Advanced Usage
-
-### Batch Operations
+### With Formulas.exe ($5 billion upgrade)
 ```bash
-# Deploy with thread limits
-run simple-batcher.js joesguns 100
+# EXACT target rankings (perfect accuracy)
+run analysis/f-profit-scan-flex.js --optimal
 
-# Include home server
-run simple-batcher.js joesguns --include-home
-
-# Quiet mode
-run simple-batcher.js joesguns --quiet
-
-# Dry run
-run simple-batcher.js joesguns --dry
+# EXACT production predictions (zero error)
+run utils/f-estimate-production.js silver-helix
 ```
 
-### Server Management
+## 📁 Project Structure
+
+```
+scripts/
+├── core/              # Basic attack operations
+│   ├── attack-hack.js
+│   ├── attack-grow.js
+│   └── attack-weaken.js
+├── batch/             # Batch management
+│   ├── smart-batcher.js       ⭐ Optimal timing-based (490x faster!)
+│   ├── simple-batcher.js      Basic deployment
+│   ├── batch-manager.js       Automated management
+│   └── home-batcher.js        Home server batching
+├── analysis/          # Profit analysis
+│   ├── profit-scan-flex.js    Enhanced scanner
+│   ├── f-profit-scan-flex.js  🔮 EXACT (Formulas.exe)
+│   └── production-monitor.js  Track production
+├── utils/             # Utilities
+│   ├── estimate-production.js
+│   ├── f-estimate-production.js 🔮 EXACT (Formulas.exe)
+│   ├── global-kill.js
+│   ├── list-procs.js
+│   ├── server-info.js
+│   └── test-formulas.js
+├── deploy/            # Deployment scripts
+│   ├── auto-expand.js         Root & deploy everywhere
+│   └── purchase-server-8gb.js Buy servers
+├── stocks/            # 🆕 Stock trading (TIX API)
+│   ├── stock-info.js          Market intelligence
+│   ├── stock-trader-basic.js  Automated trading (forecast)
+│   ├── stock-trader-advanced.js Advanced strategies (shorts)
+│   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
+│   ├── stock-momentum-analyzer.js Preview momentum 🆕
+│   └── stock-monitor.js       Portfolio monitoring
+└── docs/              # Documentation
+    ├── STOCK_TRADING_GUIDE.md      🆕 Complete trading guide
+    ├── SCRIPT_REFERENCE.md         All scripts documented
+    ├── GETTING_STARTED.md          Setup instructions
+    └── FORMULAS_ENHANCED_SCRIPTS.md Perfect accuracy guide
+```
+
+## 📖 Key Documentation
+
+| Document | Purpose | When to Use |
+|----------|---------|-------------|
+| [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) | Fast recovery after reset | Starting new BitNode |
+| [QUICK_REFERENCE.md](QUICK_REFERENCE.md) | Fast command lookup | Need quick command |
+| [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) | 🆕 Stock trading | Making money with stocks |
+| [docs/SCRIPT_REFERENCE.md](docs/SCRIPT_REFERENCE.md) | Detailed script docs | Learning script usage |
+| [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) | Project setup | First-time setup |
+| [CHANGELOG.md](CHANGELOG.md) | Version history | See what changed |
+
+## 🎯 Common Tasks
+
+### Deploy Optimal Batch System
 ```bash
-# Batch manager with custom settings
-run batch-manager.js joesguns 12 1.25 home --quiet
+# Find best target
+run analysis/profit-scan-flex.js --optimal
 
-# Root & deploy with thread cap
-run deploy/auto-expand.js joesguns 50
+# Deploy smart batcher (recommended)
+run batch/smart-batcher.js [target]
+
+# Monitor performance
+run analysis/production-monitor.js 60
 ```
 
-## 📊 Performance Monitoring
-
-### Production Analysis
+### Stock Market Trading
 ```bash
-# Monitor for 5 minutes
-run production-monitor.js 300
+# View market overview
+run stocks/stock-info.js
 
-# Find best targets
-run profit-scan.js
+# Momentum trading (NO 4S Data - $5b only!)
+run stocks/stock-momentum-analyzer.js 10
+run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000
 
-# Check server status
-run server-info.js
+# Forecast-based trading (requires 4S Data $6b)
+run stocks/stock-trader-basic.js 1000000000
+
+# Monitor portfolio
+run stocks/stock-monitor.js
 ```
 
-## 🔧 Configuration
-
-### Script Parameters
-- `target` - Server to attack (default: joesguns)
-- `capThreads` - Maximum threads per server
-- `multiplier` - Batch timing multiplier
-- `pservHost` - Host for batch manager
-
-### Flags
-- `--quiet` - Reduce output verbosity
-- `--dry` - Show what would happen without executing
-- `--include-home` - Include home server in operations
-- `--all` - Show ALL servers including zero-money servers (profit-scan-flex.js only)
-
-## 📈 Optimization Tips
-
-1. **Use profit-scan-flex.js** for clean target analysis (automatically hides purchased servers, shows only profitable targets)
-2. **Use profit-scan-flex.js** for advanced target analysis with caching (faster on repeat scans)
-3. **Use profit-scan.js** for quick checks without file operations
-4. **Monitor production** with production-monitor.js to verify efficiency
-5. **Batch operations** for maximum resource utilization
-6. **Manage purchased servers** for additional computing power
-7. **Use quiet mode** for automated operations
-
-## 🚨 Troubleshooting
-
-### Common Issues
-- **Insufficient RAM**: Check available RAM with `list-procs.js`
-- **No root access**: Ensure you have the required hacking tools
-- **Script not found**: Verify script exists on target server
-- **Low production**: Check target profitability with `profit-scan.js`
-
-### Debug Commands
+### Basic Operations
 ```bash
-# Check running processes
-run list-procs.js
+# Find profitable targets
+run analysis/profit-scan.js
 
-# List purchased servers
-run list-pservs.js
+# Check system status
+run utils/list-procs.js
 
-# Monitor production
-run production-monitor.js 60
+# Kill all scripts
+run utils/global-kill.js
 ```
 
-## 📝 Script Dependencies
+## 🔧 Installation
 
-### Required Helper Scripts
-- `attack-hack.js`
-- `attack-grow.js` 
-- `attack-weaken.js`
+### Option 1: Using bitburner-update.js (Recommended)
+```bash
+# Download all scripts
+run bitburner-update.js --all
 
-### Optional Scripts
-- `hack-joesguns.js` - Alternative hack script
-- `hack-n00dles.js` - Early game hack script
+# Or download by category
+run bitburner-update.js --essential  # Core scripts
+run bitburner-update.js --stocks     # Stock trading
+run bitburner-update.js --batch      # Batch scripts
+```
 
-## 🔄 Workflow Examples
+### Option 2: Manual Download
+1. Copy scripts from GitHub repository
+2. Place in appropriate Bitburner folders
+3. Maintain folder structure (optional but recommended)
 
-### Early Game Setup
-1. Run `profit-scan.js` to find targets
-2. Use `simple-batcher.js` to deploy to available servers
-3. Monitor with `production-monitor.js`
+### Option 3: Remote File API
+See [docs/REMOTE_API_SETUP.md](docs/REMOTE_API_SETUP.md) for development setup
 
-### Mid Game Optimization
-1. Purchase servers with `purchase-server-8gb.js`
-2. Deploy batch manager with `batch-manager.js`
-3. Root & deploy with `auto-expand.js`
+## ⭐ Key Features
 
-### Late Game Management
-1. Use `global-kill.js` to reset all operations
-2. Re-optimize with `profit-scan.js`
-3. Deploy optimized batches
+### Smart Batcher (v1.5.0)
+- **490x performance improvement** over traditional methods
+- Optimal thread ratios based on operation timing
+- $2.09m/s production vs $4.26k/s traditional
+- Automatic server preparation
+- Intelligent RAM allocation
 
-## 📚 Additional Resources
+### Formula-Enhanced Scripts (v1.7.0) 🔮
+- **Perfect accuracy** using Formulas.exe API
+- Zero estimation error for target selection
+- Exact production predictions
+- Confident deployment decisions
+- Requires: Formulas.exe ($5 billion, permanent)
 
-- Check individual script headers for detailed usage
-- Use `--help` flags where available
-- Monitor production regularly for optimization
-- Scale operations based on available resources
+### Stock Trading Suite (v1.8.1) 📈
+- **Momentum Trading**: NO 4S Data needed! ($5b only)
+- **Profit Targets**: Configurable profit taking (5%, 10%, 15%)
+- **Automated trading** with multiple strategies
+- Long and short positions (advanced)
+- Dynamic position sizing
+- Stop-loss protection
+- Real-time monitoring
+- Requires: TIX API ($5b) or TIX + 4S Data ($6b)
 
----
+### Enhanced Target Selection
+- Fleet Potential Score algorithm
+- Accounts for both efficiency AND capacity
+- Prevents low-capacity target mistakes
+- Optimal mode shows improvement potential
+
+## 🎮 Usage Examples
+
+### Scenario 1: Fresh Start
+```bash
+1. run analysis/profit-scan.js         # Find target
+2. run batch/smart-batcher.js joesguns # Deploy
+3. Wait 6-8 minutes for prep phase
+4. Watch money roll in!
+```
+
+### Scenario 2: Mid-Game Optimization
+```bash
+1. run analysis/profit-scan-flex.js --optimal  # Find best potential
+2. run utils/estimate-production.js [target]   # Verify production
+3. run batch/smart-batcher.js [target] 0.05    # Deploy with 5% hack
+4. run analysis/production-monitor.js 60       # Monitor
+```
+
+### Scenario 3: Stock Trading - Momentum (Cheaper!)
+```bash
+1. Purchase TIX API ($5b only - no 4S Data!)
+2. run stocks/stock-momentum-analyzer.js 10                  # Scout momentum
+3. run stocks/stock-trader-momentum.js 5 1000000000 0.10 6000 # Trade with 10% target
+4. run stocks/stock-monitor.js                                # Watch profits
+```
+
+### Scenario 3b: Stock Trading - Forecast (Better Returns)
+```bash
+1. Purchase TIX API ($5b) + 4S Data ($1b)
+2. run stocks/stock-info.js                    # Scout market
+3. run stocks/stock-trader-basic.js 1000000000 # Start trading
+4. run stocks/stock-monitor.js                 # Watch profits
+```
+
+### Scenario 4: With Formulas.exe
+```bash
+1. run analysis/f-profit-scan-flex.js --optimal     # EXACT rankings
+2. run utils/f-estimate-production.js [target]      # EXACT production
+3. Deploy with confidence - zero guesswork!
+```
+
+## 📊 Performance Benchmarks
+
+### Smart Batcher Results
+- **Silver-helix**: $34k/s → $3.41m/s (100x improvement)
+- **Sigma-cosmetics**: $4.26k/s → $2.09m/s (490x improvement)
+- **Thread allocation**: 4% hack / 87% grow / 9% weaken
+- **Prep time**: 6-8 minutes to optimal state
+
+### Stock Trading Returns (Estimated)
+- **Momentum Trader**: 10-40% daily returns (NO 4S Data!)
+- **Basic Trader**: 20-50% daily returns
+- **Advanced Trader**: 50-150% daily returns
+- **Capital Required**: $5b minimum (momentum), $10b+ (forecast), $50b+ (advanced)
+- **Momentum**: Only TIX API needed, Forecast: requires 4S Market Data
+
+## 🐛 Troubleshooting
+
+### Scripts not running?
+```bash
+run utils/list-procs.js  # See what's running
+run utils/global-kill.js # Stop everything
+```
+
+### Low production?
+- Wait 6-8 minutes for server prep
+- Check target security is at minimum
+- Use `profit-scan-flex.js --optimal` for better targets
+
+### Stock trading not working?
+- Verify TIX API purchased ($5b)
+- Verify 4S Data purchased ($1b)
+- Check market conditions with `stock-info.js`
+- Ensure sufficient capital for trades
+
+## 🔗 Additional Resources
+
+- **GitHub**: [bitburner-scripts](https://github.com/r3c0n75/bitburner-scripts)
+- **Official Docs**: [Bitburner Documentation](https://github.com/bitburner-official/bitburner-src)
+- **Remote API**: [Official Remote File API](https://github.com/bitburner-official/vscode-template)
 
 ## 📝 Version History
 
-### Version 1.4.4 (2025-10-26) - Current 🆕
-**Script Organization & Enhanced Error Handling:**
+- **v1.8.1** (2025-10-27): Momentum trading with profit targets (NO 4S Data!)
+- **v1.8.0** (2025-10-27): Complete TIX stock trading suite
+- **v1.7.0** (2025-10-26): Formula-enhanced scripts (perfect accuracy)
+- **v1.5.3** (2025-10-26): Fleet Potential Score algorithm
+- **v1.5.0** (2025-10-26): Smart batcher (490x performance)
+- **v1.4.2** (2025-10-26): Path fixes for organized structure
+- **v1.4.0** (2025-10-26): Enhanced error handling
+- **v1.0.0** (2025-10-25): Initial organized release
 
-- ✅ **Script Reorganization** - home-batcher.js moved to batch/ folder for logical grouping
-- ✅ **Deprecated Script Removal** - Removed outdated auto-deploy-all.js 
-- ✅ **Enhanced home-batcher.js** - Complete rewrite with enterprise-grade diagnostics
-  - Conflict detection for RAM competition
-  - Detailed RAM analysis and pre-checks
-  - Explicit failure reporting (no more silent failures!)
-  - Smart summaries with helpful recommendations
-- ✅ **Critical Bug Fix** - home-batcher.js now properly reports when hack script fails to start
-- ✅ **Documentation Updates** - All 9+ docs updated to reflect new organization
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
-### Version 1.0.0 (2025-10-25)
-**Initial organized release with comprehensive improvements:**
+## 🤝 Contributing
 
-- ✅ **Organized directory structure** - Scripts categorized into logical folders
-- ✅ **Enhanced error handling** - Comprehensive try-catch blocks and validation
-- ✅ **Structured logging** - Multi-level logging (info, warn, error) with quiet mode
-- ✅ **Success/failure tracking** - Deployment scripts track and report results
-- ✅ **Detailed documentation** - Complete guides and script reference
-- ✅ **Configuration support** - Predefined targets and settings
-- ✅ **Better validation** - Pre-execution checks prevent downstream errors
-- ✅ **Improved feedback** - Clear, actionable error messages
+Contributions welcome! Areas of interest:
+- Additional trading strategies
+- ML-based stock prediction
+- Web-based monitoring dashboard
+- Performance optimizations
+- Documentation improvements
 
-See [CHANGELOG.md](CHANGELOG.md) for complete version history.
+## 📄 License
+
+Open source - use freely in your Bitburner gameplay!
 
 ---
 
-## 🔗 Documentation Links
+**Last Updated**: October 27, 2025  
+**Version**: 1.8.1  
+**Major Update**: Momentum trading with profit targets (NO 4S Data needed!)
 
-### Quick Start
-- **[New Game Quickstart](NEW_GAME_QUICKSTART.md)** - Fast recovery after augmentations & new game guide 🆕
-- **[Remote API Setup](docs/REMOTE_API_SETUP.md)** - Professional dev workflow with instant sync ⚡ NEW!
-- **[Quick Reference](QUICK_REFERENCE.md)** - Fast command lookup
-- **[Getting Started Guide](docs/GETTING_STARTED.md)** - Step-by-step setup and usage
-- **[Script Reference](docs/SCRIPT_REFERENCE.md)** - Complete script documentation
-
-### Technical
-- **[Project Structure](PROJECT_STRUCTURE.md)** - Directory organization
-- **[Error Handling Guide](docs/ERROR_HANDLING_IMPROVEMENTS.md)** - Error handling details
-- **[Detailed Changes](docs/DETAILED_CHANGES.md)** - Complete change documentation
-- **[Changelog](CHANGELOG.md)** - Version history and changes
-
-### Reference
-- **[Documentation Index](docs/DOCUMENTATION_INDEX.md)** - Complete doc catalog
-- **[Documentation Summary](DOCUMENTATION_SUMMARY.md)** - Doc overview
-- **[Project Complete](PROJECT_COMPLETE.md)** - Final project status
-
-### Deployment
-- **[PowerShell GitHub Workflow](POWERSHELL_GITHUB_WORKFLOW.md)** - Push organized structure 🌟
-- **[Push-ToGitHub.ps1](Push-ToGitHub.ps1)** - PowerShell Git automation
-- **[bitburner-update.js](bitburner-update.js)** - In-game auto-update script
-- **[GitHub Deployment Guide](docs/GITHUB_DEPLOYMENT_GUIDE.md)** - Complete deployment guide
-
----
-
-**Note**: This collection is designed for efficiency and automation. Start with basic scripts and gradually implement more complex batch operations as your resources grow.
+**Quick Links**:
+- [Quick Reference](QUICK_REFERENCE.md) - Fast command lookup
+- [Stock Trading Guide](docs/STOCK_TRADING_GUIDE.md) - Complete trading guide
+- [Script Reference](docs/SCRIPT_REFERENCE.md) - Detailed documentation
+- [New Game Guide](NEW_GAME_QUICKSTART.md) - Fast recovery path

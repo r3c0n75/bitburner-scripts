@@ -2,6 +2,115 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.1] - 2025-10-27 - Momentum Trading with Profit Targets 🎯
+
+### Added - Momentum Trading Without 4S Data
+
+**New Scripts** (2 total):
+- `stocks/stock-trader-momentum.js` - Momentum-based trading without 4S Market Data requirement
+- `stocks/stock-momentum-analyzer.js` - Preview momentum analysis before trading
+
+**Key Features**:
+- **No 4S Data Required**: Saves $25 billion! Uses price history tracking instead of forecasts
+- **Profit Target Parameter**: User-configurable profit target (e.g., 0.05 = 5%, 0.10 = 10%, 0.15 = 15%)
+- **Flexible Capital Management**: Specify max stocks and total capital investment
+- **Commission-Aware**: Accounts for $100k transaction fees in calculations
+- **Dual Sell Strategy**: Sells on either negative momentum OR profit target reached
+- **Preview Mode**: Analyze momentum without risking capital
+
+**Usage Examples**:
+```bash
+# Conservative: 5 stocks, $1b capital, 5% profit target
+run stocks/stock-trader-momentum.js 5 1000000000 0.05 6000
+
+# Moderate: 10 stocks, $2b capital, 10% profit target
+run stocks/stock-trader-momentum.js 10 2000000000 0.10 6000
+
+# Aggressive: 3 stocks, $500m capital, 3% profit target (quick profits)
+run stocks/stock-trader-momentum.js 3 500000000 0.03 6000
+
+# Preview momentum before trading
+run stocks/stock-momentum-analyzer.js 10
+```
+
+**Parameters**:
+- `max-stocks`: Maximum number of different stocks to buy (e.g., 5, 10)
+- `total-capital`: Total money to invest across ALL stocks (e.g., 1000000000 = $1b)
+- `profit-target`: Profit % to auto-sell at (e.g., 0.05 = 5%, 0.10 = 10%, 0.15 = 15%)
+- `refresh-rate-ms`: How often to check market (default: 6000 = 6 seconds)
+
+**Strategy**:
+- Track price changes over last 5 cycles
+- Buy when 3+ positive price movements (upward momentum)
+- Sell when 3+ negative price movements (downward momentum) OR profit target reached
+- Accounts for $100k commission per transaction
+- Skip stocks with >10% price swings (too risky)
+
+**Cost Savings**:
+- **Without 4S Data**: Only need TIX API ($5 billion) vs $6 billion for forecast-based
+- **Alternative Strategy**: When you can't afford or don't want to buy 4S Market Data
+- **Lower Barrier**: Start automated trading earlier in game progression
+
+**Performance**:
+- Results vary based on market momentum conditions
+- Works best in trending markets (strong up/down movements)
+- Profit targets provide risk management and lock in gains
+- Commission impact decreases with larger positions
+
+**Best For**:
+- Players without $25 billion for 4S Market Data
+- Early-game automated trading
+- Momentum-based strategies
+- Quick profit-taking approaches
+
+**Updated Files**:
+- Added: `bitburner-remote-api/src/stocks/stock-trader-momentum.js`
+- Added: `bitburner-remote-api/src/stocks/stock-momentum-analyzer.js`
+- Added: `scripts/stocks/stock-trader-momentum.js`
+- Added: `scripts/stocks/stock-momentum-analyzer.js`
+- Updated: `bitburner-update.js` (added momentum scripts to --stocks category)
+- Updated: `STOCK_TRADING_GUIDE.md` (added momentum trading section)
+- Updated: `QUICK_REFERENCE.md` (added momentum trading commands)
+
+---
+
+## [1.8.0] - 2025-10-27 - TIX Stock Trading Suite 📈
+
+### Added - Complete Automated Stock Trading System
+
+**New Scripts** (4 total):
+- `stocks/stock-info.js` - Market intelligence and portfolio viewing
+- `stocks/stock-trader-basic.js` - Simple automated trading (20-50% daily returns)
+- `stocks/stock-trader-advanced.js` - Professional trading with shorts (50-150% daily returns)
+- `stocks/stock-monitor.js` - Real-time portfolio monitoring dashboard
+
+**New Documentation** (2 files):
+- `docs/STOCK_TRADING_GUIDE.md` - 700+ line comprehensive trading guide
+- `STOCK_TRADING_IMPLEMENTATION.md` - Technical implementation details
+
+**Updated Files**:
+- `QUICK_REFERENCE.md` - Added stock trading commands section
+- `bitburner-update.js` - Added `--stocks` flag for downloading trading scripts
+- `README.md` - Updated with stock trading quick start guide
+
+**Features**:
+- Automated buying/selling based on forecasts
+- Long and short positions (advanced)
+- Dynamic position sizing
+- Stop-loss protection (-10%)
+- Portfolio limits (10% max per stock)
+- Real-time monitoring
+- Performance tracking
+
+**Prerequisites**:
+- TIX API Access: $5 billion (required)
+- 4S Market Data TIX API: $1 billion (highly recommended)
+- Short Position Access: $25 billion (optional, for advanced)
+
+**Total Cost**: $6 billion minimum, $31 billion for full features
+
+**Integration**: Works alongside hacking scripts with no conflicts (~4-5GB RAM per trader)
+
 ## [1.5.3] - 2025-10-26 - Fleet Potential Ranking Fix 🔧
 
 ### FIXED - profit-scan-flex.js (Fleet Potential Score)

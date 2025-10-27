@@ -20,7 +20,8 @@ export async function main(ns) {
     batch: `${baseUrl}/batch`,
     analysis: `${baseUrl}/analysis`,
     utils: `${baseUrl}/utils`,
-    deploy: `${baseUrl}/deploy`
+    deploy: `${baseUrl}/deploy`,
+    stocks: `${baseUrl}/stocks`
   };
   
   // Define script categories with their folder locations
@@ -65,6 +66,15 @@ export async function main(ns) {
       { file: "hack-joesguns.js", folder: folders.deploy },
       { file: "hack-n00dles.js", folder: folders.deploy },
       { file: "deploy-share-all.js", folder: folders.deploy }
+    ],
+    
+    stocks: [
+      { file: "stock-info.js", folder: folders.stocks },
+      { file: "stock-trader-basic.js", folder: folders.stocks },
+      { file: "stock-trader-advanced.js", folder: folders.stocks },
+      { file: "stock-trader-momentum.js", folder: folders.stocks },
+      { file: "stock-momentum-analyzer.js", folder: folders.stocks },
+      { file: "stock-monitor.js", folder: folders.stocks }
     ]
   };
 
@@ -76,6 +86,7 @@ export async function main(ns) {
   const downloadUtils = args.includes("--utils");
   const downloadBatch = args.includes("--batch");
   const downloadDeploy = args.includes("--deploy");
+  const downloadStocks = args.includes("--stocks");
 
   // Determine which files to download
   let filesToDownload = [];
@@ -86,7 +97,8 @@ export async function main(ns) {
       ...scripts.batch,
       ...scripts.analysis,
       ...scripts.utils,
-      ...scripts.deploy
+      ...scripts.deploy,
+      ...scripts.stocks
     ];
   } else {
     if (downloadEssential) filesToDownload.push(...scripts.essential);
@@ -94,6 +106,7 @@ export async function main(ns) {
     if (downloadAnalysis) filesToDownload.push(...scripts.analysis);
     if (downloadUtils) filesToDownload.push(...scripts.utils);
     if (downloadDeploy) filesToDownload.push(...scripts.deploy);
+    if (downloadStocks) filesToDownload.push(...scripts.stocks);
   }
 
   // Download files
@@ -146,7 +159,8 @@ export async function main(ns) {
 // run bitburner-update.js --utils          # Download utility scripts
 // run bitburner-update.js --batch          # Download batch scripts
 // run bitburner-update.js --deploy         # Download deployment scripts
+// run bitburner-update.js --stocks         # Download stock trading scripts
 // run bitburner-update.js --essential --utils  # Download multiple categories
 //
 // Note: Scripts are downloaded from organized GitHub folder structure
-// (core/, batch/, analysis/, utils/, deploy/) but saved flat to Bitburner home
+// (core/, batch/, analysis/, utils/, deploy/, stocks/) but saved flat to Bitburner home
