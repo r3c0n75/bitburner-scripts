@@ -86,12 +86,12 @@ function displayStockInfo(ns, symbol, has4S) {
 function displayAllStocks(ns, has4S) {
   const symbols = ns.stock.getSymbols();
   
-  ns.tprint(`\n${"═".repeat(70)}`);
+  ns.tprint(`${"═".repeat(70)}`);
   ns.tprint(`STOCK MARKET OVERVIEW`);
   ns.tprint(`${"═".repeat(70)}`);
   ns.tprint(`Total Stocks: ${symbols.length}`);
   ns.tprint(`4S Market Data: ${has4S ? "YES" : "NO (forecasts unavailable)"}`);
-  ns.tprint(`\n${"─".repeat(70)}`);
+  ns.tprint(`${"─".repeat(70)}`);
   
   let totalPortfolioValue = 0;
   let totalInvested = 0;
