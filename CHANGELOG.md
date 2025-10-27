@@ -2,6 +2,90 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.5] - 2025-10-27 - Portfolio Liquidation Script 💰🔚
+
+### New Script - Close All Positions
+
+**New Script**:
+- `stocks/stock-close-all.js` - Instantly liquidate entire stock portfolio
+
+**Key Features**:
+- **Preview Mode**: Shows what would be sold without executing (default behavior)
+- **Safety Mechanism**: Requires --confirm flag to actually close positions
+- **Comprehensive Analysis**: Displays P/L for each position before closing
+- **Win Rate Calculation**: Shows profitable vs losing trades with percentage
+- **4S Integration**: Displays current forecasts for each position (when available)
+- **Execution Summary**: Real-time progress with success/failure tracking
+- **Commission-Aware**: Includes $100k transaction fees in P/L calculations
+
+**Example Usage**:
+```bash
+# Preview liquidation (safe - no execution)
+run stocks/stock-close-all.js
+
+# Execute liquidation (closes all positions)
+run stocks/stock-close-all.js --confirm
+```
+
+**Display Example**:
+```
+Found 15 position(s) to close:
+✓ NVMD LONG: 82.9k shares @ $24.1k → $27.7k
+   P/L: +$293.3m (+14.7%) | Forecast: ↑56%
+────────────────────────────────────────────
+TOTAL REALIZED P/L: +$295.5m
+Profitable Trades: 12 | Losing Trades: 3
+Win Rate: 80.0%
+```
+
+**Best For**:
+- Taking profits at end of session
+- Emergency portfolio liquidation
+- Strategy rebalancing
+- Pre-augmentation position closing
+- Quick exit during market crashes
+
+**Safety Features**:
+- Preview-first design prevents accidents
+- Clear profit/loss breakdown for informed decisions
+- Win rate helps evaluate strategy effectiveness
+- Comprehensive error handling for failed transactions
+
+---
+
+## [1.8.4] - 2025-10-27 - Stock Monitor Realized P/L Tracking 💰
+
+### Enhanced - Complete Profit/Loss Visibility
+
+**Enhanced Script**:
+- `stocks/stock-monitor.js` - Added comprehensive realized P/L tracking
+
+**Key Features**:
+- **Realized P/L Tracking**: Automatically detects when positions are closed and calculates locked-in profits
+- **Real-Time Notifications**: Shows "[REALIZED]" messages when positions close with profit/return details
+- **Total P/L Display**: Combines unrealized (open positions) + realized (closed positions) for complete view
+- **Session-Long Tracking**: Cumulative realized P/L throughout entire monitoring session
+- **Visual Indicators**: ✓ for gains, ✗ for losses on realized profits
+
+**Enhanced Display**:
+```
+──────────────────────────────────────────────────────
+Unrealized P/L: $42.3m (+14.7%)
+Realized P/L: $15.8m ✓
+Total P/L: $58.1m
+Session Return: +12.4%
+```
+
+**Benefits**:
+- **Complete Picture**: See both open position gains AND locked-in profits
+- **Trading Performance**: Track actual money made from closed trades
+- **Session Analysis**: Understand total trading success across all activity
+- **Smart Indicators**: Quick visual confirmation of profitable vs losing trades
+
+**Use Case**: Monitor automated traders to see both current portfolio performance and actual realized gains from completed trades throughout the session.
+
+---
+
 ## [1.8.3] - 2025-10-27 - Stock Monitor 4S Data Integration 📊✨
 
 ### Enhanced - Real-Time Portfolio Intelligence

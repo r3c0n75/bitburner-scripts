@@ -142,7 +142,8 @@ run stocks/stock-monitor.js 2000
 **Features**:
 - Live portfolio value updates
 - Position-by-position breakdown
-- Profit/loss tracking
+- Profit/loss tracking (unrealized + realized)
+- **NEW: Realized P/L tracking - see actual locked-in profits from closed positions**
 - Performance metrics (peak value, drawdown, session returns)
 - **NEW: Real-time forecast display with alignment indicators**
 - **NEW: Volatility analysis (HIGH/MED/LOW risk levels)**
@@ -258,6 +259,69 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 - **Testing strategy** - Preview before risking capital
 - **Learning patterns** - See how momentum relates to forecasts
 - **Finding optimal entry** - Wait for HIGH confidence opportunities
+
+---
+
+### 7. stock-close-all.js - Portfolio Liquidation 🆕
+**Purpose**: Instantly close ALL stock positions and liquidate entire portfolio
+
+```bash
+# Preview what would be sold (safe - no execution)
+run stocks/stock-close-all.js
+
+# Actually close all positions (requires --confirm flag)
+run stocks/stock-close-all.js --confirm
+```
+
+**Features**:
+- Scans entire portfolio for long and short positions
+- Shows detailed profit/loss breakdown before execution
+- Calculates win rate and total realized P/L
+- Displays current forecast for each position (with 4S Data)
+- **Safety feature**: Requires --confirm flag to prevent accidents
+- Closes all positions with 50ms delay between trades
+- Comprehensive execution summary with success/failure counts
+
+**Example Output**:
+```
+════════════════════════════════════════════════════════════════════
+PORTFOLIO LIQUIDATION SUMMARY
+════════════════════════════════════════════════════════════════════
+Found 15 position(s) to close:
+
+✓ NVMD LONG: 82.9k shares @ $24.1k → $27.7k
+   P/L: +$293.3m (+14.7%) | Forecast: ↑56%
+✓ FLCM LONG: 365.0 shares @ $8.0k → $14.4k
+   P/L: +$2.3m (+80.4%) | Forecast: ↑68%
+✗ OMGA LONG: 1.6k shares @ $2.0k → $2.0k
+   P/L: -$85.2k (-2.6%) | Forecast: ↓45%
+
+────────────────────────────────────────────────────────────────────
+TOTAL REALIZED P/L: +$295.5m
+Profitable Trades: 12 | Losing Trades: 3
+Win Rate: 80.0%
+════════════════════════════════════════════════════════════════════
+
+⚠️  SAFETY: Add --confirm flag to execute liquidation
+Example: run stocks/stock-close-all.js --confirm
+```
+
+**Requirements**:
+- TIX API Access ($5 billion) - REQUIRED
+- 4S Market Data ($1 billion) - OPTIONAL (shows forecasts in summary)
+
+**Best For**:
+- **Taking Profits**: Cash out when you've hit your target
+- **Stopping Trading**: Quickly exit all positions before reset/augmentation
+- **Rebalancing**: Clear portfolio to restart with new strategy
+- **Emergency Exit**: Liquidate during market crashes
+- **Session End**: Close positions at end of trading session
+
+**Safety Features**:
+- Preview mode shows what WOULD be sold without --confirm
+- Clear profit/loss breakdown for informed decisions
+- Win rate calculation helps evaluate strategy success
+- Comprehensive error handling for failed sales
 
 ---
 

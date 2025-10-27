@@ -115,7 +115,8 @@ stocks/stock-trader-basic.js     # Simple automated trading (forecast)
 stocks/stock-trader-advanced.js  # Advanced trading with dynamic sizing
 stocks/stock-trader-momentum.js  # Momentum trading: Ride rallies (NO 4S Data!) 🆕
 stocks/stock-momentum-analyzer.js # Preview with forecast intelligence (auto-detects 4S) 🆕✨
-stocks/stock-monitor.js          # Real-time monitor: forecasts + volatility (4S enhanced) 🆕✨
+stocks/stock-monitor.js          # Real-time monitor: forecasts + volatility + realized P/L 🆕✨
+stocks/stock-close-all.js        # Close ALL positions & liquidate portfolio 🆕
 ```
 
 ## 📊 Key Improvements Reference

@@ -513,4 +513,19 @@ run production-monitor.js 60
 
 ---
 
-**Note**: This reference covers all scripts in the collection. For specific usage examples, see the individual script headers and the Getting Started guide.
+## Stock Trading Scripts
+
+For comprehensive documentation on the complete 7-script stock trading suite, see:
+
+**[STOCK_TRADING_GUIDE.md](STOCK_TRADING_GUIDE.md)** - Complete stock trading guide including:
+- `stock-info.js` - Market intelligence viewer
+- `stock-trader-basic.js` - Forecast-based automated trading
+- `stock-trader-advanced.js` - Advanced strategies with dynamic sizing
+- `stock-trader-momentum.js` - Momentum trading (no 4S Data required!)
+- `stock-momentum-analyzer.js` - Preview with forecast intelligence
+- `stock-monitor.js` - Real-time portfolio dashboard with realized P/L
+- `stock-close-all.js` - Portfolio liquidation with safety confirmation
+
+---
+
+**Note**: This reference covers core automation scripts. For stock trading, see STOCK_TRADING_GUIDE.md. For specific usage examples, see the individual script headers and the Getting Started guide.

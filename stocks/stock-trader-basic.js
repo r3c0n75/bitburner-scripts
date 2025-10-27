@@ -3,8 +3,13 @@
  * 
  * Strategy: Buy stocks with >55% forecast, sell when forecast drops below 50%
  * 
- * Usage: run stocks/stock-trader-basic.js [investment-per-stock] [refresh-rate-ms]
- * Example: run stocks/stock-trader-basic.js 1000000000 6000
+ * Usage: run stocks/stock-trader-basic.js [max-stocks] [total-capital] [refresh-rate-ms]
+ * Example: run stocks/stock-trader-basic.js 10 1000000000 6000
+ * 
+ * Parameters:
+ * - max-stocks: Maximum number of different stocks to buy (e.g., 10)
+ * - total-capital: Total money to invest across ALL stocks (e.g., 1000000000 = $1b)
+ * - refresh-rate-ms: How often to check market in milliseconds (default: 6000 = 6s)
  * 
  * Requirements:
  * - TIX API Access ($5 billion)
@@ -30,21 +35,37 @@ export async function main(ns) {
     return;
   }
 
-  const investmentPerStock = ns.args[0] || 1e9; // Default: $1 billion per stock
-  const refreshRate = ns.args[1] || 6000;       // Default: 6 seconds (market updates every 6s)
+  // Parse parameters
+  const maxStocks = ns.args[0] || 10;           // Default: Buy up to 10 different stocks
+  const totalCapital = ns.args[1] || 1e9;       // Default: $1 billion total investment
+  const refreshRate = ns.args[2] || 6000;       // Default: 6 seconds (market updates every 6s)
+  
+  // Calculate per-stock investment accounting for commissions
+  // Reserve commission fees: $100k per buy transaction
+  const totalCommissionReserve = maxStocks * COMMISSION;
+  const investableCapital = totalCapital - totalCommissionReserve;
+  const investmentPerStock = Math.floor(investableCapital / maxStocks);
+  
+  if (investmentPerStock <= 0) {
+    ns.tprint("ERROR: Total capital too low for the number of stocks!");
+    ns.tprint(`Need at least $${ns.nFormat((maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
+    return;
+  }
   
   ns.disableLog("ALL");
   ns.clearLog();
   ns.tail();
   
-  ns.print(`${"═".repeat(50)}`);
+  ns.print(`${"═".repeat(70)}`);
   ns.print(`BASIC STOCK TRADER - STARTING`);
-  ns.print(`${"═".repeat(50)}`);
-  ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")}`);
+  ns.print(`${"═".repeat(70)}`);
+  ns.print(`Max Different Stocks: ${maxStocks}`);
+  ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
+  ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")} (after ${ns.nFormat(COMMISSION, "$0.00a")} commission)`);
   ns.print(`Refresh Rate: ${refreshRate}ms`);
   ns.print(`Buy Threshold: ${(BUY_THRESHOLD * 100).toFixed(0)}% forecast`);
   ns.print(`Sell Threshold: ${(SELL_THRESHOLD * 100).toFixed(0)}% forecast`);
-  ns.print(`${"═".repeat(50)}\n`);
+  ns.print(`${"═".repeat(70)}\n`);
 
   let cycleCount = 0;
   let totalProfit = 0;
@@ -79,8 +100,19 @@ export async function main(ns) {
           }
         }
       }
-      // Check if we should buy
+      // Check if we should buy (only if under max stocks limit)
       else if (forecast > BUY_THRESHOLD) {
+        // Count current positions
+        const currentPositions = symbols.filter(s => {
+          const [shares] = ns.stock.getPosition(s);
+          return shares > 0;
+        }).length;
+        
+        // Only buy if we haven't reached max stocks
+        if (currentPositions >= maxStocks) {
+          continue; // Already at max positions
+        }
+        
         const playerMoney = ns.getServerMoneyAvailable("home");
         const maxAffordable = Math.floor((playerMoney - COMMISSION) / askPrice);
         const maxShares = ns.stock.getMaxShares(symbol);
@@ -90,11 +122,13 @@ export async function main(ns) {
         if (sharesToBuy > 0) {
           const purchasePrice = ns.stock.buyStock(symbol, sharesToBuy);
           if (purchasePrice > 0) {
+            const totalCost = sharesToBuy * purchasePrice + COMMISSION;
             tradesExecuted++;
             actionsThisCycle++;
             
             ns.print(`✓ BUY ${symbol}: ${ns.nFormat(sharesToBuy, "0.0a")} shares @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Cost: ${ns.nFormat(sharesToBuy * purchasePrice, "$0.00a")}`);
+            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Total Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+            ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
           }
         }
       }
@@ -133,7 +167,7 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted) {
   if (positionCount > 0) {
     const unrealizedProfit = portfolioValue - invested;
     
-    ns.print(`\n${"─".repeat(50)}`);
+    ns.print(`\n${"─".repeat(70)}`);
     ns.print(`Portfolio: ${positionCount} positions | Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
     ns.print(`Unrealized P/L: ${ns.nFormat(unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
     ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
