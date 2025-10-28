@@ -6,169 +6,169 @@
 
 ## 📋 Quick Reference Table
 
-| Program | Price | Status | Recommendation | Why? |
-|---------|-------|--------|----------------|------|
-| BruteSSH.exe | $500k | ✅ OWNED | **CRITICAL - Already Owned** | Essential for automation |
-| FTPCrack.exe | $1.5m | ✅ OWNED | **CRITICAL - Already Owned** | Essential for automation |
-| relaySMTP.exe | $5m | ✅ OWNED | **CRITICAL - Already Owned** | Essential for automation |
-| HTTPWorm.exe | $30m | ✅ OWNED | **CRITICAL - Already Owned** | Essential for automation |
-| SQLInject.exe | $250m | ✅ OWNED | **CRITICAL - Already Owned** | Essential for automation |
-| ServerProfiler.exe | $500k | ❌ Not Owned | **SKIP** | Scripts better than this |
-| DeepscanV1.exe | $500k | ✅ OWNED | **NICE TO HAVE - Already Owned** | Quality of life |
-| DeepscanV2.exe | $25m | ✅ OWNED | **NICE TO HAVE - Already Owned** | Quality of life |
-| AutoLink.exe | $1m | ✅ OWNED | **NICE TO HAVE - Already Owned** | Quality of life |
-| Formulas.exe | $5b | ❌ Not Owned | **BUY WHEN AFFORDABLE** | Enhances existing scripts |
+| Program | Price | Priority | Recommendation | Why? |
+|---------|-------|----------|----------------|------|
+| BruteSSH.exe | $500k | 🔴 CRITICAL | **BUY FIRST** | Essential for automation |
+| FTPCrack.exe | $1.5m | 🔴 CRITICAL | **BUY SECOND** | Essential for automation |
+| relaySMTP.exe | $5m | 🔴 CRITICAL | **BUY EARLY** | Essential for automation |
+| HTTPWorm.exe | $30m | 🔴 CRITICAL | **BUY MID-GAME** | Essential for automation |
+| SQLInject.exe | $250m | 🔴 CRITICAL | **BUY MID-GAME** | Essential for automation |
+| ServerProfiler.exe | $500k | ❌ SKIP | **NEVER BUY** | Scripts better than this |
+| DeepscanV1.exe | $500k | 🟡 OPTIONAL | **BUY FOR QOL** | Quality of life |
+| DeepscanV2.exe | $25m | 🟡 OPTIONAL | **BUY FOR QOL** | Quality of life |
+| AutoLink.exe | $1m | 🟡 OPTIONAL | **BUY FOR QOL** | Quality of life |
+| Formulas.exe | $5b | 🟢 ENHANCEMENT | **BUY LATE-GAME** | Enhances existing scripts |
 
 ---
 
-## 🔓 Port Opening Programs (All OWNED ✅)
+## 🔓 Port Opening Programs (CRITICAL - Buy These First)
 
-### BruteSSH.exe - $500k ✅ OWNED
+### BruteSSH.exe - $500k
 **What It Does:** Opens SSH ports (port 1 of 5).
 
-**Used By Your Scripts:** 
+**Used By Scripts:** 
 - `auto-expand.js` - Automatic server rooting
 - `batch-manager.js` - Auto-rooting for batch operations
 - All deployment scripts
 
-**Verdict:** ✅ **CRITICAL - Essential for automation. You already own it.**
+**Verdict:** 🔴 **CRITICAL - Buy first. Essential for automation.**
 
-Your scripts use `ns.brutessh(host)` extensively. Without this, your automation cannot root most servers.
+Scripts use `ns.brutessh(host)` extensively. Without this, automation cannot root most servers. This is the #1 priority purchase.
 
 ---
 
-### FTPCrack.exe - $1.5m ✅ OWNED
+### FTPCrack.exe - $1.5m
 **What It Does:** Opens FTP ports (port 2 of 5).
 
-**Used By Your Scripts:**
+**Used By Scripts:**
 - `auto-expand.js` - Automatic server rooting
 - `batch-manager.js` - Auto-rooting for batch operations
 - All deployment scripts
 
-**Verdict:** ✅ **CRITICAL - Essential for automation. You already own it.**
+**Verdict:** 🔴 **CRITICAL - Buy second. Essential for automation.**
 
-Opens the second port needed for many servers. Critical for your scripts' `ns.ftpcrack(host)` calls.
+Opens the second port needed for many servers. Critical for scripts' `ns.ftpcrack(host)` calls. Buy this immediately after BruteSSH.exe.
 
 ---
 
-### relaySMTP.exe - $5m ✅ OWNED
+### relaySMTP.exe - $5m
 **What It Does:** Opens SMTP ports (port 3 of 5).
 
-**Used By Your Scripts:**
+**Used By Scripts:**
 - `auto-expand.js` - Automatic server rooting
 - `batch-manager.js` - Auto-rooting for batch operations
 - All deployment scripts
 
-**Verdict:** ✅ **CRITICAL - Essential for automation. You already own it.**
+**Verdict:** 🔴 **CRITICAL - Buy early. Essential for automation.**
 
-Unlocks mid-tier servers. Your scripts call `ns.relaysmtp(host)`.
+Unlocks mid-tier servers. Scripts call `ns.relaysmtp(host)`. Third priority purchase for expanding server access.
 
 ---
 
-### HTTPWorm.exe - $30m ✅ OWNED
+### HTTPWorm.exe - $30m
 **What It Does:** Opens HTTP ports (port 4 of 5).
 
-**Used By Your Scripts:**
+**Used By Scripts:**
 - `auto-expand.js` - Automatic server rooting
 - `batch-manager.js` - Auto-rooting for batch operations
 - All deployment scripts
 
-**Verdict:** ✅ **CRITICAL - Essential for automation. You already own it.**
+**Verdict:** 🔴 **CRITICAL - Buy mid-game. Essential for automation.**
 
-Required for high-tier servers. Your scripts call `ns.httpworm(host)`.
+Required for high-tier servers. Scripts call `ns.httpworm(host)`. Buy when you can afford it to unlock better targets.
 
 ---
 
-### SQLInject.exe - $250m ✅ OWNED
+### SQLInject.exe - $250m
 **What It Does:** Opens SQL ports (port 5 of 5).
 
-**Used By Your Scripts:**
+**Used By Scripts:**
 - `auto-expand.js` - Automatic server rooting
 - `batch-manager.js` - Auto-rooting for batch operations
 - All deployment scripts
 
-**Verdict:** ✅ **CRITICAL - Essential for automation. You already own it.**
+**Verdict:** 🔴 **CRITICAL - Buy mid-game. Essential for automation.**
 
-Opens the final port. Required for top-tier servers. Your scripts call `ns.sqlinject(host)`.
+Opens the final port. Required for top-tier servers. Scripts call `ns.sqlinject(host)`. Complete your port-opening arsenal with this.
 
 ---
 
 ## 🔍 Information Programs
 
-### ServerProfiler.exe - $500k ❌ Not Owned
+### ServerProfiler.exe - $500k
 **What It Does:** Enhances the terminal `scan` command to show detailed server information (required hacking level, RAM, security, ports needed, etc.).
 
-**Used By Your Scripts:** **NOT USED**
+**Used By Scripts:** **NOT USED**
 
-Your scripts use `ns.scan()` only for network traversal (getting neighbor lists). All server details are obtained through direct API calls:
+Scripts use `ns.scan()` only for network traversal (getting neighbor lists). All server details are obtained through direct API calls:
 - `ns.getServerRequiredHackingLevel()`
 - `ns.getServerMaxMoney()`
 - `ns.getServerMinSecurityLevel()`
 - `ns.getServerMaxRam()`
 - `ns.getServerNumPortsRequired()`
 
-**Script Alternative:** All your existing scripts already have better access to this data.
+**Script Alternative:** All existing scripts already have better access to this data through direct API calls.
 
-**Verdict:** ❌ **SKIP - Your scripts don't benefit from this.**
+**Verdict:** ❌ **NEVER BUY - Scripts don't benefit from this.**
 
-This program is useful for **manual terminal exploration** only. Your automated scripts don't need it because they query server data directly via API calls that work without ServerProfiler.exe.
+This program is useful for **manual terminal exploration** only. Automated scripts don't need it because they query server data directly via API calls that work without ServerProfiler.exe.
 
-**Save your $500k** for something else.
+**Save your $500k** for essential programs instead. This is the only program in the game with zero automation value.
 
 ---
 
 ## 🔭 Network Scanning Programs
 
-### DeepscanV1.exe - $500k ✅ OWNED
+### DeepscanV1.exe - $500k
 **What It Does:** Enables `scan-analyze` terminal command with depth up to 5 levels.
 
-**Used By Your Scripts:** **NOT USED**
+**Used By Scripts:** **NOT USED**
 
-Your scripts use BFS (breadth-first search) algorithms to discover the entire network:
+Scripts use BFS (breadth-first search) algorithms to discover the entire network:
 - `global-kill.js` - Network traversal for process killing
 - `profit-scan-flex.js` - Network scanning for profit analysis
 - `auto-expand.js` - Network exploration for deployment
 
-**Script Alternative:** Your BFS algorithms discover 100% of the network without depth limits.
+**Script Alternative:** BFS algorithms discover 100% of the network without depth limits.
 
-**Verdict:** ✅ **NICE TO HAVE - Quality of life for manual exploration.**
+**Verdict:** 🟡 **OPTIONAL - Quality of life for manual exploration.**
 
-This is useful when you want to manually explore the network from the terminal. Your scripts don't use it, but it's handy for quick manual checks. You already own it, so it's a convenience feature.
+This is useful when you want to manually explore the network from the terminal. Scripts don't use it, but it's handy for quick manual checks. Buy if you value convenience, skip if you're focused purely on automation.
 
 ---
 
-### DeepscanV2.exe - $25m ✅ OWNED
+### DeepscanV2.exe - $25m
 **What It Does:** Enables `scan-analyze` terminal command with depth up to 10 levels.
 
-**Used By Your Scripts:** **NOT USED**
+**Used By Scripts:** **NOT USED**
 
-Same situation as DeepscanV1 - your scripts use unlimited-depth BFS algorithms.
+Same situation as DeepscanV1 - scripts use unlimited-depth BFS algorithms.
 
-**Verdict:** ✅ **NICE TO HAVE - Quality of life for manual exploration.**
+**Verdict:** 🟡 **OPTIONAL - Quality of life for manual exploration.**
 
-Extends manual scanning to 10 levels deep. Your scripts don't use it, but you already own it. Convenient for terminal use.
+Extends manual scanning to 10 levels deep. Scripts don't use it, but convenient for terminal use. Only buy after all critical programs are purchased.
 
 ---
 
-### AutoLink.exe - $1m ✅ OWNED
+### AutoLink.exe - $1m
 **What It Does:** Enables automatic connection via `scan-analyze` command with `--route` flag or number shortcuts.
 
-**Used By Your Scripts:** **NOT USED**
+**Used By Scripts:** **NOT USED**
 
-Your scripts connect to servers programmatically using `ns.scp()` and `ns.exec()`.
+Scripts connect to servers programmatically using `ns.scp()` and `ns.exec()`.
 
-**Verdict:** ✅ **NICE TO HAVE - Quality of life for manual navigation.**
+**Verdict:** 🟡 **OPTIONAL - Quality of life for manual navigation.**
 
-This is purely for manual convenience. When you use `scan-analyze`, you can click a number to auto-connect. Your scripts don't need this, but you already own it. Handy for quick manual server access.
+This is purely for manual convenience. When you use `scan-analyze`, you can click a number to auto-connect. Scripts don't need this, but handy for quick manual server access.
 
 ---
 
 ## 🧮 Formulas API
 
-### Formulas.exe - $5b ❌ Not Owned
+### Formulas.exe - $5b
 **What It Does:** Unlocks access to the `ns.formulas` API for **perfect accuracy** in calculations (hacking, growth, experience, reputation, etc.).
 
-**Used By Your Scripts:** **YES - 2 Enhanced Scripts**
+**Used By Scripts:** **YES - 2 Enhanced Scripts**
 
 #### Scripts That Use Formulas.exe:
 
@@ -211,112 +211,127 @@ If you don't have Formulas.exe, they exit gracefully and tell you to use the reg
 
 #### Should You Buy Formulas.exe?
 
-**Current Situation:**
-- ✅ You have working scripts that don't require it
+**Key Considerations:**
+- ✅ Working scripts exist that don't require it
 - ✅ Regular scripts are ~95-98% accurate
-- ✅ Your profit scanning and batching work fine
+- ✅ Profit scanning and batching work fine without it
 - ❌ $5 billion is expensive early game
 - ⚠️ Formulas scripts exist but aren't critical
 
 **When to Buy:**
 1. **Early Game (< $10b net worth):** ❌ **Don't buy yet**
    - Regular scripts work fine
-   - Money better spent on other investments
+   - Money better spent on critical programs
    
 2. **Mid Game ($10b - $100b net worth):** ⚠️ **Optional**
    - If you want perfect accuracy for optimization
    - If you're fine-tuning complex batch systems
    
 3. **Late Game (> $100b net worth):** ✅ **Worth buying**
-   - $5b is pocket change
+   - $5b becomes affordable
    - Perfect accuracy helps with advanced optimization
    - Nice to have for precise calculations
 
-**Verdict:** ⏳ **BUY WHEN AFFORDABLE - Enhances existing scripts but not critical.**
+**Verdict:** 🟢 **BUY LATE-GAME - Enhances existing scripts but not critical.**
 
-Your regular scripts are excellent. The formulas versions provide **marginal improvements** (2-5% accuracy gain). Buy when $5 billion feels cheap, not when it's a major expense.
+Regular scripts are excellent. The formulas versions provide **marginal improvements** (2-5% accuracy gain). Buy when $5 billion feels affordable, not when it's a major expense.
 
 ---
 
-## 🎯 Priority Purchase Order (If Starting Over)
+## 🎯 Priority Purchase Order
 
-If you were starting fresh, here's the optimal purchase order:
+Here's the optimal purchase order for maximum automation effectiveness:
 
-1. **BruteSSH.exe** ($500k) - Unlock basic servers ✅ OWNED
-2. **FTPCrack.exe** ($1.5m) - Expand server access ✅ OWNED
-3. **DeepscanV1.exe** ($500k) - Quality of life ✅ OWNED
-4. **AutoLink.exe** ($1m) - Quality of life ✅ OWNED
-5. **relaySMTP.exe** ($5m) - More servers ✅ OWNED
-6. **DeepscanV2.exe** ($25m) - Better QoL ✅ OWNED
-7. **HTTPWorm.exe** ($30m) - High-tier servers ✅ OWNED
-8. **SQLInject.exe** ($250m) - Top-tier servers ✅ OWNED
-9. **Formulas.exe** ($5b) - Perfect accuracy ❌ **Next Purchase**
-10. ~~**ServerProfiler.exe**~~ - **Never needed** ❌ **SKIP**
+1. **BruteSSH.exe** ($500k) - Unlock basic servers - 🔴 **BUY FIRST**
+2. **FTPCrack.exe** ($1.5m) - Expand server access - 🔴 **BUY SECOND**
+3. **DeepscanV1.exe** ($500k) - Quality of life - 🟡 **OPTIONAL**
+4. **AutoLink.exe** ($1m) - Quality of life - 🟡 **OPTIONAL**
+5. **relaySMTP.exe** ($5m) - More servers - 🔴 **BUY THIRD**
+6. **DeepscanV2.exe** ($25m) - Better QoL - 🟡 **OPTIONAL**
+7. **HTTPWorm.exe** ($30m) - High-tier servers - 🔴 **BUY FOURTH**
+8. **SQLInject.exe** ($250m) - Top-tier servers - 🔴 **BUY FIFTH**
+9. **Formulas.exe** ($5b) - Perfect accuracy - 🟢 **BUY LATE-GAME**
+10. ~~**ServerProfiler.exe**~~ ($500k) - **Never needed** - ❌ **SKIP FOREVER**
 
 ---
 
 ## 💰 Summary & Recommendations
 
-### What You Already Own (Excellent Progress!) ✅
-- ✅ All 5 port-opening programs (BruteSSH through SQLInject)
-- ✅ All network scanning programs (Deepscan V1/V2, AutoLink)
-- ✅ Everything needed for your automation to work at 100% capacity
+### 🔴 Critical Programs (Buy These First)
+- **BruteSSH.exe** ($500k) - Essential #1
+- **FTPCrack.exe** ($1.5m) - Essential #2
+- **relaySMTP.exe** ($5m) - Essential #3
+- **HTTPWorm.exe** ($30m) - Essential #4
+- **SQLInject.exe** ($250m) - Essential #5
 
-### What You're Missing
-- ❌ **ServerProfiler.exe** ($500k) - **DON'T BUY** - Scripts don't benefit
-- ❌ **Formulas.exe** ($5b) - **BUY WHEN AFFORDABLE** - Enhances 2 scripts
+**Total Critical Investment:** ~$287 million
 
-### Your Next Steps
+These five programs are **mandatory** for automation. Scripts cannot root servers without them. Buy in order, as soon as you can afford each one.
 
-**Immediate Action:** ✅ **Nothing to buy right now**
+### 🟡 Optional Programs (Quality of Life)
+- **DeepscanV1.exe** ($500k) - Nice for manual exploration
+- **AutoLink.exe** ($1m) - Convenient terminal navigation
+- **DeepscanV2.exe** ($25m) - Extended manual scanning
 
-Your automation is complete. All critical programs owned.
+**Total Optional Investment:** ~$26.5 million
 
-**Future Purchase:** ⏳ **Formulas.exe when you have $10b+ spare**
+These improve manual terminal experience but don't enhance automation. Buy if you value convenience, skip if focused purely on automation efficiency.
 
-Wait until $5 billion feels insignificant. Your current scripts work excellently without it. The formulas versions provide only marginal improvements (2-5% accuracy increase).
+### 🟢 Enhancement Programs (Late-Game)
+- **Formulas.exe** ($5b) - Perfect accuracy in 2 enhanced scripts
 
-**Never Buy:** ❌ **ServerProfiler.exe**
+Buy when $5 billion feels affordable. Provides marginal improvements (2-5% accuracy gain) over regular scripts that work excellently.
 
-Your scripts already have superior access to server data via direct API calls. This program provides zero benefit to automation.
+### ❌ Programs to Skip Forever
+- **ServerProfiler.exe** ($500k) - Zero automation value
+
+Scripts already have superior access to server data via direct API calls. This is the only program with no automation benefit.
 
 ---
 
 ## 📊 Cost Analysis
 
-**Already Spent:** ~$287m (all owned programs)
+**Critical Programs (Mandatory):** ~$287 million
 - BruteSSH.exe: $500k
 - FTPCrack.exe: $1.5m
 - relaySMTP.exe: $5m
 - HTTPWorm.exe: $30m
 - SQLInject.exe: $250m
+
+**Optional Programs (Quality of Life):** ~$26.5 million
 - DeepscanV1.exe: $500k
-- DeepscanV2.exe: $25m (estimated)
+- DeepscanV2.exe: $25m
 - AutoLink.exe: $1m
 
-**Remaining Optional Purchases:** $5b
-- Formulas.exe: $5b (optional enhancement)
+**Enhancement Programs (Late-Game):** $5 billion
+- Formulas.exe: $5b
 
-**Never Needed:** $500k saved
-- ServerProfiler.exe: $500k (skip forever)
+**Programs to Skip:** $500k saved
+- ServerProfiler.exe: $500k (zero value)
 
-**Total Investment for Complete Automation:** ~$5.287b maximum
+**Total Investment for Complete Automation:**
+- **Minimum (Critical Only):** $287 million
+- **Full Automation + QoL:** $313.5 million
+- **Maximum (Including Formulas):** $5.31 billion
 
 ---
 
 ## 🚀 Bottom Line
 
-**You own everything you need.** Your automation scripts have 100% functionality with your current programs. 
+**Focus on the five critical port-opening programs first.** Without them, automation cannot root servers. This $287 million investment is mandatory for effective scripting.
 
-The only remaining purchase is **Formulas.exe** ($5b), which enhances accuracy in 2 scripts from "excellent" to "perfect." Buy it when you're wealthy, not when you're building wealth.
+**Skip ServerProfiler.exe entirely.** It's the only program in the game that provides zero value to automation. Save that $500k for something useful.
 
-**ServerProfiler.exe is the only program in the game that provides zero value to automation.** Don't waste $500k on it.
+**Optional programs improve convenience but not automation.** Buy DeepscanV1/V2 and AutoLink only if you value quality of life for manual terminal work.
 
-**Your script library is production-ready and doesn't need any programs to work better. Focus on making money, not buying things.**
+**Formulas.exe is a late-game luxury.** It enhances accuracy in 2 scripts from "excellent" (95-98%) to "perfect" (100%), but regular scripts work great. Buy when $5 billion feels affordable, not when you're building wealth.
+
+**The script library is production-ready with just the five critical programs.** Focus on making money with automation, then buy enhancements later.
 
 ---
 
-**Document Version:** 1.0.0  
+**Document Version:** 2.0.0  
 **Last Updated:** October 28, 2025  
-**Scripts Analyzed:** 38 files across all categories
+**Scripts Analyzed:** 38 files across all categories  
+**Perspective:** Generic user guide (applicable to all players)
 
