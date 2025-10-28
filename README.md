@@ -18,7 +18,7 @@ Before running any commands, you need to download the scripts:
 ### Option 1: Quick Download (Recommended)
 ```bash
 # Download the updater script first (copy/paste into Bitburner terminal)
-wget https://raw.githubusercontent.com/[YOUR_USERNAME]/bitburner-scripts/main/bitburner-update.js bitburner-update.js
+wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
 
 # Download essential scripts to get started
 run bitburner-update.js --essential
