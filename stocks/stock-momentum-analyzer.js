@@ -27,6 +27,8 @@ const BUY_MOMENTUM_THRESHOLD = 3;
 const HISTORY_LENGTH = 5;
 const MAX_VOLATILITY = 0.05;
 
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 const priceHistory = {};
 
 /** @param {NS} ns */
@@ -220,7 +222,7 @@ function displayRecommendations(ns, rec, has4S) {
     });
     
     for (const stock of rec.strongBuy) {
-      ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
+      ns.tprint(`${stock.symbol.padEnd(6)} @ ${formatMoney(ns,stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓ | ` +
                 `Change: ${stock.priceChange > 0 ? "+" : ""}${stock.priceChange.toFixed(2)}% | ` +
                 `Swing: ${stock.priceVolatility.toFixed(1)}%`);
@@ -255,7 +257,7 @@ function displayRecommendations(ns, rec, has4S) {
     });
     
     for (const stock of rec.buy) {
-      ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
+      ns.tprint(`${stock.symbol.padEnd(6)} @ ${formatMoney(ns,stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓ | ` +
                 `Change: ${stock.priceChange > 0 ? "+" : ""}${stock.priceChange.toFixed(2)}% | ` +
                 `Swing: ${stock.priceVolatility.toFixed(1)}%`);
@@ -285,7 +287,7 @@ function displayRecommendations(ns, rec, has4S) {
     
     for (let i = 0; i < Math.min(5, rec.hold.length); i++) {
       const stock = rec.hold[i];
-      ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
+      ns.tprint(`${stock.symbol.padEnd(6)} @ ${formatMoney(ns,stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓ | ` +
                 `Change: ${stock.priceChange > 0 ? "+" : ""}${stock.priceChange.toFixed(2)}%`);
     }
@@ -304,7 +306,7 @@ function displayRecommendations(ns, rec, has4S) {
     rec.avoid.sort((a, b) => b.priceVolatility - a.priceVolatility);
     
     for (const stock of rec.avoid) {
-      ns.tprint(`${stock.symbol.padEnd(6)} @ ${ns.nFormat(stock.askPrice, "$0.00a").padEnd(8)} | ` +
+      ns.tprint(`${stock.symbol.padEnd(6)} @ ${formatMoney(ns,stock.askPrice, "$0.00a").padEnd(8)} | ` +
                 `Price Swing: ${stock.priceVolatility.toFixed(1)}% ⚠️  | ` +
                 `Momentum: ${stock.momentum.positive}↑ ${stock.momentum.negative}↓`);
     }

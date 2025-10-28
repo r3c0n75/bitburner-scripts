@@ -12,6 +12,8 @@
  * Safety: Requires --confirm flag to prevent accidental liquidation
  */
 
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 /** @param {NS} ns */
 export async function main(ns) {
   if (!ns.stock.hasWSEAccount() || !ns.stock.hasTIXAPIAccess()) {
@@ -93,7 +95,7 @@ export async function main(ns) {
   positions.sort((a, b) => b.profit - a.profit);
   
   for (const pos of positions) {
-    const profitStr = pos.profit > 0 ? `+${ns.nFormat(pos.profit, "$0.00a")}` : ns.nFormat(pos.profit, "$0.00a");
+    const profitStr = pos.profit > 0 ? `+${formatMoney(ns,pos.profit, "$0.00a")}` : formatMoney(ns,pos.profit, "$0.00a");
     const returnStr = pos.profit > 0 ? `+${pos.returnPct.toFixed(1)}%` : `${pos.returnPct.toFixed(1)}%`;
     const emoji = pos.profit > 0 ? "✓" : pos.profit < 0 ? "✗" : "→";
     
@@ -104,7 +106,7 @@ export async function main(ns) {
       forecastInfo = ` | Forecast: ${fcStr}`;
     }
     
-    ns.tprint(`${emoji} ${pos.symbol} ${pos.type}: ${ns.nFormat(pos.shares, "0.0a")} shares @ ${ns.nFormat(pos.entryPrice, "$0.00a")} → ${ns.nFormat(pos.exitPrice, "$0.00a")}`);
+    ns.tprint(`${emoji} ${pos.symbol} ${pos.type}: ${formatMoney(ns,pos.shares, "0.0a")} shares @ ${formatMoney(ns,pos.entryPrice, "$0.00a")} → ${formatMoney(ns,pos.exitPrice, "$0.00a")}`);
     ns.tprint(`   P/L: ${profitStr} (${returnStr})${forecastInfo}`);
     
     totalProfit += pos.profit;
@@ -114,7 +116,7 @@ export async function main(ns) {
   
   ns.tprint("");
   ns.tprint(`${"─".repeat(70)}`);
-  ns.tprint(`TOTAL REALIZED P/L: ${totalProfit > 0 ? "+" : ""}${ns.nFormat(totalProfit, "$0.00a")}`);
+  ns.tprint(`TOTAL REALIZED P/L: ${totalProfit > 0 ? "+" : ""}${formatMoney(ns,totalProfit, "$0.00a")}`);
   ns.tprint(`Profitable Trades: ${profitableCount} | Losing Trades: ${losingCount}`);
   ns.tprint(`Win Rate: ${((profitableCount / positions.length) * 100).toFixed(1)}%`);
   ns.tprint(`${"═".repeat(70)}`);
@@ -149,7 +151,7 @@ export async function main(ns) {
       if (salePrice > 0) {
         successCount++;
         actualProfit += pos.profit;
-        ns.tprint(`✓ Closed ${pos.symbol} ${pos.type}: ${ns.nFormat(pos.profit, "$0.00a")}`);
+        ns.tprint(`✓ Closed ${pos.symbol} ${pos.type}: ${formatMoney(ns,pos.profit, "$0.00a")}`);
       } else {
         failCount++;
         ns.tprint(`✗ Failed to close ${pos.symbol} ${pos.type}`);
@@ -169,8 +171,8 @@ export async function main(ns) {
   ns.tprint(`${"═".repeat(70)}`);
   ns.tprint(`Positions Closed: ${successCount}/${positions.length}`);
   ns.tprint(`Failed: ${failCount}`);
-  ns.tprint(`Total Realized P/L: ${actualProfit > 0 ? "+" : ""}${ns.nFormat(actualProfit, "$0.00a")}`);
-  ns.tprint(`Cash Available: ${ns.nFormat(ns.getServerMoneyAvailable("home"), "$0.00a")}`);
+  ns.tprint(`Total Realized P/L: ${actualProfit > 0 ? "+" : ""}${formatMoney(ns,actualProfit, "$0.00a")}`);
+  ns.tprint(`Cash Available: ${formatMoney(ns,ns.getServerMoneyAvailable("home"), "$0.00a")}`);
   ns.tprint(`${"═".repeat(70)}`);
   
   if (successCount === positions.length) {

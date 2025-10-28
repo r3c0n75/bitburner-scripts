@@ -12,6 +12,8 @@
  * - 4S Market Data TIX API ($1 billion) - optional, for forecasts
  */
 
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 /** @param {NS} ns */
 export async function main(ns) {
   if (!ns.stock.hasWSEAccount() || !ns.stock.hasTIXAPIAccess()) {
@@ -126,7 +128,7 @@ export async function main(ns) {
       if (!currentPositionKeys.has(key)) {
         // Position was closed since last cycle
         realizedProfitTotal += prevPos.profit;
-        ns.print(`[REALIZED] ${prevPos.symbol} ${prevPos.type}: ${ns.nFormat(prevPos.profit, "$0.00a")} (${prevPos.returnPct > 0 ? "+" : ""}${prevPos.returnPct.toFixed(2)}%)`);
+        ns.print(`[REALIZED] ${prevPos.symbol} ${prevPos.type}: ${formatMoney(ns,prevPos.profit, "$0.00a")} (${prevPos.returnPct > 0 ? "+" : ""}${prevPos.returnPct.toFixed(2)}%)`);
       }
     }
     
@@ -145,15 +147,15 @@ export async function main(ns) {
     if (has4S) ns.print(`[4S Market Data: ACTIVE - Forecast & Volatility Available]`);
     ns.print(`${"═".repeat(50)}`);
     ns.print(`Active Positions: ${positions.length}`);
-    ns.print(`Portfolio Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
-    ns.print(`Total Invested: ${ns.nFormat(invested, "$0.00a")}`);
-    ns.print(`Cash Available: ${ns.nFormat(ns.getServerMoneyAvailable("home"), "$0.00a")}`);
+    ns.print(`Portfolio Value: ${formatMoney(ns,portfolioValue, "$0.00a")}`);
+    ns.print(`Total Invested: ${formatMoney(ns,invested, "$0.00a")}`);
+    ns.print(`Cash Available: ${formatMoney(ns,ns.getServerMoneyAvailable("home"), "$0.00a")}`);
     ns.print(`${"─".repeat(50)}`);
-    ns.print(`Unrealized P/L: ${ns.nFormat(totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
-    ns.print(`Realized P/L: ${ns.nFormat(realizedProfitTotal, "$0.00a")} ${realizedProfitTotal > 0 ? "✓" : realizedProfitTotal < 0 ? "✗" : ""}`);
-    ns.print(`Total P/L: ${ns.nFormat(totalProfit + realizedProfitTotal, "$0.00a")}`);
+    ns.print(`Unrealized P/L: ${formatMoney(ns,totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
+    ns.print(`Realized P/L: ${formatMoney(ns,realizedProfitTotal, "$0.00a")} ${realizedProfitTotal > 0 ? "✓" : realizedProfitTotal < 0 ? "✗" : ""}`);
+    ns.print(`Total P/L: ${formatMoney(ns,totalProfit + realizedProfitTotal, "$0.00a")}`);
     ns.print(`Session Return: ${sessionReturn > 0 ? "+" : ""}${sessionReturn.toFixed(2)}%`);
-    ns.print(`Peak Value: ${ns.nFormat(peakValue, "$0.00a")}`);
+    ns.print(`Peak Value: ${formatMoney(ns,peakValue, "$0.00a")}`);
     ns.print(`Drawdown: ${drawdown.toFixed(2)}%`);
     ns.print(`Runtime: ${runTime.toFixed(1)} minutes`);
     
@@ -196,10 +198,10 @@ export async function main(ns) {
           ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s %10s %12s",
             pos.symbol,
             pos.type,
-            ns.nFormat(pos.shares, "0.0a"),
-            ns.nFormat(pos.entryPrice, "$0.0a"),
-            ns.nFormat(pos.currentPrice, "$0.0a"),
-            ns.nFormat(pos.profit, "$0.0a"),
+            formatMoney(ns,pos.shares, "0.0a"),
+            formatMoney(ns,pos.entryPrice, "$0.0a"),
+            formatMoney(ns,pos.currentPrice, "$0.0a"),
+            formatMoney(ns,pos.profit, "$0.0a"),
             returnStr,
             `${fcStr} ${alignment}`,
             volDisplay
@@ -208,10 +210,10 @@ export async function main(ns) {
           ns.print(sprintf("%-6s %-5s %8s %8s %10s %10s %8s",
             pos.symbol,
             pos.type,
-            ns.nFormat(pos.shares, "0.0a"),
-            ns.nFormat(pos.entryPrice, "$0.0a"),
-            ns.nFormat(pos.currentPrice, "$0.0a"),
-            ns.nFormat(pos.profit, "$0.0a"),
+            formatMoney(ns,pos.shares, "0.0a"),
+            formatMoney(ns,pos.entryPrice, "$0.0a"),
+            formatMoney(ns,pos.currentPrice, "$0.0a"),
+            formatMoney(ns,pos.profit, "$0.0a"),
             returnStr
           ));
         }

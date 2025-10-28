@@ -52,6 +52,8 @@
 
 const LONG_THRESHOLD = 0.55;    // Go long if forecast > 55%
 const SHORT_THRESHOLD = 0.45;   // Go short if forecast < 45%
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 const EXIT_THRESHOLD = 0.02;    // Exit if forecast moves within 2% of neutral
 const COMMISSION = 100000;      // Transaction commission
 const MAX_POSITION_SIZE = 0.10; // Max 10% of portfolio per stock
@@ -99,7 +101,7 @@ export async function main(ns) {
   
   if (investmentPerStock <= 0) {
     ns.tprint("ERROR: Total capital too low for the number of stocks!");
-    ns.tprint(`Need at least $${ns.nFormat((maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
+    ns.tprint(`Need at least $${formatMoney(ns,(maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
     return;
   }
   
@@ -111,8 +113,8 @@ export async function main(ns) {
   ns.print(`ADVANCED STOCK TRADER - STARTING`);
   ns.print(`${"═".repeat(70)}`);
   ns.print(`Max Different Stocks: ${maxStocks}`);
-  ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
-  ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")} (after ${ns.nFormat(COMMISSION, "$0.00a")} commission)`);
+  ns.print(`Total Capital: ${formatMoney(ns,totalCapital, "$0.00a")}`);
+  ns.print(`Investment per Stock: ${formatMoney(ns,investmentPerStock, "$0.00a")} (after ${formatMoney(ns,COMMISSION, "$0.00a")} commission)`);
   ns.print(`Short Positions: ${canShort ? "ENABLED" : "DISABLED (not available in this version)"}`);
   if (!canShort) {
     ns.print(`  Note: Trading long positions only`);
@@ -173,8 +175,8 @@ export async function main(ns) {
             if (profit < biggestLoss) biggestLoss = profit;
             
             const reason = hitProfitTarget ? "PROFIT TARGET" : (hitStopLoss ? "STOP LOSS" : "FORECAST");
-            ns.print(`✓ SELL LONG ${symbol}: ${ns.nFormat(longShares, "0.0a")} @ ${ns.nFormat(salePrice, "$0.00a")}`);
-            ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+            ns.print(`✓ SELL LONG ${symbol}: ${formatMoney(ns,longShares, "0.0a")} @ ${formatMoney(ns,salePrice, "$0.00a")}`);
+            ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${formatMoney(ns,profit, "$0.00a")}`);
           }
         }
       }
@@ -204,8 +206,8 @@ export async function main(ns) {
               if (profit < biggestLoss) biggestLoss = profit;
               
               const reason = hitProfitTarget ? "PROFIT TARGET" : (hitStopLoss ? "STOP LOSS" : "FORECAST");
-              ns.print(`✓ CLOSE SHORT ${symbol}: ${ns.nFormat(shortShares, "0.0a")} @ ${ns.nFormat(salePrice, "$0.00a")}`);
-              ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+              ns.print(`✓ CLOSE SHORT ${symbol}: ${formatMoney(ns,shortShares, "0.0a")} @ ${formatMoney(ns,salePrice, "$0.00a")}`);
+              ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${formatMoney(ns,profit, "$0.00a")}`);
             }
           } catch (e) {
             // Short access not available - disable shorts
@@ -260,8 +262,8 @@ export async function main(ns) {
             tradesExecuted++;
             actionsThisCycle++;
             
-            ns.print(`✓ BUY LONG ${symbol}: ${ns.nFormat(sharesToBuy, "0.0a")} @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Confidence: ${(confidence * 100).toFixed(1)}% | Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+            ns.print(`✓ BUY LONG ${symbol}: ${formatMoney(ns,sharesToBuy, "0.0a")} @ ${formatMoney(ns,purchasePrice, "$0.00a")}`);
+            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Confidence: ${(confidence * 100).toFixed(1)}% | Cost: ${formatMoney(ns,totalCost, "$0.00a")}`);
             ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
           }
         }
@@ -284,8 +286,8 @@ export async function main(ns) {
               tradesExecuted++;
               actionsThisCycle++;
               
-              ns.print(`✓ SHORT ${symbol}: ${ns.nFormat(sharesToShort, "0.0a")} @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-              ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Confidence: ${(confidence * 100).toFixed(1)}% | Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+              ns.print(`✓ SHORT ${symbol}: ${formatMoney(ns,sharesToShort, "0.0a")} @ ${formatMoney(ns,purchasePrice, "$0.00a")}`);
+              ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Confidence: ${(confidence * 100).toFixed(1)}% | Cost: ${formatMoney(ns,totalCost, "$0.00a")}`);
               ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
             }
           } catch (e) {
@@ -366,16 +368,16 @@ function displayAdvancedSummary(ns, totalProfit, tradesExecuted, biggestWin, big
   ns.print(`PORTFOLIO SUMMARY`);
   ns.print(`${"─".repeat(70)}`);
   ns.print(`Positions: ${longPositions} long / ${shortPositions} short`);
-  ns.print(`Portfolio Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
-  ns.print(`Available Cash: ${ns.nFormat(cash, "$0.00a")}`);
-  ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
+  ns.print(`Portfolio Value: ${formatMoney(ns,portfolioValue, "$0.00a")}`);
+  ns.print(`Available Cash: ${formatMoney(ns,cash, "$0.00a")}`);
+  ns.print(`Total Capital: ${formatMoney(ns,totalCapital, "$0.00a")}`);
   ns.print(`${"─".repeat(70)}`);
-  ns.print(`Unrealized P/L: ${ns.nFormat(unrealizedProfit, "$0.00a")} (${invested > 0 ? ((unrealizedProfit / invested) * 100).toFixed(2) : "0.00"}%)`);
-  ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")}`);
+  ns.print(`Unrealized P/L: ${formatMoney(ns,unrealizedProfit, "$0.00a")} (${invested > 0 ? ((unrealizedProfit / invested) * 100).toFixed(2) : "0.00"}%)`);
+  ns.print(`Realized P/L: ${formatMoney(ns,totalProfit, "$0.00a")}`);
   ns.print(`Total Trades: ${tradesExecuted}`);
   if (tradesExecuted > 0) {
-    ns.print(`Best Trade: ${biggestWin > 0 ? ns.nFormat(biggestWin, "$0.00a") : "$0.00 (no profitable trades yet)"}`);
-    ns.print(`Worst Trade: ${ns.nFormat(biggestLoss, "$0.00a")}`);
+    ns.print(`Best Trade: ${biggestWin > 0 ? formatMoney(ns,biggestWin, "$0.00a") : "$0.00 (no profitable trades yet)"}`);
+    ns.print(`Worst Trade: ${formatMoney(ns,biggestLoss, "$0.00a")}`);
   }
   ns.print(`${"═".repeat(70)}`);
 }

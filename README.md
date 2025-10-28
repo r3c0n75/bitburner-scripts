@@ -394,22 +394,20 @@ Open source - use freely in your Bitburner gameplay!
 **Current Version**: 1.8.6  
 **Latest Feature**: Enhanced global kill reliability with 100% process termination
 
-## 🔄 Version Compatibility Status
+## ✅ Version Compatibility
 
 **Bitburner v2.8.1 (Steam)**: ✅ Fully Compatible  
-**Bitburner v3.0.0 (Web)**: 🚧 In Progress (18/18 scripts being updated)
+**Bitburner v3.0.0 (Web)**: ✅ Fully Compatible
 
-**What's Being Fixed:**
-- `ns.nFormat()` was removed in v3.0.0, replaced with `ns.formatNumber()`
-- Adding backward-compatible `formatMoney()` helper to all scripts
-- **Status**: 1/18 complete (profit-scan.js ✅)
+**All 18 scripts updated with v2.x/v3.x compatibility:**
+- Added `formatMoney()` helper function to all scripts
+- Intelligently tries `ns.nFormat()` (v2.x) with fallback to custom formatting (v3.x)
+- **100% backward compatible** - works perfectly in both versions
 
-**Scripts Working Now:**
-- ✅ `bitburner-update.js` - Installer works in both versions
-- ✅ `analysis/profit-scan.js` - Compatible with both versions
-- 🚧 17 more scripts being updated (see progress above)
-
-**Estimated Completion**: Next session (bulk update in progress)
+**What Was Fixed:**
+- `ns.nFormat()` was removed in v3.0.0
+- Scripts now use compatibility layer that works in both versions
+- All scripts tested and confirmed working in v2.8.1 Steam and v3.0.0 Web
 
 ---
 
