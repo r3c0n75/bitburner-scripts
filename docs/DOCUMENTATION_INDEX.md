@@ -102,6 +102,20 @@ Complete index of all documentation for the Bitburner script collection.
 
 ---
 
+### [PURCHASABLE_PROGRAMS_GUIDE.md](PURCHASABLE_PROGRAMS_GUIDE.md) 🆕
+**Complete Purchasable Programs Evaluation**
+- All 10 purchasable programs analyzed
+- What each program does and costs
+- Which programs your scripts use
+- Buy vs skip recommendations
+- Script alternatives to programs
+- Priority purchase order
+- Cost-benefit analysis
+
+**When to use**: Deciding which programs to buy and understanding their value for automation
+
+---
+
 ### [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕
 **Faction Reputation RAM Sharing Guide**
 - What is RAM sharing and how it works
@@ -258,6 +272,7 @@ Complete index of all documentation for the Bitburner script collection.
 | Task | Documentation |
 |------|---------------|
 | New game / augmentation recovery | [NEW_GAME_QUICKSTART.md](../NEW_GAME_QUICKSTART.md) 🆕 |
+| Which programs to buy | [PURCHASABLE_PROGRAMS_GUIDE.md](PURCHASABLE_PROGRAMS_GUIDE.md) 🆕 |
 | Perfect accuracy with Formulas.exe | [FORMULAS_ENHANCED_SCRIPTS.md](FORMULAS_ENHANCED_SCRIPTS.md) 🔮 |
 | Which scripts use Formulas.exe | [SCRIPTS_USING_FORMULAS.md](SCRIPTS_USING_FORMULAS.md) 🔮 |
 | Boost faction reputation | [RAM_SHARING_GUIDE.md](RAM_SHARING_GUIDE.md) 🆕 |
