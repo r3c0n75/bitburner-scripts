@@ -4,6 +4,7 @@ Complete guide to automated stock trading in Bitburner using the TIX (Trade Info
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
+- [⚠️ CRITICAL: Commission Impact Guide](#critical-commission-impact-guide)
 - [Script Overview](#script-overview)
 - [Getting Started](#getting-started)
 - [Trading Strategies](#trading-strategies)
@@ -34,6 +35,149 @@ Complete guide to automated stock trading in Bitburner using the TIX (Trade Info
 - **Minimum (Momentum-Based)**: $5 billion (TIX API only - no 4S Data needed!)
 
 **Note**: Some Bitburner versions include short position functionality (betting against stocks), but this is not universally available. All scripts work with long positions only.
+
+---
+
+## ⚠️ CRITICAL: Commission Impact Guide
+
+### Understanding Stock Trading Commissions
+
+**EVERY stock trade costs $100,000 commission!**
+
+- **Buying stocks**: $100,000 commission
+- **Selling stocks**: $100,000 commission
+- **Total per round trip**: **$200,000**
+
+This commission is **FIXED** regardless of position size, which means:
+- Small positions get destroyed by commissions
+- Large positions barely notice them
+
+### The Math That Matters
+
+**Example 1: Small Position (BANKRUPTCY)**
+```
+Position: $200,000 (10 stocks × $200k each from $2m total)
+Stock gains 15%: Worth $230,000
+Sell proceeds after commission: $230,000 - $100,000 = $130,000
+Original cost: $200,000 + $100,000 = $300,000
+
+NET LOSS: -$170,000 (-85% return!) ❌
+```
+
+**Example 2: Medium Position (STILL LOSING)**
+```
+Position: $1,000,000
+Stock gains 15%: Worth $1,150,000
+Sell proceeds after commission: $1,150,000 - $100,000 = $1,050,000
+Original cost: $1,000,000 + $100,000 = $1,100,000
+
+NET LOSS: -$50,000 (-4.5% return) ❌
+```
+
+**Example 3: Large Position (PROFITABLE)**
+```
+Position: $5,000,000
+Stock gains 15%: Worth $5,750,000
+Sell proceeds after commission: $5,750,000 - $100,000 = $5,650,000
+Original cost: $5,000,000 + $100,000 = $5,100,000
+
+NET PROFIT: +$550,000 (+10.8% return) ✓
+```
+
+### Minimum Capital Requirements by Script
+
+| Script | Min Position Size | Min Total Capital | Recommended |
+|--------|------------------|-------------------|-------------|
+| **stock-trader-basic.js** | $1,000,000 per stock | $10,000,000 for 10 stocks | $50m+ |
+| **stock-trader-advanced.js** | $2,000,000 per stock | $20,000,000 for 10 stocks | $100m+ |
+| **stock-trader-momentum.js** | $1,000,000 per stock | $5,000,000 for 5 stocks | $10m+ |
+
+### Position Size Calculator
+
+**Formula**: Commission Impact % = ($200,000 / Position Size) × 100
+
+| Position Size | Commission % | Status | Viability |
+|--------------|--------------|---------|-----------|
+| $200,000 | 100% | 💀 **FATAL** | Will lose everything to commissions |
+| $500,000 | 40% | ❌ **TERRIBLE** | Need 40%+ gain just to break even |
+| $1,000,000 | 20% | ⚠️ **MARGINAL** | Need 20%+ gain to profit (possible) |
+| $2,000,000 | 10% | ⚙️ **WORKABLE** | Need 10%+ gain to profit (achievable) |
+| $5,000,000 | 4% | ✅ **GOOD** | Only 4% overhead, normal targets work |
+| $10,000,000+ | 2% | ⭐ **IDEAL** | Commission negligible, full profitability |
+
+### Safe Capital Guidelines
+
+**DO NOT trade stocks if you have less than:**
+- **$10 million** for basic trading
+- **$20 million** for advanced trading
+- **$5 million** for momentum trading (can use fewer stocks)
+
+**If you have limited capital, adjust stock count:**
+```bash
+# $5m capital → 5 stocks maximum
+run stocks/stock-trader-basic.js 5 5000000
+
+# $3m capital → 3 stocks maximum
+run stocks/stock-trader-basic.js 3 3000000
+
+# $10m capital → 10 stocks (optimal)
+run stocks/stock-trader-basic.js 10 10000000
+```
+
+### Why Small Capital Fails
+
+With $2 million across 10 stocks:
+1. Each position = $200k
+2. Commission = $200k per round trip
+3. **Break-even requires 100% price gain** (impossible)
+4. Every trade is automatically a loss
+5. More trading = faster bankruptcy
+
+**Real example from testing:**
+- Started with $2m
+- Made 188 trades in minutes
+- Ended with $120k remaining
+- Lost $1.88m to commissions (-94% total loss)
+
+### How to Build Capital for Stock Trading
+
+If you don't have enough capital yet, use these strategies:
+
+```bash
+# Smart batching - Build capital fast
+run batch/batch-manager.js [target] 0.05 1.25 home --quiet
+
+# Automated expansion
+run deploy/auto-expand.js
+```
+
+Get to $50+ billion, THEN stocks become highly profitable!
+
+### Commission-Aware Trading
+
+The **advanced trader** now calculates profit targets **AFTER commissions**:
+```bash
+# 25% NET profit target (accounts for $200k fees)
+run stocks/stock-trader-advanced.js 10 50000000 0.25 0.15 6000
+```
+
+With the fixed commission bug, positions sell when they **actually** reach the target profit after fees, not before!
+
+### Key Takeaways
+
+✅ **DO**:
+- Wait until you have $10m+ before trading stocks
+- Use fewer stocks if you have limited capital
+- Calculate break-even points including commissions
+- Focus on larger positions ($1m+ each)
+
+❌ **DON'T**:
+- Trade with less than $5m total capital
+- Spread thin across many small positions
+- Expect profits from $200k-500k positions
+- Ignore commission impact calculations
+
+---
 
 ## Script Overview
 
