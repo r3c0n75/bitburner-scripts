@@ -391,23 +391,27 @@ Open source - use freely in your Bitburner gameplay!
 ---
 
 **Last Updated**: October 28, 2025  
-**Current Version**: 1.8.6  
-**Latest Feature**: Enhanced global kill reliability with 100% process termination
+**Current Version**: 1.8.7  
+**Latest Feature**: Smart batcher v3.0.0 compatibility fix
 
 ## ✅ Version Compatibility
 
 **Bitburner v2.8.1 (Steam)**: ✅ Fully Compatible  
 **Bitburner v3.0.0 (Web)**: ✅ Fully Compatible
 
-**All 18 scripts updated with v2.x/v3.x compatibility:**
-- Added `formatMoney()` helper function to all scripts
-- Intelligently tries `ns.nFormat()` (v2.x) with fallback to custom formatting (v3.x)
+**All scripts updated with v2.x/v3.x compatibility:**
+- Added compatibility helper functions to all scripts
+- Intelligently tries new API (v3.x) with fallback to old API (v2.x)
 - **100% backward compatible** - works perfectly in both versions
 
 **What Was Fixed:**
-- `ns.nFormat()` was removed in v3.0.0
-- Scripts now use compatibility layer that works in both versions
+- `ns.nFormat()` removed in v3.0.0 → replaced with `formatMoney()` helper
+- `ns.formatNumber()` removed in v3.0.0 → replaced with `formatNumber()` helper
+- Scripts now use compatibility layers that work in both versions
 - All scripts tested and confirmed working in v2.8.1 Steam and v3.0.0 Web
+
+**Latest v3.0.0 Fix (v1.8.7):**
+- ✅ `smart-batcher.js` - Fixed `formatNumber()` deprecation error
 
 ---
 

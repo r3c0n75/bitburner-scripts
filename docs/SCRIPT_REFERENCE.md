@@ -79,6 +79,7 @@ run batch-manager.js --quiet                          # Use all defaults (5% hac
 ### smart-batcher.js ⭐ RECOMMENDED
 **Purpose**: Intelligent batch deployment with optimal timing-based thread ratios
 **Performance**: 490x improvement over basic batching ($4k/s → $2.09m/s)
+**Compatibility**: ✅ v3.0.0 and v2.8.1
 **Usage**: `run smart-batcher.js <target> [hackPercent] [--include-home] [--quiet] [--dry]`
 
 **Parameters**:
