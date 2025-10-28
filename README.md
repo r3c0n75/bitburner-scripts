@@ -48,7 +48,7 @@ run stocks/stock-close-all.js --confirm                        # Close all posit
 ## 🚀 Quick Start
 
 ### New Game or Post-Augmentation?
-**Start here**: [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) - Fastest recovery path!
+**Start here**: [NEW_GAME_QUICKSTART.md](docs/NEW_GAME_QUICKSTART.md) - Fastest recovery path!
 
 ### Recommended: Smart Batcher (490x Performance!)
 ```bash
@@ -117,8 +117,8 @@ scripts/
 
 | Document | Purpose | When to Use |
 |----------|---------|-------------|
-| [NEW_GAME_QUICKSTART.md](NEW_GAME_QUICKSTART.md) | Fast recovery after reset | Starting new BitNode |
-| [QUICK_REFERENCE.md](QUICK_REFERENCE.md) | Fast command lookup | Need quick command |
+| [NEW_GAME_QUICKSTART.md](docs/NEW_GAME_QUICKSTART.md) | Fast recovery after reset | Starting new BitNode |
+| [QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) | Fast command lookup | Need quick command |
 | [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md) | 🆕 Stock trading | Making money with stocks |
 | [docs/SCRIPT_REFERENCE.md](docs/SCRIPT_REFERENCE.md) | Detailed script docs | Learning script usage |
 | [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) | Project setup | First-time setup |
@@ -333,7 +333,7 @@ Open source - use freely in your Bitburner gameplay!
 **Major Update**: Momentum trading with profit targets (NO 4S Data needed!)
 
 **Quick Links**:
-- [Quick Reference](QUICK_REFERENCE.md) - Fast command lookup
+- [Quick Reference](docs/QUICK_REFERENCE.md) - Fast command lookup
 - [Stock Trading Guide](docs/STOCK_TRADING_GUIDE.md) - Complete trading guide
 - [Script Reference](docs/SCRIPT_REFERENCE.md) - Detailed documentation
-- [New Game Guide](NEW_GAME_QUICKSTART.md) - Fast recovery path
+- [New Game Guide](docs/NEW_GAME_QUICKSTART.md) - Fast recovery path
