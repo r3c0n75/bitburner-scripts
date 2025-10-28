@@ -11,10 +11,26 @@
  * - total-capital: Total money to invest across ALL stocks (e.g., 1000000000 = $1b)
  * - refresh-rate-ms: How often to check market in milliseconds (default: 6000 = 6s)
  * 
+ * ⚠️ CRITICAL: COMMISSION WARNING ⚠️
+ * Each trade costs $100k commission (buy) + $100k commission (sell) = $200k total!
+ * 
+ * MINIMUM SAFE CAPITAL REQUIREMENTS:
+ * - Per Stock Position: $1,000,000+ (commission = 20% of position)
+ * - Total Capital: $10,000,000+ for 10 stocks
+ * 
+ * DO NOT USE WITH LOW CAPITAL:
+ * - $2m / 10 stocks = $200k per stock → 100% LOSS from commissions alone!
+ * - $5m / 10 stocks = $500k per stock → 40% loss from commissions
+ * - $10m / 10 stocks = $1m per stock → 20% loss from commissions (acceptable)
+ * 
+ * If you have less than $10m total capital, use fewer stocks:
+ * - $5m capital → max 5 stocks (run stocks/stock-trader-basic.js 5 5000000)
+ * - $3m capital → max 3 stocks (run stocks/stock-trader-basic.js 3 3000000)
+ * 
  * Requirements:
  * - TIX API Access ($5 billion)
  * - 4S Market Data TIX API ($1 billion) - REQUIRED for forecasts
- * - Sufficient funds for trading
+ * - Minimum $10 million trading capital recommended
  */
 
 const BUY_THRESHOLD = 0.55;  // Buy if forecast > 55%

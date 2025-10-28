@@ -5,23 +5,46 @@
  * - Long positions with dynamic sizing
  * - Short positions (if available in your game version)
  * - Dynamic position sizing based on forecast confidence
- * - Configurable profit target and stop-loss protection
+ * - Commission-aware profit targets and stop-loss protection
  * - Portfolio rebalancing
  * - Performance tracking
  * 
  * Usage: run stocks/stock-trader-advanced.js [max-stocks] [total-capital] [profit-target] [stop-loss] [refresh-rate-ms]
- * Example: run stocks/stock-trader-advanced.js 10 50000000000 0.15 0.10 6000
+ * Example: run stocks/stock-trader-advanced.js 10 50000000000 0.25 0.15 6000
  * 
  * Parameters:
  * - max-stocks: Maximum number of different stocks to buy (e.g., 10)
  * - total-capital: Total money to invest across ALL stocks (e.g., 50000000000 = $50b)
- * - profit-target: Profit % to auto-sell at (e.g., 0.15 = 15%, 0.20 = 20%)
- * - stop-loss: Loss % to auto-sell at (e.g., 0.10 = 10%, 0.15 = 15%)
+ * - profit-target: NET profit % after commissions (e.g., 0.25 = 25%, 0.30 = 30%)
+ * - stop-loss: NET loss % after commissions (e.g., 0.15 = 15%, 0.20 = 20%)
  * - refresh-rate-ms: How often to check market in milliseconds (default: 6000 = 6s)
+ * 
+ * ⚠️ CRITICAL: COMMISSION WARNING ⚠️
+ * Each trade costs $100k commission (buy) + $100k commission (sell) = $200k total!
+ * Profit targets and stop-loss are calculated AFTER commissions.
+ * 
+ * MINIMUM SAFE CAPITAL REQUIREMENTS:
+ * - Per Stock Position: $2,000,000+ (commission = 10% of position)
+ * - Recommended: $5,000,000+ per stock (commission = 4% of position)
+ * - Total Capital: $20,000,000+ for 10 stocks (minimum)
+ * - Optimal: $50,000,000+ for 10 stocks (recommended)
+ * 
+ * COMMISSION IMPACT ON PROFIT TARGETS:
+ * With $1m per stock and 15% profit target:
+ *   Raw gain: $150k, Commission: $200k → NET LOSS: $50k ❌
+ * 
+ * With $5m per stock and 25% profit target:
+ *   Raw gain: $1.25m, Commission: $200k → NET PROFIT: $1.05m ✓
+ * 
+ * RECOMMENDED SETTINGS BY CAPITAL:
+ * - $20m total → run stocks/stock-trader-advanced.js 10 20000000 0.30 0.20 6000
+ * - $50m total → run stocks/stock-trader-advanced.js 10 50000000 0.25 0.15 6000
+ * - $100m+ total → run stocks/stock-trader-advanced.js 10 100000000 0.20 0.10 6000
  * 
  * Requirements:
  * - TIX API Access ($5 billion)
  * - 4S Market Data TIX API ($1 billion)
+ * - Minimum $20 million trading capital (higher recommended)
  * 
  * Note: Short positions may not be available in all Bitburner versions.
  *       Script will work with long positions only if shorts unavailable.
@@ -128,9 +151,13 @@ export async function main(ns) {
       
       // Check long positions
       if (longShares > 0) {
-        const returnPct = ((bidPrice - longPrice) / longPrice);
-        const hitProfitTarget = returnPct >= profitTarget;
-        const hitStopLoss = returnPct <= -stopLoss;
+        // Calculate actual profit including commissions
+        const grossProfit = (bidPrice - longPrice) * longShares;
+        const netProfit = grossProfit - (2 * COMMISSION); // Buy + sell commission
+        const netReturnPct = netProfit / (longShares * longPrice);
+        
+        const hitProfitTarget = netReturnPct >= profitTarget;
+        const hitStopLoss = netReturnPct <= -stopLoss;
         const badForecast = forecast < (0.5 + EXIT_THRESHOLD);
         const shouldExit = hitProfitTarget || hitStopLoss || badForecast;
         
@@ -147,16 +174,20 @@ export async function main(ns) {
             
             const reason = hitProfitTarget ? "PROFIT TARGET" : (hitStopLoss ? "STOP LOSS" : "FORECAST");
             ns.print(`✓ SELL LONG ${symbol}: ${ns.nFormat(longShares, "0.0a")} @ ${ns.nFormat(salePrice, "$0.00a")}`);
-            ns.print(`  Reason: ${reason} | Return: ${(returnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+            ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
           }
         }
       }
       
       // Check short positions
       if (shortShares > 0 && canShort) {
-        const returnPct = ((shortPrice - askPrice) / shortPrice);
-        const hitProfitTarget = returnPct >= profitTarget;
-        const hitStopLoss = returnPct <= -stopLoss;
+        // Calculate actual profit including commissions
+        const grossProfit = (shortPrice - askPrice) * shortShares;
+        const netProfit = grossProfit - (2 * COMMISSION); // Buy short + sell short commission
+        const netReturnPct = netProfit / (shortShares * shortPrice);
+        
+        const hitProfitTarget = netReturnPct >= profitTarget;
+        const hitStopLoss = netReturnPct <= -stopLoss;
         const badForecast = forecast > (0.5 - EXIT_THRESHOLD);
         const shouldExit = hitProfitTarget || hitStopLoss || badForecast;
         
@@ -174,7 +205,7 @@ export async function main(ns) {
               
               const reason = hitProfitTarget ? "PROFIT TARGET" : (hitStopLoss ? "STOP LOSS" : "FORECAST");
               ns.print(`✓ CLOSE SHORT ${symbol}: ${ns.nFormat(shortShares, "0.0a")} @ ${ns.nFormat(salePrice, "$0.00a")}`);
-              ns.print(`  Reason: ${reason} | Return: ${(returnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+              ns.print(`  Reason: ${reason} | Net Return: ${(netReturnPct * 100).toFixed(2)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
             }
           } catch (e) {
             // Short access not available - disable shorts
@@ -343,7 +374,7 @@ function displayAdvancedSummary(ns, totalProfit, tradesExecuted, biggestWin, big
   ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")}`);
   ns.print(`Total Trades: ${tradesExecuted}`);
   if (tradesExecuted > 0) {
-    ns.print(`Best Trade: ${ns.nFormat(biggestWin, "$0.00a")}`);
+    ns.print(`Best Trade: ${biggestWin > 0 ? ns.nFormat(biggestWin, "$0.00a") : "$0.00 (no profitable trades yet)"}`);
     ns.print(`Worst Trade: ${ns.nFormat(biggestLoss, "$0.00a")}`);
   }
   ns.print(`${"═".repeat(70)}`);
