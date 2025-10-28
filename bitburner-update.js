@@ -16,12 +16,12 @@ export async function main(ns) {
   
   // Folder paths in your GitHub repo
   const folders = {
-    core: `${baseUrl}/core`,
-    batch: `${baseUrl}/batch`,
-    analysis: `${baseUrl}/analysis`,
-    utils: `${baseUrl}/utils`,
-    deploy: `${baseUrl}/deploy`,
-    stocks: `${baseUrl}/stocks`
+    core: { url: `${baseUrl}/scripts/core`, local: "core" },
+    batch: { url: `${baseUrl}/scripts/batch`, local: "batch" },
+    analysis: { url: `${baseUrl}/scripts/analysis`, local: "analysis" },
+    utils: { url: `${baseUrl}/scripts/utils`, local: "utils" },
+    deploy: { url: `${baseUrl}/scripts/deploy`, local: "deploy" },
+    stocks: { url: `${baseUrl}/scripts/stocks`, local: "stocks" }
   };
   
   // Define script categories with their folder locations
@@ -31,18 +31,22 @@ export async function main(ns) {
       { file: "attack-grow.js", folder: folders.core },
       { file: "attack-weaken.js", folder: folders.core },
       { file: "simple-batcher.js", folder: folders.batch },
+      { file: "smart-batcher.js", folder: folders.batch },
       { file: "profit-scan.js", folder: folders.analysis },
       { file: "profit-scan-flex.js", folder: folders.analysis },
       { file: "f-profit-scan-flex.js", folder: folders.analysis },
-      { file: "production-monitor.js", folder: folders.analysis }
+      { file: "production-monitor.js", folder: folders.analysis },
+      { file: "estimate-production.js", folder: folders.analysis }
     ],
     
     batch: [
-      { file: "batch-manager.js", folder: folders.batch }
+      { file: "smart-batcher.js", folder: folders.batch },
+      { file: "batch-manager.js", folder: folders.batch },
+      { file: "home-batcher.js", folder: folders.batch }
     ],
     
     analysis: [
-      { file: "estimate-production.js", folder: folders.utils }
+      { file: "estimate-production.js", folder: folders.analysis }
     ],
     
     utils: [
@@ -51,17 +55,14 @@ export async function main(ns) {
       { file: "list-pservs.js", folder: folders.utils },
       { file: "server-info.js", folder: folders.utils },
       { file: "share-ram.js", folder: folders.utils },
-      { file: "test-formulas.js", folder: folders.utils },
       { file: "f-estimate-production.js", folder: folders.utils }
     ],
     
     deploy: [
-      { file: "auto-deploy-all.js", folder: folders.deploy },
       { file: "auto-expand.js", folder: folders.deploy },
       { file: "hack-universal.js", folder: folders.deploy },
       { file: "purchase-server-8gb.js", folder: folders.deploy },
       { file: "replace-pservs-no-copy.js", folder: folders.deploy },
-      { file: "home-batcher.js", folder: folders.deploy },
       { file: "deploy-hack-joesguns.js", folder: folders.deploy },
       { file: "hack-joesguns.js", folder: folders.deploy },
       { file: "hack-n00dles.js", folder: folders.deploy },
@@ -69,6 +70,7 @@ export async function main(ns) {
     ],
     
     stocks: [
+      { file: "check-stock-api.js", folder: folders.stocks },
       { file: "stock-info.js", folder: folders.stocks },
       { file: "stock-trader-basic.js", folder: folders.stocks },
       { file: "stock-trader-advanced.js", folder: folders.stocks },
@@ -120,19 +122,20 @@ export async function main(ns) {
   let failed = 0;
 
   for (const script of filesToDownload) {
-    const url = `${script.folder}/${script.file}`;
+    const url = `${script.folder.url}/${script.file}`;
+    const localPath = `${script.folder.local}/${script.file}`;
     try {
-      const success = await ns.wget(url, script.file);
+      const success = await ns.wget(url, localPath);
       if (success) {
-        ns.tprint(`✓ ${script.file}`);
+        ns.tprint(`✓ ${localPath}`);
         successful++;
       } else {
-        ns.tprint(`✗ ${script.file} - Download failed`);
+        ns.tprint(`✗ ${localPath} - Download failed`);
         failed++;
       }
       await ns.sleep(100); // Small delay between downloads
     } catch (e) {
-      ns.tprint(`✗ ${script.file} - Error: ${e}`);
+      ns.tprint(`✗ ${localPath} - Error: ${e}`);
       failed++;
     }
   }
@@ -163,5 +166,6 @@ export async function main(ns) {
 // run bitburner-update.js --stocks         # Download stock trading scripts
 // run bitburner-update.js --essential --utils  # Download multiple categories
 //
-// Note: Scripts are downloaded from organized GitHub folder structure
-// (core/, batch/, analysis/, utils/, deploy/, stocks/) but saved flat to Bitburner home
+// Note: Scripts are downloaded from GitHub and organized into local folders:
+// core/, batch/, analysis/, utils/, deploy/, stocks/
+// This matches the organized folder structure on GitHub
