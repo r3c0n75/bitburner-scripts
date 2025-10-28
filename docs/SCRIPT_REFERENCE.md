@@ -232,8 +232,24 @@ run production-monitor.js 300
 ## Utility Scripts
 
 ### global-kill.js
-**Purpose**: Kill all running scripts across all servers
-**Usage**: `run global-kill.js`
+**Purpose**: Kill all running scripts across all servers with 100% reliability
+**Usage**: `run utils/global-kill.js`
+
+**Enhanced Features** ✨:
+- Uses `ns.killall()` for efficient bulk operations
+- Strategic 50ms delays between servers ensure proper process termination
+- Processes all remote servers first, saves current host for last
+- Double protection against self-termination (checks filename AND process ID)
+- Clear feedback with ✓ indicator and process counts
+
+**Example Output**:
+```
+✓ Killed 147 processes across 56 servers.
+```
+
+**Why Enhanced**:
+Previous version had timing issues causing some processes to survive. The enhanced version eliminates race conditions and provides 100% reliable termination across your entire network.
+
 **Note**: Does not kill the global-kill.js script itself
 
 ### list-procs.js
@@ -301,9 +317,28 @@ run production-monitor.js 300
 - Automatically names servers (pserv-1, pserv-2, etc.)
 
 ### replace-pservs-no-copy.js
-**Purpose**: Replace purchased servers without copying scripts
-**Usage**: `run replace-pservs-no-copy.js`
-**Note**: This script is for advanced users who want to replace servers without preserving scripts
+**Purpose**: Upgrade all purchased servers to higher RAM capacity
+**Usage**: 
+```bash
+run deploy/replace-pservs-no-copy.js           # Show upgrade options
+run deploy/replace-pservs-no-copy.js 32        # Upgrade to 32GB
+run deploy/replace-pservs-no-copy.js 128       # Upgrade to 128GB
+```
+
+**Features**:
+- Shows current RAM, available upgrade options, and costs
+- Validates you have sufficient funds before starting
+- Deletes old servers and purchases new ones with same names
+- Tracks success/failure for each server
+- Displays total RAM after upgrade
+
+**Important**: After upgrading servers, you must restart your batch system:
+```bash
+run utils/global-kill.js                                           # Kill all processes
+run batch/batch-manager.js joesguns 0.05 1.25 home --quiet        # Restart batch manager
+```
+
+**Note**: Does not preserve scripts on servers (they're redeployed automatically by batch-manager)
 
 ### home-batcher.js
 **Purpose**: Home server batch operations

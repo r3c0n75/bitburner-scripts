@@ -137,6 +137,8 @@ export async function main(ns) {
   ns.tprint(`New total RAM: ${ns.nFormat(replaced * targetRAM, "0.00b")}`);
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint("");
-  ns.tprint("✓ Your batch system will auto-scale to use the new RAM!");
-  ns.tprint("  (batch-manager.js automatically detects and uses increased capacity)");
+  ns.tprint("⚠️  IMPORTANT: Restart your batch system to use the new RAM!");
+  ns.tprint("  1. Kill all processes: run utils/global-kill.js");
+  ns.tprint("  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet");
+  ns.tprint("     (batch-manager will then detect and deploy to the upgraded servers)");
 }

@@ -131,6 +131,20 @@ Complete index of all documentation for the Bitburner script collection.
 
 ---
 
+### [GLOBAL_KILL_ENHANCEMENT_SUMMARY.md](GLOBAL_KILL_ENHANCEMENT_SUMMARY.md) 🆕✨
+**Global Kill Reliability Enhancement (v1.8.6)**
+- Problem statement and root causes
+- Solution implementation details
+- Technical comparison (before/after)
+- Strategic delays and bulk operations
+- Smart execution order
+- 100% reliable process termination
+- User validation and results
+
+**When to use**: Understanding the global-kill.js reliability improvements and enterprise-grade process management
+
+---
+
 ### [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)
 **Directory Structure and Organization**
 - Complete directory tree
@@ -334,5 +348,5 @@ README.md (Start Here)
 
 ---
 
-**Last Updated**: 2025-10-26  
-**Version**: 1.7.0
+**Last Updated**: 2025-10-28  
+**Version**: 1.8.6

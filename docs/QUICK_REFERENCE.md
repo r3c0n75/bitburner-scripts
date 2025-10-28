@@ -176,6 +176,21 @@ run batch/simple-batcher.js joesguns
 run batch/simple-batcher.js joesguns 100 --quiet
 ```
 
+### Upgrade Purchased Servers
+```bash
+# Step 1: Check upgrade options
+run deploy/replace-pservs-no-copy.js              # Shows costs & options
+
+# Step 2: Upgrade (example: to 128GB)
+run deploy/replace-pservs-no-copy.js 128          # Upgrades all servers
+
+# Step 3: Kill all processes
+run utils/global-kill.js
+
+# Step 4: Restart batch manager (auto-deploys to upgraded servers)
+run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+```
+
 ### Monitor Performance
 ```bash
 run analysis/production-monitor.js 300

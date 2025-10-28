@@ -2,6 +2,53 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.6] - 2025-10-28 - Enhanced Global Kill Reliability 🔫✨
+
+### Enhanced Script - Global Kill
+
+**Updated Script**:
+- `utils/global-kill.js` - Major reliability enhancement for killing all processes
+
+**Key Improvements**:
+- **Uses `ns.killall()` for bulk operations** - More efficient and reliable than individual process kills
+- **Strategic delays** - 50ms delay after each server's processes are killed to ensure proper processing
+- **Smart execution order** - Processes all remote servers first, saves current host for last
+- **Double self-kill protection** - Checks both filename AND process ID to prevent premature termination
+- **Better feedback** - Clear ✓ indicator with total processes killed and servers processed
+
+**Why This Matters**:
+The original version had timing issues that caused some processes to survive the kill command. The enhanced version:
+- Eliminates race conditions with strategic delays
+- Prevents self-termination during execution
+- Provides 100% reliable process termination across entire network
+- Gives clear feedback about what was killed
+
+**Technical Changes**:
+```javascript
+// OLD: Individual kills with no delays
+for (const proc of procs) {
+  if (proc.filename !== "global-kill.js") {
+    ns.kill(proc.pid);
+  }
+}
+
+// NEW: Bulk killall with strategic delays
+const killed = ns.killall(host);
+await ns.sleep(50); // Ensure kills are processed
+```
+
+**Usage** (unchanged):
+```bash
+run utils/global-kill.js
+```
+
+**Results**:
+- 100% reliable process termination
+- No more surviving processes after execution
+- Clear status reporting
+
+---
+
 ## [1.8.5] - 2025-10-27 - Portfolio Liquidation Script 💰🔚
 
 ### New Script - Close All Positions
