@@ -15,7 +15,7 @@
 
 Before running any commands, you need to download the scripts:
 
-> **⚠️ Version Note**: Installer works on both v2.8.1 (Steam) and v3.0.0 (Web). Some scripts are still being updated for v3.x compatibility. See [Version Compatibility Status](#🔄-version-compatibility-status) below.
+> **⚠️ Version Note**: Installer works on both v2.8.1 (Steam) and v3.0.0 (Web). All scripts are fully compatible with both versions! See [Version Compatibility](#✅-version-compatibility) at the bottom for details.
 
 ### Option 1: Quick Download (Recommended)
 ```bash
@@ -39,31 +39,236 @@ If you want to edit scripts with VS Code, see [docs/REMOTE_API_SETUP.md](docs/RE
 
 ---
 
+## ⭐ Why These Scripts Are Powerful
+
+Before you start, here's why these scripts will transform your Bitburner experience:
+
+### 490x Faster Money Generation
+**Smart Batcher Technology** uses optimal thread ratios based on operation timing:
+- Traditional approach: 25% hack / 45% grow / 30% weaken (inefficient)
+- Smart approach: 4% hack / 87% grow / 9% weaken (optimal)
+- Real results: $34k/s → $3.41m/s on silver-helix target
+
+**You don't need to understand the math** - just run the scripts and they handle everything automatically.
+
+### Intelligent Target Selection
+The `profit-scan-flex.js` script uses **Fleet Potential Score** algorithm:
+- Finds servers with BOTH high efficiency AND high capacity
+- Prevents rookie mistakes (attacking targets with tiny money pools)
+- Shows you which servers will improve after preparation
+
+**Bottom line:** Instead of manually hacking for hours, these scripts automate everything and make you 100-490x more money.
+
+---
+
+## 💾 RAM Requirements & Early Game Tips
+
+**Your home server starts with limited RAM** (typically 8GB). Here's what you need to know BEFORE you start:
+
+### Script RAM Requirements
+
+| Script | RAM Required | Best For |
+|--------|-------------|----------|
+| `batch/home-batcher.js` | 4.90 GB | ✅ EARLY GAME - Fits in 8GB home server |
+| `batch/simple-batcher.js` | 5.10 GB | Early-mid game deployment |
+| `batch/batch-manager.js` | 5.50 GB | Mid game automation |
+| `batch/smart-batcher.js` | 6.35 GB | ✅ RECOMMENDED - Best performance |
+| `analysis/profit-scan-flex.js` | ~2 GB | Target finding (always works) |
+| `utils/global-kill.js` | ~2 GB | Stop all scripts (always works) |
+
+### What Can You Run?
+
+**🏠 With 8GB Home RAM (Fresh Start):**
+```bash
+# Option 1: Use home-batcher (leaves room for other scripts)
+run batch/home-batcher.js joesguns
+
+# Option 2: Use smart-batcher (better performance, tight fit)
+run batch/smart-batcher.js joesguns  # Leaves ~1.65GB free
+```
+
+**💻 With 16GB Home RAM (First Upgrade):**
+```bash
+# Now you can comfortably run smart-batcher
+run batch/smart-batcher.js joesguns  # Leaves ~9.65GB free
+```
+
+**🚀 With 32GB+ Home RAM (Mid Game):**
+```bash
+# Run everything - smart-batcher + monitoring + utilities
+run batch/batch-manager.js joesguns --quiet  # Automated management
+```
+
+### How to Check Your RAM
+
+**Look at the top-right corner of your terminal** - it shows `home: XGB`
+
+- If you see **8GB**: Use home-batcher.js OR smart-batcher.js (tight fit)
+- If you see **16GB+**: Use smart-batcher.js (recommended)
+- If you see **32GB+**: You're ready for full automation
+
+### RAM Management Tips
+
+**If you're running out of RAM:**
+- ✅ Use `home-batcher.js` instead of `smart-batcher.js` (saves 1.45GB)
+- ✅ Use `--quiet` flag to reduce logging overhead
+- ✅ Kill unnecessary scripts: `run utils/global-kill.js`
+- ✅ Check what's using RAM: `run utils/list-procs.js`
+
+**Pro tip:** The core attack scripts (`attack-hack.js`, `attack-grow.js`, `attack-weaken.js`) use very little RAM (~1.75GB each) and run on OTHER servers you've rooted, not your home server! The batch scripts just coordinate them.
+
+---
+
 ## 👶 For New Players - Your First $1 Million
 
 **Start here if you're new to Bitburner or just started a fresh game:**
+
+> **📌 Check your home RAM first!** Look at top-right corner of terminal (shows `home: XGB`). With 8GB, you can run all the commands below.
 
 ### Step 1: Find a Target
 ```bash
 run analysis/profit-scan.js
 ```
-This shows you which servers make the most money. Look for "joesguns" or "n00dles" - they're easy early targets.
+
+**What you'll see:** A ranked list of servers showing their profit potential.
+
+**What to do:** Look for "joesguns" or "n00dles" near the top - they're easy early targets.
+
+---
 
 ### Step 2: Deploy Your First Batch System
 ```bash
 run batch/smart-batcher.js joesguns
 ```
-This automatically hacks "joesguns" repeatedly. **Wait 6-8 minutes** for the "prep phase" to complete.
+
+**What happens:** The script automatically:
+- Finds all servers you have access to
+- Deploys hacking scripts across your network
+- Starts continuously hacking "joesguns"
+- Prepares the target server for optimal income
+
+**Important:** ⏱️ **Wait 6-8 minutes** for the "prep phase" to complete. The server needs to be weakened first!
+
+**You'll know it's working when:**
+- ✅ You see "✓ Started attack-weaken.js..." messages
+- ✅ You see "✓ Started attack-grow.js..." messages  
+- ✅ You see "✓ Started attack-hack.js..." messages
+- ✅ Your money starts increasing (check top-right corner)
+
+---
 
 ### Step 3: Watch the Money Roll In
 ```bash
 run analysis/production-monitor.js 60
 ```
-This shows how much money you're making per second. You should see $10k-100k/second depending on your stats.
 
-**That's it!** You're now making passive income. As you level up and gain access to better servers, repeat Step 1-2 with new targets.
+**What you'll see:** Real-time income tracking showing $/second
 
-**Need more help?** See [docs/NEW_GAME_QUICKSTART.md](docs/NEW_GAME_QUICKSTART.md) for detailed recovery strategies.
+**Success indicators:**
+- 💰 **Early game** (joesguns): $10k-100k/second
+- 💰 **After prep phase**: Income increases steadily
+- 💰 **Optimal state**: Consistent high income rate
+
+**If income is low:** Wait longer! The prep phase can take 6-8 minutes. Security needs to reach minimum first.
+
+---
+
+**🎉 That's it!** You're now making passive income while you explore other parts of the game.
+
+**What to do next:** See the [Mid-Game Progression](#🎯-mid-game-progression---your-next-100-million) section below to scale up your operation.
+
+---
+
+## 🎯 Mid-Game Progression - Your Next $100 Million
+
+**You've made your first $1-10 million - excellent!** Here's how to scale up to $100M+:
+
+### Phase 1: Upgrade Your Infrastructure ($1M-10M)
+
+**Priority 1: Upgrade Home RAM to 16GB**
+- **Why:** Enables comfortable smart-batcher usage with room for utilities
+- **Cost:** ~$1-5M (varies by game state)
+- **How:** Visit City → Purchase RAM upgrades (look for computer stores)
+- **Benefit:** 5x more working space, run multiple scripts simultaneously
+
+**Priority 2: Level Up Your Skills**
+- **Hack skill to 100+:** Faster operations, better success rates
+- **Raise money:** Keep running your batch scripts (passive income!)
+- **Focus:** Take any jobs, complete contracts, work on reputation
+
+---
+
+### Phase 2: Find Better Targets ($10M-50M)
+
+**Use the optimal mode for target discovery:**
+```bash
+run analysis/profit-scan-flex.js --optimal
+```
+
+**What to look for:**
+- 💎 **High "Fleet Score"** - These are hidden gems!
+- 💎 **Servers marked "NEEDS PREP"** - Will improve dramatically after smart-batcher runs
+- 💎 **Money pools $100M+** - More capacity = more income
+
+**How to switch targets:**
+```bash
+run utils/global-kill.js                    # Stop everything
+run batch/smart-batcher.js [new-target]     # Deploy to better target
+run analysis/production-monitor.js 60       # Verify improved income
+```
+
+**Expected income progression:**
+- 💰 joesguns (starter): $10k-100k/second
+- 💰 silver-helix (mid): $1m-5m/second
+- 💰 Top-tier servers (late): $10m+/second
+
+---
+
+### Phase 3: Expand Your Fleet ($50M-100M+)
+
+**Buy Purchased Servers:**
+```bash
+run deploy/purchase-server-8gb.js
+```
+
+**Benefits:**
+- Each server adds 8GB+ of dedicated hacking power
+- They don't need rooting - you own them!
+- Can buy up to 25 servers (massive scaling)
+
+**Strategy:**
+1. Buy 1-2 servers when you have $20M+ saved
+2. Deploy smart-batcher to utilize the new capacity
+3. Income increases significantly
+4. Repeat: Buy more → Make more → Buy more
+
+**Automation (32GB+ home RAM):**
+```bash
+run batch/batch-manager.js [target] --quiet
+```
+This automatically manages your entire fleet and roots new servers as you gain access!
+
+---
+
+### Quick Progress Checklist
+
+**$1M → $10M:**
+- ✅ Upgrade home RAM to 16GB
+- ✅ Switch to better targets as you level up
+- ✅ Use smart-batcher.js for 490x performance
+
+**$10M → $50M:**
+- ✅ Use profit-scan-flex.js --optimal to find hidden gems
+- ✅ Buy your first purchased server ($20M+)
+- ✅ Level hack skill to 100+
+
+**$50M → $100M+:**
+- ✅ Buy 5-10 purchased servers for massive scaling
+- ✅ Target top-tier servers (silver-helix, omega-net, etc.)
+- ✅ Consider automation with batch-manager.js
+
+**$100M+:**
+- 🎓 You're ready for [Advanced Features](#💎-advanced-features-mid-to-late-game) like stock trading!
 
 ---
 
@@ -99,7 +304,46 @@ run batch/smart-batcher.js [better-target]    # Start fresh
 
 ---
 
-## 📁 Project Structure
+## 🐛 Troubleshooting
+
+### "Script not found" errors
+You probably skipped installation! Go back to the [Installation section](#🔧-installation-first) and download the scripts.
+
+### "Not enough RAM" errors?
+Your home server doesn't have enough RAM to run that script. See the [RAM Requirements section](#💾-ram-requirements--early-game-tips) for:
+- Script RAM requirements table
+- Alternative scripts that use less RAM
+- How to upgrade your home server RAM
+
+### Scripts not doing anything?
+```bash
+run utils/list-procs.js  # See what's running
+run utils/global-kill.js # Stop everything and restart
+```
+
+### Making way less money than expected?
+- **Wait 6-8 minutes** for the "prep phase" - servers need weakening first
+- Check if target security is at minimum with `server-info.js`
+- Try a different target with `profit-scan-flex.js --optimal`
+
+### Stock trading commands not working?
+- Did you buy the TIX API? ($5 billion from Alpha Enterprises in City)
+- Do you have enough capital? (Minimum $100 million to start)
+- Check market status: `run stocks/stock-info.js`
+
+### Scripts running but using too much RAM?
+```bash
+run utils/global-kill.js              # Kill everything
+run batch/smart-batcher.js [target] 0.02  # Lower hack percentage (uses less RAM)
+```
+
+**Or see the [RAM Requirements section](#💾-ram-requirements--early-game-tips)** for script alternatives and upgrade tips.
+
+**Still stuck?** Check the detailed guides in the `docs/` folder or [open an issue on GitHub](https://github.com/r3c0n75/bitburner-scripts/issues).
+
+---
+
+## 📁 Project Structure & Reference
 
 ```
 scripts/
@@ -241,82 +485,6 @@ run utils/f-estimate-production.js silver-helix
 **Why buy it?** No more switching targets only to find they're worse. Perfect information = confident decisions.
 
 **Complete Guide:** [docs/FORMULAS_ENHANCED_SCRIPTS.md](docs/FORMULAS_ENHANCED_SCRIPTS.md)
-
----
-
-## ⭐ Why These Scripts Are Powerful
-
-### Smart Batcher Technology
-**490x faster money generation** compared to simple hacking loops. How?
-
-- Uses **optimal thread ratios** based on operation timing (4% hack / 87% grow / 9% weaken)
-- Automatically prepares servers to optimal state
-- Real results: $34k/s → $3.41m/s on silver-helix target
-
-**You don't need to understand the math** - just run `smart-batcher.js` and it handles everything.
-
-### Intelligent Target Selection
-The `profit-scan-flex.js` script uses **Fleet Potential Score** algorithm:
-
-- Finds servers with BOTH high efficiency AND high capacity
-- Prevents rookie mistakes (attacking targets with tiny money pools)
-- Shows you which servers will improve after preparation
-
-### Multiple Trading Strategies
-**7 different stock trading scripts** for different play styles and capital levels:
-
-- Momentum trading (contrarian strategy, no forecasts needed)
-- Forecast-based trading (uses 4S Market Data)
-- Advanced dynamic sizing (for late-game whales)
-- Real-time monitoring with P/L tracking
-- Portfolio liquidation with safety features
-
-## 📊 Performance You Can Expect
-
-### Hacking Income
-- **Early game** (joesguns): $10k-100k/second
-- **Mid game** (silver-helix): $1m-5m/second  
-- **Late game** (optimal targets): $10m+/second
-
-**Improvement over manual**: 100-490x faster than simple hack loops
-
-### Stock Trading Returns (Estimated)
-| Strategy | Daily Returns | Requirements | Capital Needed |
-|----------|--------------|--------------|----------------|
-| Momentum | 10-40% | TIX API ($5b) | $1b minimum |
-| Forecast | 20-50% | TIX + 4S Data ($6b) | $10b+ optimal |
-| Advanced | 50-150% | TIX + 4S + Short ($31b) | $50b+ optimal |
-
-**Note:** Returns vary based on market conditions and your game progress.
-
-## 🐛 Troubleshooting
-
-### "Script not found" errors
-You probably skipped installation! Go back to the [Installation section](#🔧-installation-first) and download the scripts.
-
-### Scripts not doing anything?
-```bash
-run utils/list-procs.js  # See what's running
-run utils/global-kill.js # Stop everything and restart
-```
-
-### Making way less money than expected?
-- **Wait 6-8 minutes** for the "prep phase" - servers need weakening first
-- Check if target security is at minimum with `server-info.js`
-- Try a different target with `profit-scan-flex.js --optimal`
-
-### Stock trading commands not working?
-- Did you buy the TIX API? ($5 billion from Alpha Enterprises in City)
-- Do you have enough capital? (Minimum $100 million to start)
-- Check market status: `run stocks/stock-info.js`
-
-### Scripts running but using too much RAM?
-```bash
-run utils/global-kill.js              # Kill everything
-run batch/smart-batcher.js [target] 0.02  # Lower hack percentage (uses less RAM)
-```
-
-**Still stuck?** Check the detailed guides in the `docs/` folder or [open an issue on GitHub](https://github.com/r3c0n75/bitburner-scripts/issues).
 
 ---
 
