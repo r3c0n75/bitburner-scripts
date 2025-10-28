@@ -15,6 +15,8 @@
 
 Before running any commands, you need to download the scripts:
 
+> **⚠️ Version Note**: Installer works on both v2.8.1 (Steam) and v3.0.0 (Web). Some scripts are still being updated for v3.x compatibility. See [Version Compatibility Status](#🔄-version-compatibility-status) below.
+
 ### Option 1: Quick Download (Recommended)
 ```bash
 # Download the updater script first (copy/paste into Bitburner terminal)
@@ -391,6 +393,25 @@ Open source - use freely in your Bitburner gameplay!
 **Last Updated**: October 28, 2025  
 **Current Version**: 1.8.6  
 **Latest Feature**: Enhanced global kill reliability with 100% process termination
+
+## 🔄 Version Compatibility Status
+
+**Bitburner v2.8.1 (Steam)**: ✅ Fully Compatible  
+**Bitburner v3.0.0 (Web)**: 🚧 In Progress (18/18 scripts being updated)
+
+**What's Being Fixed:**
+- `ns.nFormat()` was removed in v3.0.0, replaced with `ns.formatNumber()`
+- Adding backward-compatible `formatMoney()` helper to all scripts
+- **Status**: 1/18 complete (profit-scan.js ✅)
+
+**Scripts Working Now:**
+- ✅ `bitburner-update.js` - Installer works in both versions
+- ✅ `analysis/profit-scan.js` - Compatible with both versions
+- 🚧 17 more scripts being updated (see progress above)
+
+**Estimated Completion**: Next session (bulk update in progress)
+
+---
 
 **Essential Documentation:**
 - 🚀 **New to Bitburner?** Start with the [For New Players](#👶-for-new-players---your-first-$1-million) section above
