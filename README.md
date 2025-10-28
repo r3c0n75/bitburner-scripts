@@ -2,23 +2,26 @@
 
 Complete automation suite for Bitburner including optimal batch operations, profit analysis, and stock market trading.
 
-## 🆕 What's New - Version 1.8.5
+## 🆕 What's New - Version 1.8.6
+
+**v1.8.6 - Enhanced Global Kill Reliability:** 🔫✨
+- `global-kill.js` - 100% reliable process termination with strategic delays & bulk operations 🆕
 
 **NEW: Complete Stock Trading Suite with Portfolio Management!** 💰🔚
 
 Latest enhancements to the complete 7-script stock trading system:
 
 **v1.8.5 - Portfolio Liquidation:**
-- `stock-close-all.js` - Close ALL positions with preview mode & safety confirmation 🆕
+- `stock-close-all.js` - Close ALL positions with preview mode & safety confirmation
 
 **v1.8.4 - Realized P/L Tracking:**
-- `stock-monitor.js` - Enhanced with realized + unrealized P/L tracking 🆕
+- `stock-monitor.js` - Enhanced with realized + unrealized P/L tracking
 
 **v1.8.3 - 4S Data Intelligence:**
-- `stock-monitor.js` - Real-time forecasts, volatility analysis, position alignment 🆕✨
+- `stock-monitor.js` - Real-time forecasts, volatility analysis, position alignment
 
 **v1.8.2 - Forecast Intelligence:**
-- `stock-momentum-analyzer.js` - Confidence scoring & trap detection 🆕✨
+- `stock-momentum-analyzer.js` - Confidence scoring & trap detection
 
 **Complete Trading Suite (7 scripts):**
 - `stock-info.js` - Market intelligence viewer
