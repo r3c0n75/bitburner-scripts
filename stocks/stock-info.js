@@ -7,6 +7,22 @@
  * - 4S Market Data TIX API ($1 billion) - optional, for forecasts
  */
 
+/**
+ * Format number for both v2.x and v3.x compatibility
+ */
+function formatMoney(ns, value, format) {
+  try {
+    return ns.nFormat(value, format);
+  } catch (e) {
+    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    let unitIndex = 0;
+    let num = Math.abs(value);
+    while (num >= 1000 && unitIndex < units.length - 1) { num /= 1000; unitIndex++; }
+    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+    return (value < 0 ? '-$' : '$') + num.toFixed(decimals) + units[unitIndex];
+  }
+}
+
 /** @param {NS} ns */
 export async function main(ns) {
   // Check if TIX API is available
@@ -45,10 +61,10 @@ function displayStockInfo(ns, symbol, has4S) {
   ns.tprint(`\n${"═".repeat(70)}`);
   ns.tprint(`STOCK INFORMATION: ${symbol}`);
   ns.tprint(`${"═".repeat(70)}`);
-  ns.tprint(`Ask Price: ${ns.nFormat(askPrice, "$0.00a")}`);
-  ns.tprint(`Bid Price: ${ns.nFormat(bidPrice, "$0.00a")}`);
-  ns.tprint(`Spread: ${ns.nFormat(askPrice - bidPrice, "$0.00a")} (${((askPrice - bidPrice) / askPrice * 100).toFixed(2)}%)`);
-  ns.tprint(`Max Shares: ${ns.nFormat(maxShares, "0.00a")}`);
+  ns.tprint(`Ask Price: ${formatMoney(ns, askPrice, "$0.00a")}`);
+  ns.tprint(`Bid Price: ${formatMoney(ns, bidPrice, "$0.00a")}`);
+  ns.tprint(`Spread: ${formatMoney(ns, askPrice - bidPrice, "$0.00a")} (${((askPrice - bidPrice) / askPrice * 100).toFixed(2)}%)`);
+  ns.tprint(`Max Shares: ${formatMoney(ns, maxShares, "0.00a")}`);
   ns.tprint(`Volatility: ${(volatility * 100).toFixed(2)}%`);
   
   if (has4S) {
@@ -63,9 +79,9 @@ function displayStockInfo(ns, symbol, has4S) {
     const longValue = longShares * bidPrice;
     const longProfit = (bidPrice - longPrice) * longShares;
     const longReturn = ((bidPrice - longPrice) / longPrice) * 100;
-    ns.tprint(`Long: ${ns.nFormat(longShares, "0.00a")} shares @ ${ns.nFormat(longPrice, "$0.00a")}`);
-    ns.tprint(`  Current Value: ${ns.nFormat(longValue, "$0.00a")}`);
-    ns.tprint(`  Profit/Loss: ${ns.nFormat(longProfit, "$0.00a")} (${longReturn > 0 ? "+" : ""}${longReturn.toFixed(2)}%)`);
+    ns.tprint(`Long: ${formatMoney(ns, longShares, "0.00a")} shares @ ${formatMoney(ns, longPrice, "$0.00a")}`);
+    ns.tprint(`  Current Value: ${formatMoney(ns, longValue, "$0.00a")}`);
+    ns.tprint(`  Profit/Loss: ${formatMoney(ns, longProfit, "$0.00a")} (${longReturn > 0 ? "+" : ""}${longReturn.toFixed(2)}%)`);
   } else {
     ns.tprint(`Long: No position`);
   }
@@ -74,9 +90,9 @@ function displayStockInfo(ns, symbol, has4S) {
     const shortValue = shortShares * askPrice;
     const shortProfit = (shortPrice - askPrice) * shortShares;
     const shortReturn = ((shortPrice - askPrice) / shortPrice) * 100;
-    ns.tprint(`Short: ${ns.nFormat(shortShares, "0.00a")} shares @ ${ns.nFormat(shortPrice, "$0.00a")}`);
-    ns.tprint(`  Current Value: ${ns.nFormat(shortValue, "$0.00a")}`);
-    ns.tprint(`  Profit/Loss: ${ns.nFormat(shortProfit, "$0.00a")} (${shortReturn > 0 ? "+" : ""}${shortReturn.toFixed(2)}%)`);
+    ns.tprint(`Short: ${formatMoney(ns, shortShares, "0.00a")} shares @ ${formatMoney(ns, shortPrice, "$0.00a")}`);
+    ns.tprint(`  Current Value: ${formatMoney(ns, shortValue, "$0.00a")}`);
+    ns.tprint(`  Profit/Loss: ${formatMoney(ns, shortProfit, "$0.00a")} (${shortReturn > 0 ? "+" : ""}${shortReturn.toFixed(2)}%)`);
   } else {
     ns.tprint(`Short: No position`);
   }
@@ -126,7 +142,7 @@ function displayAllStocks(ns, has4S) {
       totalPortfolioValue += value;
       totalInvested += invested;
       
-      posStr = `L ${ns.nFormat(longShares, "0.0a")}`;
+      posStr = `L ${formatMoney(ns, longShares, "0.0a")}`;
       plStr = `${returnPct > 0 ? "+" : ""}${returnPct.toFixed(1)}%`;
     } else if (shortShares > 0) {
       positionsCount++;
@@ -138,7 +154,7 @@ function displayAllStocks(ns, has4S) {
       totalPortfolioValue += value;
       totalInvested += invested;
       
-      posStr = `S ${ns.nFormat(shortShares, "0.0a")}`;
+      posStr = `S ${formatMoney(ns, shortShares, "0.0a")}`;
       plStr = `${returnPct > 0 ? "+" : ""}${returnPct.toFixed(1)}%`;
     }
     
@@ -147,8 +163,8 @@ function displayAllStocks(ns, has4S) {
       const fcStr = forecast > 0.5 ? `↑${(forecast * 100).toFixed(0)}%` : `↓${(forecast * 100).toFixed(0)}%`;
       ns.tprint(sprintf("%-6s %10s %10s %8s %8s %8s",
         symbol,
-        ns.nFormat(askPrice, "$0.0a"),
-        ns.nFormat(bidPrice, "$0.0a"),
+        formatMoney(ns, askPrice, "$0.0a"),
+        formatMoney(ns, bidPrice, "$0.0a"),
         fcStr,
         posStr,
         plStr
@@ -156,8 +172,8 @@ function displayAllStocks(ns, has4S) {
     } else {
       ns.tprint(sprintf("%-6s %10s %10s %8s %8s",
         symbol,
-        ns.nFormat(askPrice, "$0.0a"),
-        ns.nFormat(bidPrice, "$0.0a"),
+        formatMoney(ns, askPrice, "$0.0a"),
+        formatMoney(ns, bidPrice, "$0.0a"),
         posStr,
         plStr
       ));
@@ -169,9 +185,9 @@ function displayAllStocks(ns, has4S) {
   if (totalInvested > 0) {
     const totalProfit = totalPortfolioValue - totalInvested;
     const totalReturn = (totalProfit / totalInvested) * 100;
-    ns.tprint(`Portfolio Value: ${ns.nFormat(totalPortfolioValue, "$0.00a")}`);
-    ns.tprint(`Total Invested: ${ns.nFormat(totalInvested, "$0.00a")}`);
-    ns.tprint(`Total P/L: ${ns.nFormat(totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
+    ns.tprint(`Portfolio Value: ${formatMoney(ns, totalPortfolioValue, "$0.00a")}`);
+    ns.tprint(`Total Invested: ${formatMoney(ns, totalInvested, "$0.00a")}`);
+    ns.tprint(`Total P/L: ${formatMoney(ns, totalProfit, "$0.00a")} (${totalReturn > 0 ? "+" : ""}${totalReturn.toFixed(2)}%)`);
   }
 }
 

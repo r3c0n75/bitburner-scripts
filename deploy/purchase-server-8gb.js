@@ -9,6 +9,29 @@
  *   run purchase-server-8gb.js --all 32     # Buy max servers with 32GB each
  */
 
+/**
+ * Format number for both v2.x and v3.x compatibility
+ * @param {NS} ns
+ * @param {number} value
+ * @param {string} format
+ */
+function formatMoney(ns, value, format) {
+  try {
+    return ns.nFormat(value, format);
+  } catch (e) {
+    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    let unitIndex = 0;
+    let num = Math.abs(value);
+    while (num >= 1000 && unitIndex < units.length - 1) {
+      num /= 1000;
+      unitIndex++;
+    }
+    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+    const formatted = num.toFixed(decimals) + units[unitIndex];
+    return (value < 0 ? '-$' : '$') + formatted;
+  }
+}
+
 /** @param {NS} ns */
 export async function main(ns) {
   ns.disableLog("sleep");
@@ -29,7 +52,7 @@ export async function main(ns) {
   ns.tprint("  SERVER PURCHASE");
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint(`RAM per server: ${ram}GB`);
-  ns.tprint(`Cost per server: ${ns.nFormat(cost, "$0.00a")}`);
+  ns.tprint(`Cost per server: ${formatMoney(ns, cost, "$0.00a")}`);
   ns.tprint(`Current servers: ${currentServers}/${maxServers}`);
   ns.tprint(`Available slots: ${availableSlots}`);
   ns.tprint("");
@@ -43,12 +66,12 @@ export async function main(ns) {
   const playerMoney = ns.getPlayer().money;
   const affordableCount = Math.floor(playerMoney / cost);
   
-  ns.tprint(`Your money: ${ns.nFormat(playerMoney, "$0.00a")}`);
+  ns.tprint(`Your money: ${formatMoney(ns, playerMoney, "$0.00a")}`);
   ns.tprint(`Can afford: ${affordableCount} servers`);
   ns.tprint("");
 
   if (affordableCount === 0) {
-    ns.tprint(`✗ Insufficient funds! Need ${ns.nFormat(cost, "$0.00a")} for one server.`);
+    ns.tprint(`✗ Insufficient funds! Need ${formatMoney(ns, cost, "$0.00a")} for one server.`);
     return;
   }
 
@@ -83,7 +106,7 @@ export async function main(ns) {
 
     const success = ns.purchaseServer(serverName, ram);
     if (success) {
-      ns.tprint(`✓ Purchased ${serverName} (${ram}GB) - ${ns.nFormat(cost, "$0.00a")}`);
+      ns.tprint(`✓ Purchased ${serverName} (${ram}GB) - ${formatMoney(ns, cost, "$0.00a")}`);
       purchased++;
     } else {
       ns.tprint(`✗ Failed to purchase ${serverName}`);
@@ -102,8 +125,8 @@ export async function main(ns) {
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint(`Purchased: ${purchased} servers`);
   ns.tprint(`Failed: ${failed}`);
-  ns.tprint(`Total spent: ${ns.nFormat(spent, "$0.00a")}`);
-  ns.tprint(`Remaining money: ${ns.nFormat(ns.getPlayer().money, "$0.00a")}`);
+  ns.tprint(`Total spent: ${formatMoney(ns, spent, "$0.00a")}`);
+  ns.tprint(`Remaining money: ${formatMoney(ns, ns.getPlayer().money, "$0.00a")}`);
   ns.tprint(`Total servers: ${newTotal}/${maxServers}`);
   ns.tprint("═══════════════════════════════════════════════════");
   
