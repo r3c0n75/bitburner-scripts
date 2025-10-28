@@ -14,14 +14,14 @@ export async function main(ns) {
   // ============================================
   const baseUrl = "https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main";
   
-  // Folder paths in your GitHub repo
+  // Folder paths in your GitHub repo (scripts/ folder IS the repo root)
   const folders = {
-    core: { url: `${baseUrl}/scripts/core`, local: "core" },
-    batch: { url: `${baseUrl}/scripts/batch`, local: "batch" },
-    analysis: { url: `${baseUrl}/scripts/analysis`, local: "analysis" },
-    utils: { url: `${baseUrl}/scripts/utils`, local: "utils" },
-    deploy: { url: `${baseUrl}/scripts/deploy`, local: "deploy" },
-    stocks: { url: `${baseUrl}/scripts/stocks`, local: "stocks" }
+    core: { url: `${baseUrl}/core`, local: "core" },
+    batch: { url: `${baseUrl}/batch`, local: "batch" },
+    analysis: { url: `${baseUrl}/analysis`, local: "analysis" },
+    utils: { url: `${baseUrl}/utils`, local: "utils" },
+    deploy: { url: `${baseUrl}/deploy`, local: "deploy" },
+    stocks: { url: `${baseUrl}/stocks`, local: "stocks" }
   };
   
   // Define script categories with their folder locations
