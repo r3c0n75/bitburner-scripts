@@ -129,8 +129,12 @@ export async function main(ns) {
       // Download to temp file first
       const success = await ns.wget(url, tempFile);
       if (success) {
-        // Move to folder structure (creates folder automatically)
-        ns.mv(tempFile, finalPath);
+        // Read temp file content
+        const content = ns.read(tempFile);
+        // Write to final path (creates folder automatically in v3.x)
+        ns.write(finalPath, content, "w");
+        // Delete temp file
+        ns.rm(tempFile);
         ns.tprint(`✓ ${finalPath}`);
         successful++;
       } else {
@@ -172,4 +176,4 @@ export async function main(ns) {
 //
 // Note: Scripts are downloaded from GitHub and organized into local folders:
 // core/, batch/, analysis/, utils/, deploy/, stocks/
-// Folders are created automatically using the mv command trick
+// Folders are created automatically using read/write file operations
