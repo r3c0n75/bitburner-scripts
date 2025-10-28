@@ -87,17 +87,20 @@ scripts/
 ├── analysis/          # Profit analysis
 │   ├── profit-scan-flex.js    Enhanced scanner
 │   ├── f-profit-scan-flex.js  🔮 EXACT (Formulas.exe)
-│   └── production-monitor.js  Track production
-├── utils/             # Utilities
-│   ├── estimate-production.js
-│   ├── f-estimate-production.js 🔮 EXACT (Formulas.exe)
-│   ├── global-kill.js
-│   ├── list-procs.js
-│   ├── server-info.js
-│   └── test-formulas.js
+│   ├── profit-scan.js         Basic scanner
+│   ├── production-monitor.js  Track production
+│   └── estimate-production.js Production estimates
+├── config/            # Configuration files
+│   └── default-targets.js     Default hacking targets
 ├── deploy/            # Deployment scripts
 │   ├── auto-expand.js         Root & deploy everywhere
-│   └── purchase-server-8gb.js Buy servers
+│   ├── purchase-server-8gb.js Buy servers
+│   ├── replace-pservs-no-copy.js Replace servers
+│   ├── hack-universal.js      Universal hacking script
+│   ├── deploy-hack-joesguns.js Deploy to joesguns
+│   ├── hack-joesguns.js       Joesguns hacking
+│   ├── hack-n00dles.js        n00dles hacking
+│   └── deploy-share-all.js    Deploy share scripts
 ├── stocks/            # 🆕 Stock trading (TIX API)
 │   ├── stock-info.js          Market intelligence viewer
 │   ├── stock-trader-basic.js  Automated trading (forecast)
@@ -105,12 +108,26 @@ scripts/
 │   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
 │   ├── stock-momentum-analyzer.js Forecast intelligence analyzer 🆕✨
 │   ├── stock-monitor.js       Portfolio monitoring (realized P/L) 🆕
-│   └── stock-close-all.js     Portfolio liquidation 🆕
-└── docs/              # Documentation
+│   ├── stock-close-all.js     Portfolio liquidation 🆕
+│   └── check-stock-api.js     Verify TIX API access
+├── utils/             # Utilities
+│   ├── f-estimate-production.js 🔮 EXACT (Formulas.exe)
+│   ├── global-kill.js         Kill all running scripts
+│   ├── list-procs.js          List running processes
+│   ├── list-pservs.js         List purchased servers
+│   ├── server-info.js         Server information
+│   └── share-ram.js           Share RAM for factions
+└── docs/              # Documentation (28 files)
+    ├── NEW_GAME_QUICKSTART.md      🆕 Fast recovery guide
+    ├── QUICK_REFERENCE.md          🆕 Fast command lookup
     ├── STOCK_TRADING_GUIDE.md      🆕 Complete trading guide
     ├── SCRIPT_REFERENCE.md         All scripts documented
     ├── GETTING_STARTED.md          Setup instructions
-    └── FORMULAS_ENHANCED_SCRIPTS.md Perfect accuracy guide
+    ├── FORMULAS_ENHANCED_SCRIPTS.md Perfect accuracy guide
+    ├── REMOTE_API_SETUP.md         Remote API development
+    ├── BeginnersGuide.md           🆕 Beginner's guide
+    ├── DockerGuide.md              🆕 Docker setup guide
+    └── ... (19 more documentation files)
 ```
 
 ## 📖 Key Documentation
@@ -232,7 +249,7 @@ See [docs/REMOTE_API_SETUP.md](docs/REMOTE_API_SETUP.md) for development setup
 ### Scenario 2: Mid-Game Optimization
 ```bash
 1. run analysis/profit-scan-flex.js --optimal  # Find best potential
-2. run utils/estimate-production.js [target]   # Verify production
+2. run analysis/estimate-production.js [target]   # Verify production
 3. run batch/smart-batcher.js [target] 0.05    # Deploy with 5% hack
 4. run analysis/production-monitor.js 60       # Monitor
 ```
@@ -302,6 +319,10 @@ run utils/global-kill.js # Stop everything
 
 ## 📝 Version History
 
+- **v1.8.5** (2025-10-27): Portfolio liquidation with preview mode & safety
+- **v1.8.4** (2025-10-27): Stock monitor realized P/L tracking
+- **v1.8.3** (2025-10-27): Stock monitor 4S data integration
+- **v1.8.2** (2025-10-27): Stock momentum analyzer 4S enhancement
 - **v1.8.1** (2025-10-27): Momentum trading with profit targets (NO 4S Data!)
 - **v1.8.0** (2025-10-27): Complete TIX stock trading suite
 - **v1.7.0** (2025-10-26): Formula-enhanced scripts (perfect accuracy)
@@ -329,8 +350,8 @@ Open source - use freely in your Bitburner gameplay!
 ---
 
 **Last Updated**: October 27, 2025  
-**Version**: 1.8.1  
-**Major Update**: Momentum trading with profit targets (NO 4S Data needed!)
+**Version**: 1.8.5  
+**Major Update**: Portfolio liquidation with preview mode & safety confirmation
 
 **Quick Links**:
 - [Quick Reference](docs/QUICK_REFERENCE.md) - Fast command lookup
