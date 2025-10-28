@@ -300,12 +300,21 @@ export async function main(ns) {
   ns.tprint("═══════════════════════════════════════════════════════════════════════");
 }
 
-/** helper formatting */
+/**
+ * Format number for both v2.x and v3.x compatibility
+ * @param {NS} ns
+ * @param {number} v - Value to format
+ */
 function formatNumber(ns, v) {
-  if (ns.formatNumber) return ns.formatNumber(v, 2);
-  if (v >= 1e9) return `$${(v/1e9).toFixed(2)}b`;
-  if (v >= 1e6) return `$${(v/1e6).toFixed(2)}m`;
-  if (v >= 1e3) return `$${(v/1e3).toFixed(2)}k`;
-  return `$${v.toFixed(2)}`;
+  // Try old nFormat (v2.x) first
+  try {
+    return ns.nFormat(v, "$0.00a");
+  } catch (e) {
+    // nFormat removed, use custom formatting for v3.x
+    if (v >= 1e9) return `$${(v/1e9).toFixed(2)}b`;
+    if (v >= 1e6) return `$${(v/1e6).toFixed(2)}m`;
+    if (v >= 1e3) return `$${(v/1e3).toFixed(2)}k`;
+    return `$${v.toFixed(2)}`;
+  }
 }
 
