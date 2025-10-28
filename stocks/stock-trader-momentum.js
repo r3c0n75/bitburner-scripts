@@ -31,6 +31,8 @@ const HISTORY_LENGTH = 5;             // Track last 5 price points
 const COMMISSION = 100000;            // Stock transaction commission
 const MAX_PRICE_SWING = 3;            // Skip stocks with >3% price swings (too risky)
 
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 // Global price history storage
 const priceHistory = {};
 
@@ -79,7 +81,7 @@ export async function main(ns) {
   
   if (investmentPerStock <= 0) {
     ns.tprint("ERROR: Total capital too low for the number of stocks!");
-    ns.tprint(`Need at least $${ns.nFormat((maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
+    ns.tprint(`Need at least $${formatMoney(ns,(maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
     return;
   }
   
@@ -92,8 +94,8 @@ export async function main(ns) {
       ns.print(`${"═".repeat(70)}`);
       ns.print(`Strategy: Ride momentum, hold until profit target or stop loss`);
       ns.print(`Max Different Stocks: ${maxStocks}`);
-      ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
-      ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")} (after ${ns.nFormat(COMMISSION, "$0.00a")} commission)`);
+      ns.print(`Total Capital: ${formatMoney(ns,totalCapital, "$0.00a")}`);
+      ns.print(`Investment per Stock: ${formatMoney(ns,investmentPerStock, "$0.00a")} (after ${formatMoney(ns,COMMISSION, "$0.00a")} commission)`);
       ns.print(`Profit Target: +${(profitTarget * 100).toFixed(1)}% (take profit)`);
       ns.print(`Stop Loss: -${(stopLoss * 100).toFixed(1)}% (limit losses)`);
       ns.print(`Refresh Rate: ${refreshRate}ms`);
@@ -160,8 +162,8 @@ export async function main(ns) {
                 actionsThisCycle++;
                 
                 const reason = hitProfitTarget ? "PROFIT TARGET" : "STOP LOSS";
-                ns.print(`✓ SELL ${symbol}: ${ns.nFormat(longShares, "0.0a")} shares @ ${ns.nFormat(salePrice, "$0.00a")}`);
-                ns.print(`  Reason: ${reason} | Return: ${(currentReturn * 100).toFixed(2)}% | Momentum: ${positiveMovements}↑ ${negativeMovements}↓ | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+                ns.print(`✓ SELL ${symbol}: ${formatMoney(ns,longShares, "0.0a")} shares @ ${formatMoney(ns,salePrice, "$0.00a")}`);
+                ns.print(`  Reason: ${reason} | Return: ${(currentReturn * 100).toFixed(2)}% | Momentum: ${positiveMovements}↑ ${negativeMovements}↓ | Profit: ${formatMoney(ns,profit, "$0.00a")}`);
               }
             }
           }
@@ -192,8 +194,8 @@ export async function main(ns) {
             tradesExecuted++;
             actionsThisCycle++;
             
-            ns.print(`✓ BUY ${symbol}: ${ns.nFormat(sharesToBuy, "0.0a")} shares @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-            ns.print(`  Momentum Buy: ${positiveMovements}↑ ${negativeMovements}↓ (riding the rally) | Swing: ${priceSwing.toFixed(1)}% | Total Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+            ns.print(`✓ BUY ${symbol}: ${formatMoney(ns,sharesToBuy, "0.0a")} shares @ ${formatMoney(ns,purchasePrice, "$0.00a")}`);
+            ns.print(`  Momentum Buy: ${positiveMovements}↑ ${negativeMovements}↓ (riding the rally) | Swing: ${priceSwing.toFixed(1)}% | Total Cost: ${formatMoney(ns,totalCost, "$0.00a")}`);
             ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
           }
         }
@@ -288,14 +290,14 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted, cycleCount) {
   const dataCollectionProgress = Math.min(100, (cycleCount / HISTORY_LENGTH) * 100);
   
   ns.print(`\n${"─".repeat(70)}`);
-  ns.print(`Portfolio: ${positionCount} positions | Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
+  ns.print(`Portfolio: ${positionCount} positions | Value: ${formatMoney(ns,portfolioValue, "$0.00a")}`);
   
   if (positionCount > 0) {
     const unrealizedProfit = portfolioValue - invested;
-    ns.print(`Unrealized P/L: ${ns.nFormat(unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
+    ns.print(`Unrealized P/L: ${formatMoney(ns,unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
   }
   
-  ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
+  ns.print(`Realized P/L: ${formatMoney(ns,totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
   ns.print(`Strong Momentum Opportunities: ${strongMomentumCount} (potential momentum buys)`);
   
   if (cycleCount < HISTORY_LENGTH) {
