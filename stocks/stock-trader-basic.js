@@ -33,6 +33,8 @@
  * - Minimum $10 million trading capital recommended
  */
 
+function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+
 const BUY_THRESHOLD = 0.55;  // Buy if forecast > 55%
 const SELL_THRESHOLD = 0.50;  // Sell if forecast < 50%
 const COMMISSION = 100000;     // Stock transaction commission
@@ -64,7 +66,7 @@ export async function main(ns) {
   
   if (investmentPerStock <= 0) {
     ns.tprint("ERROR: Total capital too low for the number of stocks!");
-    ns.tprint(`Need at least $${ns.nFormat((maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
+    ns.tprint(`Need at least $${formatMoney(ns,(maxStocks * COMMISSION * 2), "0.00a")} for ${maxStocks} stocks`);
     return;
   }
   
@@ -76,8 +78,8 @@ export async function main(ns) {
   ns.print(`BASIC STOCK TRADER - STARTING`);
   ns.print(`${"═".repeat(70)}`);
   ns.print(`Max Different Stocks: ${maxStocks}`);
-  ns.print(`Total Capital: ${ns.nFormat(totalCapital, "$0.00a")}`);
-  ns.print(`Investment per Stock: ${ns.nFormat(investmentPerStock, "$0.00a")} (after ${ns.nFormat(COMMISSION, "$0.00a")} commission)`);
+  ns.print(`Total Capital: ${formatMoney(ns,totalCapital, "$0.00a")}`);
+  ns.print(`Investment per Stock: ${formatMoney(ns,investmentPerStock, "$0.00a")} (after ${formatMoney(ns,COMMISSION, "$0.00a")} commission)`);
   ns.print(`Refresh Rate: ${refreshRate}ms`);
   ns.print(`Buy Threshold: ${(BUY_THRESHOLD * 100).toFixed(0)}% forecast`);
   ns.print(`Sell Threshold: ${(SELL_THRESHOLD * 100).toFixed(0)}% forecast`);
@@ -111,8 +113,8 @@ export async function main(ns) {
             tradesExecuted++;
             actionsThisCycle++;
             
-            ns.print(`✓ SELL ${symbol}: ${ns.nFormat(longShares, "0.0a")} shares @ ${ns.nFormat(salePrice, "$0.00a")}`);
-            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Profit: ${ns.nFormat(profit, "$0.00a")}`);
+            ns.print(`✓ SELL ${symbol}: ${formatMoney(ns,longShares, "0.0a")} shares @ ${formatMoney(ns,salePrice, "$0.00a")}`);
+            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Profit: ${formatMoney(ns,profit, "$0.00a")}`);
           }
         }
       }
@@ -142,8 +144,8 @@ export async function main(ns) {
             tradesExecuted++;
             actionsThisCycle++;
             
-            ns.print(`✓ BUY ${symbol}: ${ns.nFormat(sharesToBuy, "0.0a")} shares @ ${ns.nFormat(purchasePrice, "$0.00a")}`);
-            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Total Cost: ${ns.nFormat(totalCost, "$0.00a")}`);
+            ns.print(`✓ BUY ${symbol}: ${formatMoney(ns,sharesToBuy, "0.0a")} shares @ ${formatMoney(ns,purchasePrice, "$0.00a")}`);
+            ns.print(`  Forecast: ${(forecast * 100).toFixed(1)}% | Total Cost: ${formatMoney(ns,totalCost, "$0.00a")}`);
             ns.print(`  Positions: ${currentPositions + 1}/${maxStocks}`);
           }
         }
@@ -184,9 +186,9 @@ function displayPortfolioSummary(ns, totalProfit, tradesExecuted) {
     const unrealizedProfit = portfolioValue - invested;
     
     ns.print(`\n${"─".repeat(70)}`);
-    ns.print(`Portfolio: ${positionCount} positions | Value: ${ns.nFormat(portfolioValue, "$0.00a")}`);
-    ns.print(`Unrealized P/L: ${ns.nFormat(unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
-    ns.print(`Realized P/L: ${ns.nFormat(totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
+    ns.print(`Portfolio: ${positionCount} positions | Value: ${formatMoney(ns,portfolioValue, "$0.00a")}`);
+    ns.print(`Unrealized P/L: ${formatMoney(ns,unrealizedProfit, "$0.00a")} (${((unrealizedProfit / invested) * 100).toFixed(2)}%)`);
+    ns.print(`Realized P/L: ${formatMoney(ns,totalProfit, "$0.00a")} | Total Trades: ${tradesExecuted}`);
   }
 }
 

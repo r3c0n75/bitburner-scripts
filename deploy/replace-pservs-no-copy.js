@@ -6,6 +6,26 @@
  * If no RAM size is specified, shows current status and available options.
  */
 
+/**
+ * Format number for both v2.x and v3.x compatibility
+ */
+function formatMoney(ns, value, format) {
+  try {
+    return ns.nFormat(value, format);
+  } catch (e) {
+    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    let unitIndex = 0;
+    let num = Math.abs(value);
+    while (num >= 1000 && unitIndex < units.length - 1) {
+      num /= 1000;
+      unitIndex++;
+    }
+    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+    const formatted = num.toFixed(decimals) + units[unitIndex];
+    return (value < 0 ? '-$' : '$') + formatted;
+  }
+}
+
 /** @param {NS} ns */
 export async function main(ns) {
   ns.disableLog("sleep");
@@ -31,7 +51,7 @@ export async function main(ns) {
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint(`Current servers: ${pservs.length}/25`);
   ns.tprint(`Current RAM per server: ${currentRAM}GB`);
-  ns.tprint(`Current money: ${ns.nFormat(currentMoney, "$0.00a")}`);
+  ns.tprint(`Current money: ${formatMoney(ns, currentMoney, "$0.00a")}`);
   ns.tprint("");
 
   // If no target specified, show options
@@ -51,8 +71,8 @@ export async function main(ns) {
       const multiplier = ram / currentRAM;
       
       ns.tprint(
-        `${ram.toString().padStart(4)}GB | ${ns.nFormat(cost, "$0.00a").padStart(11)} | ` +
-        `${ns.nFormat(totalCost, "$0.00a").padStart(10)} | ${status} (${multiplier}x RAM)`
+        `${ram.toString().padStart(4)}GB | ${formatMoney(ns, cost, "$0.00a").padStart(11)} | ` +
+        `${formatMoney(ns, totalCost, "$0.00a").padStart(10)} | ${status} (${multiplier}x RAM)`
       );
     }
     
@@ -80,17 +100,17 @@ export async function main(ns) {
   const totalCost = cost * pservs.length;
 
   ns.tprint(`Upgrading to: ${targetRAM}GB RAM (${targetRAM / currentRAM}x increase)`);
-  ns.tprint(`Cost per server: ${ns.nFormat(cost, "$0.00a")}`);
-  ns.tprint(`Total cost: ${ns.nFormat(totalCost, "$0.00a")}`);
-  ns.tprint(`Remaining after upgrade: ${ns.nFormat(currentMoney - totalCost, "$0.00a")}`);
+  ns.tprint(`Cost per server: ${formatMoney(ns, cost, "$0.00a")}`);
+  ns.tprint(`Total cost: ${formatMoney(ns, totalCost, "$0.00a")}`);
+  ns.tprint(`Remaining after upgrade: ${formatMoney(ns, currentMoney - totalCost, "$0.00a")}`);
   ns.tprint("");
 
   // Check if can afford
   if (currentMoney < totalCost) {
     ns.tprint(`✗ Insufficient funds!`);
-    ns.tprint(`Need: ${ns.nFormat(totalCost, "$0.00a")}`);
-    ns.tprint(`Have: ${ns.nFormat(currentMoney, "$0.00a")}`);
-    ns.tprint(`Short: ${ns.nFormat(totalCost - currentMoney, "$0.00a")}`);
+    ns.tprint(`Need: ${formatMoney(ns, totalCost, "$0.00a")}`);
+    ns.tprint(`Have: ${formatMoney(ns, currentMoney, "$0.00a")}`);
+    ns.tprint(`Short: ${formatMoney(ns, totalCost - currentMoney, "$0.00a")}`);
     return;
   }
 
@@ -134,7 +154,7 @@ export async function main(ns) {
   ns.tprint("");
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint(`Upgrade complete: ${replaced} successful, ${failed} failed`);
-  ns.tprint(`New total RAM: ${ns.nFormat(replaced * targetRAM, "0.00b")}`);
+  ns.tprint(`New total RAM: ${formatMoney(ns, replaced * targetRAM, "0.00b")}`);
   ns.tprint("═══════════════════════════════════════════════════");
   ns.tprint("");
   ns.tprint("⚠️  IMPORTANT: Restart your batch system to use the new RAM!");
