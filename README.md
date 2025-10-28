@@ -69,12 +69,12 @@ The `profit-scan-flex.js` script uses **Fleet Potential Score** algorithm:
 
 | Script | RAM Required | Best For |
 |--------|-------------|----------|
-| `batch/home-batcher.js` | 4.90 GB | ✅ EARLY GAME - Fits in 8GB home server |
+| `utils/global-kill.js` | 3.05 GB | Stop all scripts (always works) |
+| `analysis/profit-scan-flex.js` | 4.40 GB | Target finding (fits in 8GB) |
+| `batch/home-batcher.js` | 4.90 GB | ✅ EARLY GAME - Best for 8GB home |
 | `batch/simple-batcher.js` | 5.10 GB | Early-mid game deployment |
 | `batch/batch-manager.js` | 5.50 GB | Mid game automation |
 | `batch/smart-batcher.js` | 6.35 GB | ✅ RECOMMENDED - Best performance |
-| `analysis/profit-scan-flex.js` | ~2 GB | Target finding (always works) |
-| `utils/global-kill.js` | ~2 GB | Stop all scripts (always works) |
 
 ### What Can You Run?
 
@@ -106,6 +106,31 @@ run batch/batch-manager.js joesguns --quiet  # Automated management
 - If you see **8GB**: Use home-batcher.js OR smart-batcher.js (tight fit)
 - If you see **16GB+**: Use smart-batcher.js (recommended)
 - If you see **32GB+**: You're ready for full automation
+
+### How to Get More RAM
+
+**Your home server RAM can be upgraded!** Here's how:
+
+**Option 1: Purchase RAM Upgrades (Fastest)**
+1. Go to **City** (use the navigation menu or type `connect CSEC` if you have access)
+2. Visit any location with computer upgrades (like Alpha Enterprises)
+3. Look for "Purchase Home RAM Upgrade"
+4. Cost scales exponentially: ~$1M for 16GB, ~$10M+ for 32GB, etc.
+
+**Option 2: Install Augmentations**
+- Many augmentations increase home RAM
+- Work for factions to gain reputation
+- Purchase augmentations when you have enough rep + money
+- Example: "Neural Accelerator" and similar augs boost RAM
+
+**Option 3: BitNode Bonuses (Long-term)**
+- Complete BitNodes to unlock permanent bonuses
+- Some BitNodes give permanent RAM increases
+- Stacks across all future runs
+
+> **ℹ️ What's a BitNode?** BitNodes are part of Bitburner's core storyline - different simulated realities with unique rules, challenges, and mechanics. [Destroying a BitNode](https://bitburner-fork-oddiz.readthedocs.io/en/latest/advancedgameplay/bitnodes.html#what-is-a-bitnode) resets most progress but grants powerful persistent upgrades called Source-Files. Think of them as "New Game+" prestige levels. This is end-game content - focus on your first playthrough first!
+
+**💡 Priority:** Getting to 16GB should be your **first major purchase** after making $1-5M. This single upgrade dramatically improves your quality of life!
 
 ### RAM Management Tips
 
