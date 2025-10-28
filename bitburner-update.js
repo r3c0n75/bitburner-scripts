@@ -123,19 +123,23 @@ export async function main(ns) {
 
   for (const script of filesToDownload) {
     const url = `${script.folder.url}/${script.file}`;
-    const localPath = `${script.folder.local}/${script.file}`;
+    const tempFile = `temp_${script.file}`;
+    const finalPath = `${script.folder.local}/${script.file}`;
     try {
-      const success = await ns.wget(url, localPath);
+      // Download to temp file first
+      const success = await ns.wget(url, tempFile);
       if (success) {
-        ns.tprint(`✓ ${localPath}`);
+        // Move to folder structure (creates folder automatically)
+        ns.mv(tempFile, finalPath);
+        ns.tprint(`✓ ${finalPath}`);
         successful++;
       } else {
-        ns.tprint(`✗ ${localPath} - Download failed`);
+        ns.tprint(`✗ ${finalPath} - Download failed`);
         failed++;
       }
       await ns.sleep(100); // Small delay between downloads
     } catch (e) {
-      ns.tprint(`✗ ${localPath} - Error: ${e}`);
+      ns.tprint(`✗ ${finalPath} - Error: ${e}`);
       failed++;
     }
   }
@@ -168,4 +172,4 @@ export async function main(ns) {
 //
 // Note: Scripts are downloaded from GitHub and organized into local folders:
 // core/, batch/, analysis/, utils/, deploy/, stocks/
-// This matches the organized folder structure on GitHub
+// Folders are created automatically using the mv command trick
