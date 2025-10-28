@@ -2,6 +2,67 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.7] - 2025-10-28 - Smart Batcher v3.0.0 Compatibility ⚙️✨
+
+### Enhanced Script - Smart Batcher
+
+**Updated Script**:
+- `batch/smart-batcher.js` - v3.0.0 game compatibility fix
+
+**Breaking Change Resolved**:
+Fixed `formatNumber: Function removed in 3.0.0` error that caused script failure in Bitburner v3.0.0.
+
+**Key Changes**:
+- ✅ **Added compatibility helper function** - Works in both v2.8.1 and v3.0.0
+- ✅ **Replaced 4 instances** of deprecated `ns.formatNumber()` calls
+- ✅ **Three-tier fallback system**: `ns.format.number()` (v3.x) → `ns.formatNumber()` (v2.x) → manual formatting
+- ✅ **Zero behavior changes** - Same output, now compatible across game versions
+
+**Technical Implementation**:
+```javascript
+function formatNumber(ns, v) {
+  // Try new format.number (v3.x) first
+  try {
+    if (ns.format && ns.format.number) {
+      return ns.format.number(v, "$0.00a");
+    }
+  } catch (e) {
+    // Fall through to old method
+  }
+  
+  // Try old formatNumber (v2.x)
+  try {
+    return ns.formatNumber(v, 2);
+  } catch (e) {
+    // Manual fallback if both methods fail
+    if (v >= 1e9) return `$${(v/1e9).toFixed(2)}b`;
+    if (v >= 1e6) return `$${(v/1e6).toFixed(2)}m`;
+    if (v >= 1e3) return `$${(v/1e3).toFixed(2)}k`;
+    return `$${v.toFixed(2)}`;
+  }
+}
+```
+
+**Affected Output Lines**:
+- Money per hack thread display
+- Income rate per second
+- Income rate per minute
+- Income rate per hour
+
+**Testing**:
+✅ Confirmed working in Bitburner v3.0.0
+✅ Backward compatible with v2.8.1
+
+**Usage** (unchanged):
+```bash
+run batch/smart-batcher.js joesguns
+run batch/smart-batcher.js joesguns 0.05 --quiet
+```
+
+**Note**: This follows the same compatibility pattern used in `profit-scan-flex.js` and other v3.0.0-compatible scripts.
+
+---
+
 ## [1.8.6] - 2025-10-28 - Enhanced Global Kill Reliability 🔫✨
 
 ### Enhanced Script - Global Kill
