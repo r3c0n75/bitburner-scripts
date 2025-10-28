@@ -3,6 +3,33 @@
  * Usage: run server-info.js [server]
  */
 
+/**
+ * Format number for both v2.x and v3.x compatibility
+ * @param {NS} ns
+ * @param {number} value
+ * @param {string} format
+ */
+function formatMoney(ns, value, format) {
+  // Try old nFormat (v2.x) - it exists in v3.x but throws error when called
+  try {
+    return ns.nFormat(value, format);
+  } catch (e) {
+    // nFormat removed or errored, use custom formatting for v3.x
+    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    let unitIndex = 0;
+    let num = Math.abs(value);
+    
+    while (num >= 1000 && unitIndex < units.length - 1) {
+      num /= 1000;
+      unitIndex++;
+    }
+    
+    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+    const formatted = num.toFixed(decimals) + units[unitIndex];
+    return (value < 0 ? '-$' : '$') + formatted;
+  }
+}
+
 /** @param {NS} ns */
 export async function main(ns) {
   const target = ns.args[0] || ns.getHostname();
@@ -28,7 +55,7 @@ export async function main(ns) {
     };
 
     ns.tprint(`\n=== Server Information: ${target} ===`);
-    ns.tprint(`Money: ${ns.nFormat(info.currentMoney, "$0.00a")} / ${ns.nFormat(info.maxMoney, "$0.00a")} (${((info.currentMoney/info.maxMoney)*100).toFixed(1)}%)`);
+    ns.tprint(`Money: ${formatMoney(ns, info.currentMoney, "$0.00a")} / ${formatMoney(ns, info.maxMoney, "$0.00a")} (${((info.currentMoney/info.maxMoney)*100).toFixed(1)}%)`);
     ns.tprint(`RAM: ${info.usedRam.toFixed(2)}GB / ${info.maxRam}GB (${info.freeRam.toFixed(2)}GB free)`);
     ns.tprint(`Security: ${info.currentSecurity.toFixed(2)} / ${info.minSecurity.toFixed(2)}`);
     ns.tprint(`Root Access: ${info.hasRoot ? "YES" : "NO"}`);
@@ -43,8 +70,8 @@ export async function main(ns) {
     // Calculate profitability
     const expectedPerHack = info.maxMoney * info.hackPercent * info.hackChance;
     const moneyPerSecond = expectedPerHack / (info.hackTime / 1000);
-    ns.tprint(`Expected per hack: ${ns.nFormat(expectedPerHack, "$0.00a")}`);
-    ns.tprint(`Money per second: ${ns.nFormat(moneyPerSecond, "$0.00a")}/s`);
+    ns.tprint(`Expected per hack: ${formatMoney(ns, expectedPerHack, "$0.00a")}`);
+    ns.tprint(`Money per second: ${formatMoney(ns, moneyPerSecond, "$0.00a")}/s`);
     
   } catch (e) {
     ns.tprint(`Error getting server info for ${target}: ${e}`);

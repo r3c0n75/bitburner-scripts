@@ -4,6 +4,33 @@
  * Usage: run estimate-production.js [target]
  */
 
+/**
+ * Format number for both v2.x and v3.x compatibility
+ * @param {NS} ns
+ * @param {number} value
+ * @param {string} format
+ */
+function formatMoney(ns, value, format) {
+  // Try old nFormat (v2.x) - it exists in v3.x but throws error when called
+  try {
+    return ns.nFormat(value, format);
+  } catch (e) {
+    // nFormat removed or errored, use custom formatting for v3.x
+    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    let unitIndex = 0;
+    let num = Math.abs(value);
+    
+    while (num >= 1000 && unitIndex < units.length - 1) {
+      num /= 1000;
+      unitIndex++;
+    }
+    
+    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+    const formatted = num.toFixed(decimals) + units[unitIndex];
+    return (value < 0 ? '-$' : '$') + formatted;
+  }
+}
+
 /** @param {NS} ns */
 export async function main(ns) {
   const target = ns.args[0] || "joesguns";
@@ -18,8 +45,8 @@ export async function main(ns) {
     const hackPercent = ns.hackAnalyze(target);
     
     ns.tprint(`\n=== Production Estimate for ${target} ===`);
-    ns.tprint(`Max Money: ${ns.nFormat(maxMoney, "$0.00a")}`);
-    ns.tprint(`Current Money: ${ns.nFormat(currentMoney, "$0.00a")} (${((currentMoney/maxMoney)*100).toFixed(1)}%)`);
+    ns.tprint(`Max Money: ${formatMoney(ns, maxMoney, "$0.00a")}`);
+    ns.tprint(`Current Money: ${formatMoney(ns, currentMoney, "$0.00a")} (${((currentMoney/maxMoney)*100).toFixed(1)}%)`);
     ns.tprint(`Hack Time: ${(hackTime/1000).toFixed(2)}s`);
     ns.tprint(`Grow Time: ${(growTime/1000).toFixed(2)}s`);
     ns.tprint(`Weaken Time: ${(weakenTime/1000).toFixed(2)}s`);
@@ -40,7 +67,7 @@ export async function main(ns) {
     ns.tprint(`Batch Cycle Time: ${(batchTime/1000).toFixed(2)}s`);
     ns.tprint(`Safe Interval: ${(batchInterval/1000).toFixed(2)}s`);
     ns.tprint(`Max Batches/min: ${batchesPerMinute.toFixed(2)}`);
-    ns.tprint(`Money per Hack Thread: ${ns.nFormat(moneyPerHack, "$0.00a")}`);
+    ns.tprint(`Money per Hack Thread: ${formatMoney(ns, moneyPerHack, "$0.00a")}`);
     
     // Calculate realistic production rates for different thread counts
     ns.tprint(`\n=== Realistic Production Estimates ===`);
@@ -55,7 +82,7 @@ export async function main(ns) {
       const moneyPerMinute = moneyPerBatch * batchesPerMinute;
       const moneyPerHour = moneyPerMinute * 60;
       
-      ns.tprint(`${threads} hack threads: ${ns.nFormat(moneyPerSecond, "$0.00a")}/s, ${ns.nFormat(moneyPerMinute, "$0.00a")}/min, ${ns.nFormat(moneyPerHour, "$0.00a")}/hr`);
+      ns.tprint(`${threads} hack threads: ${formatMoney(ns, moneyPerSecond, "$0.00a")}/s, ${formatMoney(ns, moneyPerMinute, "$0.00a")}/min, ${formatMoney(ns, moneyPerHour, "$0.00a")}/hr`);
     }
     
     // Show theoretical maximum (if you could hack continuously)
@@ -63,8 +90,8 @@ export async function main(ns) {
     const batchEfficiency = (moneyPerHack * batchesPerSecond) / theoreticalMaxPerSecond * 100;
     
     ns.tprint(`\n=== Efficiency Analysis ===`);
-    ns.tprint(`Theoretical max (continuous hack): ${ns.nFormat(theoreticalMaxPerSecond, "$0.00a")}/s`);
-    ns.tprint(`Realistic rate (batch cycle): ${ns.nFormat(moneyPerHack * batchesPerSecond, "$0.00a")}/s`);
+    ns.tprint(`Theoretical max (continuous hack): ${formatMoney(ns, theoreticalMaxPerSecond, "$0.00a")}/s`);
+    ns.tprint(`Realistic rate (batch cycle): ${formatMoney(ns, moneyPerHack * batchesPerSecond, "$0.00a")}/s`);
     ns.tprint(`Batch efficiency: ${batchEfficiency.toFixed(1)}%`);
     ns.tprint(`\nNote: Batch efficiency < 100% is normal due to grow/weaken overhead.`);
     
