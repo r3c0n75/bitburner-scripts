@@ -90,14 +90,17 @@ run batch/smart-batcher.js joesguns  # Leaves ~1.65GB free
 
 **💻 With 16GB Home RAM (First Upgrade):**
 ```bash
-# Now you can comfortably run smart-batcher
-run batch/smart-batcher.js joesguns  # Leaves ~9.65GB free
+# Now you can comfortably run smart-batcher OR batch-manager
+run batch/smart-batcher.js joesguns           # Leaves ~9.65GB free
+run batch/batch-manager.js joesguns --quiet   # Leaves ~10.50GB free (automated management)
 ```
 
 **🚀 With 32GB+ Home RAM (Mid Game):**
 ```bash
-# Run everything - smart-batcher + monitoring + utilities
-run batch/batch-manager.js joesguns --quiet  # Automated management
+# Run multiple scripts simultaneously - batch manager + monitoring + analysis tools + stock scripts
+run batch/batch-manager.js joesguns --quiet
+run analysis/production-monitor.js 60
+# Plus plenty of headroom for other utilities
 ```
 
 ### How to Check Your RAM
