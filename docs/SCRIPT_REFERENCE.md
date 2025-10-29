@@ -42,8 +42,8 @@ run simple-batcher.js joesguns --include-home --quiet
 run simple-batcher.js joesguns --dry
 ```
 
-### batch-manager.js
-**Purpose**: Enhanced batch manager with auto-rooting and intelligent quiet mode - deploys smart-batcher.js
+### batch-manager.js ⭐ v1.8.10
+**Purpose**: Enhanced batch manager with auto-rooting, instant RAM detection, and intelligent monitoring - deploys smart-batcher.js
 **Usage**: `run batch-manager.js [target] [hackPercent] [multiplier] [pservHost] [flags...]`
 **Parameters**:
 - `target` - Server to attack (default: joesguns)
@@ -51,30 +51,56 @@ run simple-batcher.js joesguns --dry
 - `multiplier` - Batch timing multiplier (default: 1.25)
 - `pservHost` - Host for batch manager (default: home)
 - `flags` - Special flags:
-  - `--quiet` - Suppress routine messages (rooting notifications still shown)
+  - `--quiet` - Suppress routine messages to terminal (LOG window still updated)
   - `--no-root` - Disable automatic server rooting
 
 **Features**:
 - 🚀 Automatically deploys 490x more efficient smart-batcher
+- ⚡ **Instant RAM detection** - Detects server upgrades within one cycle (~85s)
+- 📊 **Enhanced reporting** - Shows both RAM increase and current size per server
 - 🔄 Monitors for new servers every 10 cycles
-- 🎯 Only redeploys when new servers are rooted (not every cycle)
-- 🤫 Intelligent quiet mode: full output once, then silent until changes
+- 📋 **LOG window support** - All activity visible via script log
+- 🎯 Smart redeployment - Only when changes detected (RAM upgrades or new servers)
 - 💰 Leverages optimal timing-based thread ratios (4% hack / 87% grow / 9% weaken)
-- ⚡ 3-4x faster server preparation
+- 🔕 Clean logs - 23 API calls silenced for spam-free monitoring
 
 **Examples**:
 ```bash
-run batch-manager.js joesguns 0.05 1.25 home --quiet  # Recommended
+run batch-manager.js omega-net                        # Recommended
+run batch-manager.js omega-net 0.05 1.25 home --quiet # Quiet mode
 run batch-manager.js joesguns --quiet --no-root       # Disable auto-rooting
 run batch-manager.js --quiet                          # Use all defaults (5% hack)
 ```
 
-**Intelligent Quiet Mode Behavior** 🤫:
-- **Initial deployment**: Shows full smart-batcher output (timing, ratios, summary)
-- **Continuous monitoring**: Stays completely silent while monitoring
-- **New servers rooted**: Shows rooting notifications + triggers full redeployment
-- **Perfect for**: Long-term automated management while you level up
-- Errors/warnings: Always visible regardless of quiet mode
+**What You'll See**:
+```
+============================================================
+BATCH MANAGER v1.8.10 - Starting...
+============================================================
+Target: omega-net | Host: home | HackPercent: 5.0%
+Interval: 84.28s | Hack Time: 16.86s
+Auto-rooting: ENABLED (scan every 10 cycles)
+============================================================
+Running initial server scan...
+Initial scan complete: 95 server(s) rooted (0 new)
+Total network RAM: 13476GB across rooted servers
+[Cycle 2] Waiting... (next scan in 8 cycles)
+✓ Network RAM changed: 13476GB → 19876GB (+6400GB)
+  Estimated: 25 purchased servers (~256GB increase each, now ~512GB per server)
+Deploying batch/smart-batcher.js on home...
+✓ Deployed batch/smart-batcher.js on home (pid=1596)
+```
+
+**Key Improvements**:
+- **v1.8.10**: Enhanced RAM reporting (shows increase + current size)
+- **v1.8.9**: Instant RAM detection every cycle (vs every 10 cycles)
+- **v1.8.8**: LOG window support + comprehensive monitoring
+
+**RAM Upgrade Detection**:
+- Checks RAM **every cycle** (~85 seconds for typical targets)
+- Detects upgrades **14x faster** than previous version
+- Automatically redeploys smart-batcher with expanded fleet
+- Shows clear breakdown: total change, per-server increase, current size
 
 ### smart-batcher.js ⭐ RECOMMENDED
 **Purpose**: Intelligent batch deployment with optimal timing-based thread ratios

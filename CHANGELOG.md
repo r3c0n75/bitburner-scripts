@@ -2,6 +2,150 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.10] - 2025-10-29 - Batch Manager Enhanced RAM Reporting 📊✨
+
+### Enhanced Script - Batch Manager
+
+**Updated Script**:
+- `batch/batch-manager.js` - Enhanced RAM upgrade reporting with per-server breakdown
+
+**Key Enhancement**:
+- **Detailed RAM reporting** - Shows both total increase AND current size per server
+- **Clear upgrade visibility** - Immediately understand what changed and current capacity
+
+**What You'll See**:
+```
+✓ Network RAM changed: 13476GB → 19876GB (+6400GB)
+  Estimated: 25 purchased servers (~256GB increase each, now ~512GB per server)
+```
+
+**Why This Matters**:
+- **Clarity**: Instantly see both the upgrade amount (256GB) and new size (512GB)
+- **Transparency**: No confusion about whether numbers show increase or total
+- **Planning**: Easy to track your progression and next upgrade targets
+
+**Technical Implementation**:
+- Calculates total RAM across all purchased servers
+- Divides by server count for accurate per-server average
+- Shows both the delta (increase) and current state (new size)
+
+---
+
+## [1.8.9] - 2025-10-29 - Batch Manager Instant RAM Detection ⚡🎯
+
+### Enhanced Script - Batch Manager
+
+**Updated Script**:
+- `batch/batch-manager.js` - Instant RAM upgrade detection (every cycle)
+
+**Major Performance Improvement**:
+- **RAM checks every cycle** (~85s) instead of every 10 cycles (~14 min)
+- **Instant upgrade detection** - No more waiting up to 14 minutes
+- **Smart separation** - Quick RAM checks (cheap) + periodic rooting scans (expensive)
+
+**Key Features**:
+- ⚡ **85-second detection** - Upgrades detected at next cycle
+- 🔄 **Automatic redeployment** - Immediate smart-batcher restart
+- 📊 **Per-server breakdown** - Shows exactly what changed
+- 🎯 **Smart monitoring** - RAM every cycle, rooting every 10 cycles
+
+**Before vs After**:
+- **Before**: Wait up to 14 minutes for RAM upgrade detection
+- **After**: Detection within 85 seconds (next cycle)
+- **Improvement**: 14x faster upgrade response time
+
+**What You'll See**:
+```
+[Cycle 2] Waiting... (next scan in 8 cycles)
+✓ Network RAM changed: 8676GB → 10276GB (+1600GB)
+  Estimated: 25 purchased servers (~64GB increase each)
+Deploying batch/smart-batcher.js on home...
+✓ Deployed batch/smart-batcher.js on home (pid=1169)
+```
+
+**Technical Changes**:
+- Moved RAM calculation to every cycle (was only during rooting scans)
+- Quick `getTotalNetworkRAM()` check before expensive network scan
+- Triggers immediate redeployment when RAM increases detected
+- Separate tracking for RAM changes vs new server rooting
+
+---
+
+## [1.8.8] - 2025-10-29 - Batch Manager Enhanced Logging & Monitoring 📋✨
+
+### Enhanced Script - Batch Manager
+
+**Updated Script**:
+- `batch/batch-manager.js` - Complete logging overhaul with LOG window support
+
+**Major Features Added**:
+- ✅ **LOG window support** - All messages appear in script log (click LOG button)
+- ✅ **Startup banner** - Clear visual indication of script start and configuration
+- ✅ **Heartbeat messages** - Activity updates every cycle (long intervals) or every 5 cycles
+- ✅ **RAM upgrade detection** - Automatically detects and redeploys on server upgrades
+- ✅ **Network RAM tracking** - Shows total network capacity on startup and changes
+- ✅ **Smart logging** - Important messages always visible, info respects quiet mode
+
+**Logging Enhancements**:
+- All messages go to LOG window (via `ns.print()`)
+- Important messages also go to terminal (via `ns.tprint()`)
+- Quiet mode suppresses terminal spam while keeping log window updated
+- Clean output with proper categorization (info, important, warnings, errors)
+
+**New Output Features**:
+```
+============================================================
+BATCH MANAGER v1.8.8 - Starting...
+============================================================
+Target: omega-net | Host: home | HackPercent: 5.0%
+Interval: 92.24s | Hack Time: 18.45s
+Auto-rooting: ENABLED (scan every 10 cycles)
+Quiet mode: OFF (terminal + log)
+============================================================
+Running initial server scan...
+Initial scan complete: 64 server(s) rooted (0 new)
+Total network RAM: 8676GB across rooted servers
+```
+
+**Heartbeat System**:
+- Shows activity every cycle for long intervals (>60s)
+- Shows activity every 5 cycles for short intervals (<60s)
+- Countdown to next scan: "next scan in 7 cycles"
+- Clear monitoring status throughout execution
+
+**RAM Upgrade Detection**:
+```
+✓ Network RAM changed: 8676GB → 10276GB (+1600GB)
+Network changes detected - killing existing batcher to redeploy...
+✓ Deployed batch/smart-batcher.js on home (pid=1169)
+```
+
+**API Call Silencing**:
+Disabled logging for 23 API calls to eliminate log spam:
+- Network operations: `scan`, `ps`, `kill`, `scp`
+- Server info: `getServerMaxRam`, `getServerUsedRam`, `getScriptRam`
+- Rooting: `brutessh`, `ftpcrack`, `relaysmtp`, `httpworm`, `sqlinject`, `nuke`
+- Access checks: `getServerNumPortsRequired`, `getServerRequiredHackingLevel`, `getHackingLevel`, `hasRootAccess`
+- Timing: `getHackTime`, `getGrowTime`, `getWeakenTime`
+- Files: `fileExists`, `exec`
+- Misc: `sleep`
+
+**Why This Matters**:
+- **Visibility**: Always know what the script is doing
+- **Debugging**: Easy to track issues via LOG window
+- **Automation**: Automatically handles server upgrades
+- **Clean logs**: No API call spam, just meaningful updates
+
+**Technical Implementation**:
+- Three-tier logging system (info, important, error)
+- `info()`: LOG window + optional terminal
+- `important()`: Both LOG window and terminal
+- `error()`/`warn()`: Both LOG window and terminal
+- Network RAM tracking with upgrade detection
+- Heartbeat frequency adapts to interval length
+
+---
+
 ## [1.8.7] - 2025-10-28 - Smart Batcher v3.0.0 Compatibility ⚙️✨
 
 ### Enhanced Script - Smart Batcher
