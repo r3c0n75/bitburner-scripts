@@ -184,11 +184,10 @@ run deploy/replace-pservs-no-copy.js              # Shows costs & options
 # Step 2: Upgrade (example: to 128GB)
 run deploy/replace-pservs-no-copy.js 128          # Upgrades all servers
 
-# Step 3: Kill all processes
-run utils/global-kill.js
-
-# Step 4: Restart batch manager (auto-deploys to upgraded servers)
-run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+# Batch-manager should auto-detect the upgraded servers
+# If it doesn't restart automatically, manually restart:
+run utils/global-kill.js                          # Kill all processes
+run batch/batch-manager.js joesguns 0.05 1.25 home --quiet  # Restart batch manager
 ```
 
 ### Monitor Performance
