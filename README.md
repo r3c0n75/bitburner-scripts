@@ -47,6 +47,7 @@ Before you start, here's why these scripts will transform your Bitburner experie
 **Smart Batcher Technology** uses optimal thread ratios based on operation timing:
 - Traditional approach: 25% hack / 45% grow / 30% weaken (inefficient)
 - Smart approach: 4% hack / 87% grow / 9% weaken (optimal)
+    - Calculates optimal hack/grow/weaken ratios based on target timing
 - Real results: $34k/s → $3.41m/s on silver-helix target
 
 **You don't need to understand the math** - just run the scripts and they handle everything automatically.

@@ -1,10 +1,10 @@
-/** stock-close-all.js
+/** close-all-stock.js
  * Close ALL stock positions and liquidate portfolio.
  * 
  * Instantly sells all long and short positions, showing profit/loss for each.
  * Useful for taking profits, stopping trading, or rebalancing.
  * 
- * Usage: run stocks/stock-close-all.js [--confirm]
+ * Usage: run stocks/close-all-stock.js [--confirm]
  * 
  * Requirements:
  * - TIX API Access ($5 billion)
@@ -125,7 +125,7 @@ export async function main(ns) {
   if (!confirmFlag) {
     ns.tprint("");
     ns.tprint("⚠️  SAFETY: Add --confirm flag to execute liquidation");
-    ns.tprint("Example: run stocks/stock-close-all.js --confirm");
+    ns.tprint("Example: run stocks/close-all-stock.js --confirm");
     return;
   }
   
