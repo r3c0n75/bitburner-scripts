@@ -101,29 +101,36 @@ run batch/batch-manager.js joesguns --quiet  # Automated management
 
 ### How to Check Your RAM
 
-**Look at the top-right corner of your terminal** - it shows `home: XGB`
+**Run the `free` command in your terminal:**
+```bash
+free
+```
 
-- If you see **8GB**: Use home-batcher.js OR smart-batcher.js (tight fit)
-- If you see **16GB+**: Use smart-batcher.js (recommended)
-- If you see **32GB+**: You're ready for full automation
+**Example output:**
+```
+Total:      32.00GB
+Used:       25.65GB (80.16%)
+Available:   6.35GB
+```
+
+**What to look for:**
+- **Total: 8GB**: Use home-batcher.js OR smart-batcher.js (tight fit)
+- **Total: 16GB+**: Use smart-batcher.js (recommended)
+- **Total: 32GB+**: You're ready for full automation
+
+**Note:** The "Available" line shows how much free RAM you have right now for running scripts.
 
 ### How to Get More RAM
 
 **Your home server RAM can be upgraded!** Here's how:
 
 **Option 1: Purchase RAM Upgrades (Fastest)**
-1. Go to **City** (use the navigation menu or type `connect CSEC` if you have access)
+1. Click **City** in the main navigation menu (left sidebar)
 2. Visit any location with computer upgrades (like Alpha Enterprises)
-3. Look for "Purchase Home RAM Upgrade"
+3. Look for **"Upgrade 'home' RAM (current → higher) - $cost"**
 4. Cost scales exponentially: ~$1M for 16GB, ~$10M+ for 32GB, etc.
 
-**Option 2: Install Augmentations**
-- Many augmentations increase home RAM
-- Work for factions to gain reputation
-- Purchase augmentations when you have enough rep + money
-- Example: "Neural Accelerator" and similar augs boost RAM
-
-**Option 3: BitNode Bonuses (Long-term)**
+**Option 2: BitNode Bonuses (Long-term)**
 - Complete BitNodes to unlock permanent bonuses
 - Some BitNodes give permanent RAM increases
 - Stacks across all future runs
@@ -148,7 +155,7 @@ run batch/batch-manager.js joesguns --quiet  # Automated management
 
 **Start here if you're new to Bitburner or just started a fresh game:**
 
-> **📌 Check your home RAM first!** Look at top-right corner of terminal (shows `home: XGB`). With 8GB, you can run all the commands below.
+> **📌 Check your home RAM first!** Run `free` command in your terminal to see your RAM. With 8GB total, you can run all the commands below.
 
 ### Step 1: Find a Target
 ```bash
@@ -356,7 +363,7 @@ run utils/global-kill.js # Stop everything and restart
 - Try a different target with `profit-scan-flex.js --optimal`
 
 ### Stock trading commands not working?
-- Did you buy the TIX API? ($5 billion from Alpha Enterprises in City)
+- Did you buy the TIX API? ($25 billion from Alpha Enterprises in City)
 - Do you have enough capital? (Minimum $100 million to start)
 - Check market status: `run stocks/stock-info.js`
 
@@ -444,13 +451,13 @@ scripts/
 
 ## 💎 Advanced Features (Mid to Late Game)
 
-### Stock Market Trading ($5-6 Billion Required)
+### Stock Market Trading ($25-26 Billion Required)
 
-Once you have **$5 billion** saved, you can buy the **TIX API** from the Alpha Enterprises location in City. This unlocks automated stock trading for passive income.
+Once you have **$25 billion** saved, you can buy the **TIX API** from the Alpha Enterprises location in City. This unlocks automated stock trading for passive income.
 
 **Two Trading Strategies:**
 
-#### Option 1: Momentum Trading (Cheaper - $5b only!)
+#### Option 1: Momentum Trading (Cheaper - $25b only!)
 No need for expensive 4S Market Data. Buys stocks on dips, sells on profit targets.
 
 ```bash
@@ -464,10 +471,10 @@ run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000
 run stocks/stock-monitor.js
 ```
 
-**Expected Returns:** 10-40% daily
+**Expected Returns:** 10-40% per trade (time varies)
 
-#### Option 2: Forecast Trading (Better returns - $6b total)
-Requires TIX API ($5b) + 4S Market Data ($1b). Uses forecast data for better accuracy.
+#### Option 2: Forecast Trading (Better returns - $26b total)
+Requires TIX API ($25b) + 4S Market Data ($1b). Uses forecast data for better accuracy.
 
 ```bash
 # View market intelligence
@@ -480,7 +487,7 @@ run stocks/stock-trader-basic.js 1000000000
 run stocks/stock-monitor.js
 ```
 
-**Expected Returns:** 20-50% daily
+**Expected Returns:** 20-50% per trade (faster with advanced strategies)
 
 #### Close All Positions (when done)
 ```bash
