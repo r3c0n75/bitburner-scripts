@@ -73,8 +73,8 @@ The `profit-scan-flex.js` script uses **Fleet Potential Score** algorithm:
 | `analysis/profit-scan-flex.js` | 4.40 GB | Target finding (fits in 8GB) |
 | `batch/home-batcher.js` | 4.90 GB | ✅ EARLY GAME - Best for 8GB home |
 | `batch/simple-batcher.js` | 5.10 GB | Early-mid game deployment |
-| `batch/batch-manager.js` | 5.50 GB | Mid game automation |
-| `batch/smart-batcher.js` | 6.35 GB | ✅ RECOMMENDED - Best performance |
+| `batch/batch-manager.js` | 5.50 GB | ⭐ RECOMMENDED - Auto-scaling + instant RAM detection |
+| `batch/smart-batcher.js` | 6.35 GB | ✅ Best performance (490x faster) |
 
 ### What Can You Run?
 
@@ -269,9 +269,13 @@ run deploy/purchase-server-8gb.js
 
 **Automation (32GB+ home RAM):**
 ```bash
-run batch/batch-manager.js [target] --quiet
+run batch/batch-manager.js omega-net --quiet
 ```
-This automatically manages your entire fleet and roots new servers as you gain access!
+This automatically manages your entire fleet with:
+- ⚡ **Instant RAM detection** - Detects server upgrades within ~85 seconds
+- 🔄 **Auto-rooting** - Finds and roots new servers automatically
+- 📊 **Smart redeployment** - Only when changes detected (RAM upgrades or new servers)
+- 📋 **Full visibility** - Click "LOG" button to see all activity
 
 ---
 
