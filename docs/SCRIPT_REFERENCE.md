@@ -359,7 +359,7 @@ run deploy/replace-pservs-no-copy.js 128       # Upgrade to 128GB
 - Tracks success/failure for each server
 - Displays total RAM after upgrade
 
-**Important**: After upgrading servers, you must restart your batch system:
+**Important**: Batch-manager should automatically detect the upgraded servers on its next cycle. If it doesn't restart automatically, you can manually restart:
 ```bash
 run utils/global-kill.js                                           # Kill all processes
 run batch/batch-manager.js joesguns 0.05 1.25 home --quiet        # Restart batch manager

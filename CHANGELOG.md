@@ -2,6 +2,44 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.11] - 2025-10-29 - Server Upgrade Messaging Enhancement 📝
+
+### Enhanced Script - Replace Purchased Servers
+
+**Updated Script**:
+- `deploy/replace-pservs-no-copy.js` - Updated completion message to reflect auto-detection
+
+**Key Change**:
+- **Improved messaging** - Now correctly states that batch-manager auto-detects upgraded servers
+- **Less urgent tone** - Manual restart only needed if auto-detection doesn't work
+- **Better UX** - Clearer expectations about what happens after upgrade
+
+**Old Message**:
+```
+⚠️  IMPORTANT: Restart your batch system to use the new RAM!
+  1. Kill all processes: run utils/global-kill.js
+  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+```
+
+**New Message**:
+```
+✓ Batch-manager should auto-detect the upgraded servers on its next cycle.
+  If it doesn't restart automatically, you can manually restart:
+  1. Kill all processes: run utils/global-kill.js
+  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+```
+
+**Why This Matters**:
+- **Accurate information** - Reflects v1.8.9+ instant RAM detection capabilities
+- **Reduced confusion** - Users know auto-detection is expected behavior
+- **Helpful fallback** - Manual restart instructions still provided if needed
+
+**Documentation Updated**:
+- `docs/SCRIPT_REFERENCE.md` - Updated upgrade process section
+- `docs/QUICK_REFERENCE.md` - Updated upgrade commands section
+
+---
+
 ## [1.8.10] - 2025-10-29 - Batch Manager Enhanced RAM Reporting 📊✨
 
 ### Enhanced Script - Batch Manager
