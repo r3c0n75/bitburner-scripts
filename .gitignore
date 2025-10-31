@@ -22,7 +22,8 @@ desktop.ini
 node_modules/
 package-lock.json
 
-# PowerShell artifacts
+# PowerShell artifacts and scripts
+*.ps1
 *.ps1xml
 
 # Keep all JavaScript files
