@@ -310,6 +310,12 @@ This automatically manages your entire fleet with:
 **$100M+:**
 - 🎓 You're ready for [Advanced Features](#💎-advanced-features-mid-to-late-game) like stock trading!
 
+**$1B+ (Late Game):**
+- ✅ Establish passive stock trading income
+- ✅ Join factions and start earning reputation
+- ✅ Deploy RAM sharing with `run deploy/deploy-share-all.js`
+- ✅ Purchase and install augmentations for massive permanent bonuses!
+
 ---
 
 ## 📖 Common Daily Tasks
@@ -340,6 +346,18 @@ run utils/server-info.js joesguns  # Detailed server stats
 ```bash
 run utils/global-kill.js                      # Stop everything
 run batch/smart-batcher.js [better-target]    # Start fresh
+```
+
+### Switch to RAM Sharing (Late Game)
+```bash
+run utils/global-kill.js         # Stop hacking
+run deploy/deploy-share-all.js   # Start generating faction reputation
+```
+
+### Switch Back to Hacking
+```bash
+run utils/global-kill.js                  # Stop RAM sharing
+run batch/batch-manager.js [target] --quiet # Resume automated hacking
 ```
 
 ---
@@ -376,6 +394,12 @@ run utils/global-kill.js # Stop everything and restart
 run utils/global-kill.js              # Kill everything
 run batch/smart-batcher.js [target] 0.02  # Lower hack percentage (uses less RAM)
 ```
+
+### RAM sharing not generating reputation fast enough?
+- Buy more purchased servers to increase your total RAM pool
+- Upgrade existing purchased servers to higher RAM (16GB, 32GB, etc.)
+- Make sure you've actually joined a faction first
+- The more RAM you share, the faster reputation accumulates (it's exponential!)
 
 **Or see the [RAM Requirements section](#💾-ram-requirements--early-game-tips)** for script alternatives and upgrade tips.
 
@@ -455,17 +479,21 @@ scripts/
 
 ## 💎 Advanced Features (Mid to Late Game)
 
-### Stock Market Trading ($25-26 Billion Required)
+### Stock Market Trading ($25-31 Billion Required)
 
 Once you have **$25 billion** saved, you can buy the **TIX API** from the Alpha Enterprises location in City. This unlocks automated stock trading for passive income.
 
-**Two Trading Strategies:**
+**Three Trading Strategies (Choose Your Level):**
 
-#### Option 1: Momentum Trading (Cheaper - $25b only!)
-No need for expensive 4S Market Data. Buys stocks on dips, sells on profit targets.
+---
+
+#### Level 1: Momentum Trading (Easiest Entry - $25b TIX API + $5-10m capital)
+
+**Best for:** Getting started with stock trading without expensive 4S Market Data  
+**Strategy:** Buys stocks on dips (contrarian approach), sells on profit targets
 
 ```bash
-# Analyze market first (optional but helpful if you have 4S Data)
+# Analyze market first (optional)
 run stocks/stock-momentum-analyzer.js 10
 
 # Start trading: 5 stocks, $1b capital, 5% profit target, 5% stop loss
@@ -475,29 +503,81 @@ run stocks/stock-trader-momentum.js 5 1000000000 0.05 0.05 6000
 run stocks/stock-monitor.js
 ```
 
-**Expected Returns:** 10-40% per trade (time varies)
+**Expected Returns:** 10-40% per trade  
+**Why use this:** Cheapest entry into stock trading, no forecast data needed
 
-#### Option 2: Forecast Trading (Better returns - $26b total)
-Requires TIX API ($25b) + 4S Market Data ($1b). Uses forecast data for better accuracy.
+---
+
+#### Level 2: Forecast Trading (⭐ Recommended - $26b total + $10-50m capital)
+
+**Best for:** Consistent profits with forecast intelligence  
+**Requirements:** TIX API ($25b) + 4S Market Data ($1b)  
+**Strategy:** Buys stocks with >55% forecast, sells when forecast drops below 50%
 
 ```bash
 # View market intelligence
 run stocks/stock-info.js
 
-# Start trading with $1 billion
-run stocks/stock-trader-basic.js 1000000000
+# Start trading: 10 stocks, $1 billion capital, 6 second refresh
+run stocks/stock-trader-basic.js 10 1000000000 6000
 
-# Monitor portfolio
+# Monitor portfolio with real-time P/L tracking
 run stocks/stock-monitor.js
 ```
 
-**Expected Returns:** 20-50% per trade (faster with advanced strategies)
+**Expected Returns:** 20-50% per trade  
+**Why use this:** Uses actual forecast data for smarter decisions, much more reliable than momentum trading
 
-#### Close All Positions (when done)
+> **💡 Pro Tip:** This is the sweet spot for most players! The forecast data is worth every penny - you'll make your $1b investment back quickly with accurate market intelligence.
+
+---
+
+#### Level 3: Advanced Trading (Expert - $31b total + $20-50m+ capital)
+
+**Best for:** Maximum profits with professional risk management  
+**Requirements:** TIX API ($25b) + 4S Market Data ($1b) + Short Position Access ($25b)  
+**Strategy:** Long/short positions, dynamic sizing, profit targets, stop-loss protection
+
+```bash
+# Advanced trading: 10 stocks, $50b capital, 25% profit target, 15% stop loss
+run stocks/stock-trader-advanced.js 10 50000000000 0.25 0.15 6000
+
+# Real-time portfolio monitoring
+run stocks/stock-monitor.js
+```
+
+**Expected Returns:** 50-150% daily with optimal capital
+
+**Features:**
+- Long AND short positions (profit from both rises and falls)
+- Dynamic position sizing based on forecast confidence
+- Automatic profit-taking at your target percentage
+- Stop-loss protection to limit losses
+- Professional portfolio rebalancing
+- Win rate tracking and performance metrics
+
+**Why use this:** Enterprise-grade trading with maximum profit potential and risk management
+
+---
+
+#### Close All Positions (Any Level)
+
 ```bash
 run stocks/stock-close-all.js           # Preview mode (safe)
 run stocks/stock-close-all.js --confirm # Actually close positions
 ```
+
+---
+
+#### Trading Strategy Comparison
+
+| Strategy | Cost to Start | Expected Returns | Difficulty |
+|----------|---------------|------------------|------------|
+| Momentum Trading | $25b + $5-10m | 10-40% per trade | ⭐ Easy |
+| Forecast Trading | $26b + $10-50m | 20-50% per trade | ⭐⭐ Medium |
+| Advanced Trading | $31b + $20-50m+ | 50-150% daily | ⭐⭐⭐ Expert |
+
+> **💰 Recommended Progression:** Start with Momentum Trading to learn the basics → Upgrade to Forecast Trading for better returns → Master Advanced Trading for maximum profits!
 
 **Complete Guide:** [docs/STOCK_TRADING_GUIDE.md](docs/STOCK_TRADING_GUIDE.md)
 
@@ -525,6 +605,162 @@ run utils/f-estimate-production.js silver-helix
 **Why buy it?** No more switching targets only to find they're worse. Perfect information = confident decisions.
 
 **Complete Guide:** [docs/FORMULAS_ENHANCED_SCRIPTS.md](docs/FORMULAS_ENHANCED_SCRIPTS.md)
+
+---
+
+### Late-Game Progression: Augmentations & Factions
+
+Once you have **reliable passive income** from stock trading and automated hacking, it's time to unlock the game's most powerful upgrades: **Augmentations**!
+
+#### What Are Augmentations?
+
+Augmentations are **permanent upgrades** that massively boost your abilities:
+- 🧠 **Hacking power** - Faster operations, better success rates
+- 💪 **Combat stats** - Strength, defense, dexterity, agility
+- 💰 **Faction reputation** - Earn reputation faster
+- 📊 **Charisma** - Better company/faction work results
+- ⚡ **Experience multipliers** - Level up skills faster
+
+**The catch?** Installing augmentations **resets your game progress** (soft reset), but you keep the permanent bonuses. This is how you break through to exponentially higher income!
+
+---
+
+#### How to Unlock Augmentations
+
+**Step 1: Join a Faction**
+
+Factions have different requirements. Common early factions:
+- **CyberSec** - Hack CSEC server (requires hacking 50+)
+- **Tian Di Hui** - $1 million + hacking 50+ in any city
+- **Netburners** - Hacking 80+ and total hacknet levels 100+
+- **Sector-12** - Be in Sector-12 with $15 million
+
+**Step 2: Earn Reputation**
+
+Work for the faction to earn reputation points:
+- 💻 **Hacking Contracts** - Best for hacking-focused players (you!)
+- 🛡️ **Field Work** - Requires combat stats
+- 🔒 **Security Work** - Lower requirements, slower reputation gain
+
+**Step 3: Purchase Augmentations**
+
+Each augmentation requires:
+- ✅ Enough faction reputation (varies: 10k to 1 million+)
+- ✅ Enough money ($1 million to $1 billion+)
+
+> **💡 Important:** The more augmentations you buy, the more expensive the next one becomes (exponential price multiplier). Plan your purchases carefully!
+
+---
+
+#### The Reputation Challenge
+
+High-tier augmentations require **massive reputation**:
+- Basic augmentations: 10,000 - 50,000 reputation
+- Advanced augmentations: 100,000 - 500,000 reputation
+- Elite augmentations: 1,000,000+ reputation
+
+**The problem:** Earning reputation through manual hacking contracts takes *forever*.
+
+**The solution:** **RAM sharing!** 🚀
+
+---
+
+#### RAM Sharing for Maximum Reputation
+
+RAM sharing lets you dedicate your **entire server fleet** to passively generating reputation while you're away!
+
+**Prerequisites:**
+- ✅ Stable passive income from stock trading (you won't be hacking for money)
+- ✅ A large fleet of servers (purchased servers highly recommended)
+- ✅ Already joined a faction
+
+**How to Deploy RAM Sharing:**
+
+```bash
+# Stop all current hacking operations
+run utils/global-kill.js
+
+# Deploy RAM sharing to ALL servers for your faction
+run deploy/deploy-share-all.js
+```
+
+**What happens:**
+- Every server you control starts running `share-ram.js`
+- All available RAM is dedicated to generating faction reputation
+- Reputation accumulates passively while you're offline or doing other tasks
+- The more RAM you share, the faster you earn reputation
+
+> **⚡ Pro Tip:** With 25 purchased servers (8GB each) plus your home server, you can generate reputation 100-200x faster than manual hacking contracts!
+
+#### Optimal Late-Game Strategy
+
+**Phase 1: Build Your Foundation**
+1. Establish automated stock trading for passive income
+2. Purchase 25 servers (8GB minimum, 16GB+ recommended)
+3. Accumulate $100 million - $1 billion for augmentation purchases
+
+**Phase 2: Focus on Reputation**
+1. Join your target faction(s)
+2. Stop hacking for money (you have stock trading income!)
+3. Deploy RAM sharing: `run deploy/deploy-share-all.js`
+4. Let your fleet generate reputation overnight
+
+**Phase 3: Purchase & Install Augmentations**
+1. Once you have enough reputation, visit the faction
+2. Purchase all augmentations you can afford
+3. Install them to trigger the soft reset
+4. Start your next run with massive permanent bonuses!
+
+---
+
+#### Recommended Augmentation Targets
+
+**Early Augmentations (Good First Purchases):**
+- **Augmented Targeting I & II** - Better hacking success
+- **Neuralstimulator** - Faster hacking/growing/weakening
+- **BitWire** - Increased hack skill
+- **TITN-41 Gene-Modification** - General skill improvements
+
+**High-Value Late-Game Augmentations:**
+- **The Red Pill** - Unlocks endgame content (1 million+ reputation!)
+- **NeuroFlux Governor** - Can be purchased infinite times, each level improves everything slightly
+- **Neuroreceptor Management Implant** - Massive faction reputation multiplier
+
+> **🎯 Strategy Tip:** Focus on **hacking augmentations first**. They make your next run dramatically more efficient, letting you reach late-game faster!
+
+---
+
+#### Example Late-Game Workflow
+
+```bash
+# 1. Check your current money generation
+run analysis/production-monitor.js 60
+
+# 2. Stop hacking, start RAM sharing
+run utils/global-kill.js
+run deploy/deploy-share-all.js
+
+# 3. Monitor your stock portfolio (passive income)
+run stocks/stock-monitor.js
+
+# 4. Check faction status in-game
+# Visit faction → Check reputation → Purchase augmentations when ready
+
+# 5. When ready to reset
+# Install all purchased augmentations → Start fresh with bonuses!
+```
+
+---
+
+#### RAM Sharing vs Hacking for Money
+
+| Activity | Best For | Income Source |
+|----------|----------|---------------|
+| Hacking (smart-batcher) | Building your wealth | Direct hacking income |
+| Stock Trading | Passive wealth generation | Market movements |
+| RAM Sharing | Earning faction reputation | Stock trading only |
+
+> **💰 Key Insight:** Once your stock trading generates enough passive income, you can **completely stop hacking for money** and dedicate your entire fleet to reputation farming. This is the fastest path to elite augmentations!
 
 ---
 
@@ -571,6 +807,27 @@ run utils/f-estimate-production.js silver-helix
 - Real results: $4.26k/s → $2.09m/s
 
 **See [CHANGELOG.md](CHANGELOG.md) for complete version history.**
+
+---
+
+## ✨ Final Tips for Success
+
+> **The Golden Rule:** Start small, scale up gradually. Don't rush to buy expensive upgrades before you understand the basics!
+
+**Recommended Learning Path:**
+1. **Week 1:** Learn basic automation with smart-batcher
+2. **Week 2:** Master target selection with profit-scan-flex
+3. **Week 3:** Expand your server fleet
+4. **Week 4+:** Explore stock trading and advanced features
+5. **Late Game:** Establish passive income → Join factions → Farm reputation → Purchase augmentations → Soft reset with permanent bonuses!
+
+**Remember:**
+- 💡 Wait 6-8 minutes for prep phases to complete
+- 💡 Upgrade home RAM to 16GB as soon as possible
+- 💡 Use `profit-scan-flex.js --optimal` to find hidden gems
+- 💡 Late game: Use RAM sharing to farm faction reputation 100-200x faster
+- 💡 Check the GitHub repository for updates
+- 💡 Join the community for help and discussion
 
 ---
 
