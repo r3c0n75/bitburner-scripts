@@ -59,43 +59,44 @@ if ($FirstTime) {
     if (!(Test-Path ".gitignore")) {
         Write-Host "Creating .gitignore..." -ForegroundColor Yellow
         
-        $gitignoreContent = @"
-# Bitburner Scripts Repository
-# Organized folder structure maintained for development
-
-# IDE and Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs and temporary files
-*.log
-*.bak
-*.tmp
-
-# Node modules (if using any build tools)
-node_modules/
-package-lock.json
-
-# PowerShell artifacts
-*.ps1xml
-
-# Keep all JavaScript files
-!*.js
-
-# Keep all markdown documentation
-!*.md
-
-# Keep all directories
-!*/
-"@
+        $gitignoreContent = @(
+            "# Bitburner Scripts Repository",
+            "# Organized folder structure maintained for development",
+            "",
+            "# IDE and Editor files",
+            ".vscode/",
+            ".idea/",
+            "*.swp",
+            "*.swo",
+            "*~",
+            "",
+            "# OS files",
+            ".DS_Store",
+            "Thumbs.db",
+            "desktop.ini",
+            "",
+            "# Logs and temporary files",
+            "*.log",
+            "*.bak",
+            "*.tmp",
+            "",
+            "# Node modules (if using any build tools)",
+            "node_modules/",
+            "package-lock.json",
+            "",
+            "# PowerShell artifacts",
+            "*.ps1xml",
+            "",
+            "# Keep all JavaScript files",
+            "!*.js",
+            "",
+            "# Keep all markdown documentation",
+            "!*.md",
+            "",
+            "# Keep all directories",
+            "!*/"
+        ) -join "`n"
+        
         Set-Content -Path ".gitignore" -Value $gitignoreContent
         Write-Host "✓ .gitignore created" -ForegroundColor Green
     }

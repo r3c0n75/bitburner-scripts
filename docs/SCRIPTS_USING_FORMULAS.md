@@ -24,6 +24,8 @@ These scripts will not work without Formulas.exe installed. They check for `ns.f
 ### 2. f-profit-scan-flex.js 🌟
 **Location**: `analysis/f-profit-scan-flex.js`  
 **Purpose**: EXACT target selection with perfect accuracy  
+**Requirement Check**: Uses `ns.fileExists("Formulas.exe", "home")` to verify ownership before running
+**Error Handling**: Displays helpful error message with alternative (profit-scan-flex.js) if Formulas.exe not found
 **Formulas Used**:
 - `ns.formulas.hacking.hackTime(server, player)` - Exact timing calculations
 - `ns.formulas.hacking.growTime(server, player)` - Exact grow timing

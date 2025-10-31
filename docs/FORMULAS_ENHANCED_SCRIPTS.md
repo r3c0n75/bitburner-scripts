@@ -14,6 +14,11 @@ The **f-prefix** scripts use exact formulas instead of approximations, giving yo
 
 **Purpose**: Find best hacking targets with **EXACT calculations** (no estimates)
 
+**Requirements**: 
+- ✅ Formulas.exe must be purchased and installed ($5 billion from Dark Web)
+- ✅ TOR router access required to purchase
+- ⚠️ Script will display helpful error message if Formulas.exe not found
+
 **Usage**:
 ```bash
 run analysis/f-profit-scan-flex.js           # exact current state rankings

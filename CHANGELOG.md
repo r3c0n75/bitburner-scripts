@@ -2,6 +2,60 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.12] - 2025-10-31 - f-profit-scan-flex.js Formulas.exe Detection Fix 🔧
+
+### Fixed - f-profit-scan-flex.js
+
+**Updated Script**:
+- `analysis/f-profit-scan-flex.js` - Fixed Formulas.exe ownership detection
+
+**The Problem**:
+- Script checked if `ns.formulas` API existed (which it always does)
+- Did NOT check if user actually owns Formulas.exe ($5 billion program)
+- When formulas called without ownership, threw runtime errors
+- Errors were silently caught, resulting in 0 servers processed
+- Users saw empty results with no explanation
+
+**The Fix**:
+- ✅ Now uses `ns.fileExists("Formulas.exe", "home")` to verify actual ownership
+- ✅ Falls back to test call if fileExists unavailable
+- ✅ Displays clear, helpful error message if Formulas.exe not found
+- ✅ Suggests using `profit-scan-flex.js` as alternative
+- ✅ Added error logging in catch blocks for debugging
+
+**New Error Message**:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ERROR: This script requires Formulas.exe
+
+Formulas.exe must be purchased from the Dark Web for $5 billion.
+It provides exact calculations instead of estimates.
+
+Alternative: Use 'profit-scan-flex.js' for estimate-based analysis
+             (works without Formulas.exe)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Enhanced Error Handling**:
+- Player object validation before processing
+- Server object validation for formulas
+- Detailed error messages in catch blocks
+- Displays player hacking level on success
+
+**Documentation Updated**:
+- Enhanced script header with requirement details
+- Updated `docs/FORMULAS_ENHANCED_SCRIPTS.md` with requirement section
+- Updated `docs/SCRIPTS_USING_FORMULAS.md` with detection details
+- Clarified that API presence ≠ program ownership
+
+**Impact**:
+- Users without Formulas.exe get clear guidance instead of confusion
+- Proper direction to working alternative script
+- Better debugging when formulas fail
+- Prevents wasted time troubleshooting empty results
+
+---
+
 ## [1.8.11] - 2025-10-29 - Server Upgrade Messaging Enhancement 📝
 
 ### Enhanced Script - Replace Purchased Servers

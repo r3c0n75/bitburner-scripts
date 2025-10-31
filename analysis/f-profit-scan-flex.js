@@ -2,11 +2,17 @@
  * 
  * Formula-enhanced profit scanner with EXACT calculations (requires Formulas.exe)
  * 
+ * IMPORTANT: This script REQUIRES Formulas.exe to be purchased and installed.
+ *            - Cost: $5 billion from Dark Web
+ *            - Purchase: Requires TOR router access
+ *            - Alternative: Use profit-scan-flex.js for estimate-based analysis
+ * 
  * IMPROVEMENTS OVER profit-scan-flex.js:
  *  - Uses ns.formulas.hacking.* for EXACT calculations (no estimates)
  *  - Precise hack chance calculations at optimal and current states
  *  - Exact timing calculations with player stats
  *  - Perfect optimal state projections
+ *  - Zero estimation error (0% vs 10-20% error in regular version)
  * 
  * Usage:
  *   run analysis/f-profit-scan-flex.js [limit] [--save] [--all] [--optimal]
@@ -16,16 +22,46 @@
  *   run analysis/f-profit-scan-flex.js --optimal  # rank by EXACT potential (min security, max money)
  *   run analysis/f-profit-scan-flex.js --all      # show ALL servers including purchased servers
  *   run analysis/f-profit-scan-flex.js --save     # write profiler-overrides.json
+ * 
+ * Error Handling:
+ *  - Detects if Formulas.exe is actually owned (not just API presence)
+ *  - Clear error message if Formulas.exe not found
+ *  - Helpful suggestion to use profit-scan-flex.js instead
  */
 
 /** @param {NS} ns */
 export async function main(ns) {
   ns.disableLog("sleep");
 
-  // Check for Formulas.exe
-  if (!ns.formulas || !ns.formulas.hacking) {
-    ns.tprint("ERROR: This script requires Formulas.exe ($5 billion from Dark Web)");
-    ns.tprint("Use profit-scan-flex.js for the non-formulas version.");
+  // Check for Formulas.exe - need to actually test if it works, not just if API exists
+  let hasFormulas = false;
+  try {
+    // Check if the file exists on home
+    if (ns.fileExists("Formulas.exe", "home")) {
+      hasFormulas = true;
+    }
+  } catch (e) {
+    // If fileExists doesn't work, try calling a formula function
+    try {
+      const testServer = ns.getServer("home");
+      const testPlayer = ns.getPlayer();
+      ns.formulas.hacking.hackTime(testServer, testPlayer);
+      hasFormulas = true;
+    } catch (e2) {
+      hasFormulas = false;
+    }
+  }
+  
+  if (!hasFormulas) {
+    ns.tprint("━".repeat(71));
+    ns.tprint("ERROR: This script requires Formulas.exe");
+    ns.tprint("");
+    ns.tprint("Formulas.exe must be purchased from the Dark Web for $5 billion.");
+    ns.tprint("It provides exact calculations instead of estimates.");
+    ns.tprint("");
+    ns.tprint("Alternative: Use 'profit-scan-flex.js' for estimate-based analysis");
+    ns.tprint("             (works without Formulas.exe)");
+    ns.tprint("━".repeat(71));
     return;
   }
 
@@ -51,8 +87,13 @@ export async function main(ns) {
 
   // Get player stats for formula calculations
   const player = ns.getPlayer();
-
-  ns.tprint(`f-profit-scan-flex: Generating EXACT timing data using Formulas.exe...`);
+  
+  // Debug: verify player object
+  if (!player || typeof player !== 'object') {
+    ns.tprint("ERROR: Invalid player object returned from ns.getPlayer()");
+    return;
+  }
+  ns.tprint(`f-profit-scan-flex: Generating EXACT timing data using Formulas.exe (Player hacking: ${player.hacking || player.skills?.hacking || 'unknown'})...`);
 
   // Generate fresh overrides from reachable rooted hosts
   let overrides = {};
@@ -79,6 +120,13 @@ export async function main(ns) {
         if (onlyMoney && (!maxMoney || maxMoney <= 0)) continue;
 
         const server = ns.getServer(h);
+        
+        // Ensure server object has required properties for formulas
+        // Some versions of ns.getServer() may return incomplete objects
+        if (!server || typeof server !== 'object') {
+          ns.tprint(`Skipping ${h}: invalid server object`);
+          continue;
+        }
 
         // Use EXACT formulas with current server state
         const hackTimeMs = Math.round(ns.formulas.hacking.hackTime(server, player));
@@ -93,7 +141,7 @@ export async function main(ns) {
         result[h] = { hackTimeMs, growTimeMs, weakenTimeMs };
         count++;
       } catch (e) {
-        // skip problematic hosts
+        ns.tprint(`ERROR processing ${h}: ${e.message || e}`);
       }
     }
 
@@ -219,7 +267,7 @@ export async function main(ns) {
         threadUtilization
       });
     } catch (e) {
-      // ignore hosts we can't query
+      ns.tprint(`ERROR analyzing ${h}: ${e.message || e}`);
     }
   }
 
