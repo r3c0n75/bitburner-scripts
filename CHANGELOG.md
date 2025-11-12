@@ -2,6 +2,50 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.15] - 2025-11-12 - bitburner-update.js Path Fix 🔧
+
+### Fixed - bitburner-update.js Download Failures
+
+**Issue Reported**: Two scripts were failing to download via `bitburner-update.js`
+
+**Root Causes**:
+1. `f-estimate-production.js` was listed under `utils/` category but file actually exists in `analysis/` folder
+2. `close-all-stock.js` was referenced with incorrect filename `stock-close-all.js`
+
+**Files Fixed**:
+- ✅ `scripts/bitburner-update.js` - Corrected file paths and categories
+- ✅ `bitburner-remote-api/src/bitburner-update.js` - Same fixes
+- ✅ `bitburner-remote-api/dist/bitburner-update.js` - Same fixes (compiled version)
+
+**Documentation Updated** (9 files):
+- ✅ `SCRIPT_REFERENCE.md` - Updated paths from `utils/` to `analysis/`
+- ✅ `FORMULAS_ENHANCED_SCRIPTS.md` - Updated all usage examples
+- ✅ `SCRIPTS_USING_FORMULAS.md` - Updated script location references
+- ✅ `QUICK_REFERENCE.md` - Updated command examples
+- ✅ `STOCK_TRADING_GUIDE.md` - Updated filename references
+- ✅ `NEW_GAME_QUICKSTART.md` - Updated usage examples
+- ✅ `README.md` - Updated folder structure and examples
+- ✅ `DOCUMENTATION_INDEX.md` - Updated references
+- ✅ `PURCHASABLE_PROGRAMS_GUIDE.md` - Updated references
+
+**Result**:
+```bash
+# Before (FAILED):
+✗ utils/f-estimate-production.js - Download failed
+✗ stocks/stock-close-all.js - Download failed
+
+# After (SUCCESS):
+✓ analysis/f-estimate-production.js
+✓ stocks/close-all-stock.js
+```
+
+**Impact**:
+- Users can now successfully download all scripts via `bitburner-update.js --all`
+- All documentation consistently references correct paths and filenames
+- Zero breaking changes - existing users just need to re-run update script
+
+**Credit**: Thanks to GitHub user for reporting these download failures!
+
 ## [1.8.14] - 2025-11-12 - RAM Sharing Optimization 🚀
 
 ### Enhanced - share-ram.js

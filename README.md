@@ -766,6 +766,13 @@ run stocks/stock-monitor.js
 
 ## 🆕 What's New (For Returning Users)
 
+### Version 1.8.15 (November 12, 2025)
+**bitburner-update.js Path Fix** 🔧
+- Fixed download failures for `f-estimate-production.js` (moved from utils/ to analysis/)
+- Fixed download failure for `close-all-stock.js` (corrected filename)
+- Updated all documentation with correct paths and filenames
+- All scripts now download successfully via `bitburner-update.js`
+
 ### Version 1.8.13 (November 12, 2025)
 **Batch Scripts RAM Calculation Fix** 🔧
 - Fixed critical bug in `smart-batcher.js` and `simple-batcher.js`
@@ -869,8 +876,8 @@ Open source - use freely in your Bitburner gameplay!
 ---
 
 **Last Updated**: November 12, 2025  
-**Current Version**: 1.8.13  
-**Latest Feature**: Batch scripts RAM calculation fix for 100% deployment reliability
+**Current Version**: 1.8.15  
+**Latest Feature**: bitburner-update.js path fix for successful script downloads
 
 ## ✅ Version Compatibility
 
