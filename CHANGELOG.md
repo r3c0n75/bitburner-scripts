@@ -2,6 +2,50 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.14] - 2025-11-12 - RAM Sharing Optimization 🚀
+
+### Enhanced - share-ram.js
+
+**Updated Scripts**:
+- `utils/share-ram.js` - Optimized to use exactly 4.00GB RAM
+
+**The Problem**:
+- Original script used 4.05GB due to logging code (hostname tracking, runtime calculation, cycle counting, status prints)
+- Server RAM comes in multiples of 4GB (8GB, 16GB, 32GB, 64GB)
+- 4.05GB meant you could only run 1 instance on 8GB server (wasting ~3.95GB)
+- On 16GB server: only 3 instances fit (12.15GB used, 3.85GB wasted) instead of 4
+- Logging provided no actionable value - just informational stats
+
+**The Solution**:
+- ✅ Removed all logging code (hostname, timestamps, runtime tracking, cycle counting)
+- ✅ Script now uses **exactly 4.00GB RAM**
+- ✅ Kept essential functionality: `ns.share()` in infinite loop
+- ✅ Perfect memory utilization on all servers
+
+**Impact - Perfect RAM Utilization**:
+```
+8GB server:   1 instance → 2 instances  (100% efficiency)
+16GB server:  3 instances → 4 instances  (33% more capacity)
+32GB server:  6 instances → 8 instances  (33% more capacity)
+64GB server:  14 instances → 16 instances (14% more capacity)
+```
+
+**Benefits**:
+- 🎯 Zero RAM waste across your entire network
+- 📈 Up to 33% more faction reputation bonus capacity
+- 🧹 Cleaner logs (no unnecessary status messages)
+- ⚡ Marginally better performance (fewer operations)
+
+**Verification**:
+You can verify the script is running via:
+- Process list: `ps` or `run utils/list-procs.js`
+- Faction reputation multiplier in game UI
+- Server RAM usage display
+
+**Note**: If you need logging for debugging, you can still see when scripts start/stop via `deploy/deploy-share-all.js` output.
+
+**Credit**: Thanks to GitHub user for identifying this optimization opportunity!
+
 ## [1.8.13] - 2025-11-12 - Batch Scripts RAM Calculation Fix 🔧
 
 ### Fixed - smart-batcher.js & simple-batcher.js

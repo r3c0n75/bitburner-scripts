@@ -305,10 +305,10 @@ Previous version had timing issues causing some processes to survive. The enhanc
 **Usage**: `run utils/share-ram.js`
 **Features**:
 - Continuously calls `ns.share()` to maintain 10-second reputation bonus
-- Minimal RAM usage (1.6GB per thread)
+- **Optimized RAM usage: Exactly 4.00GB** - perfect for memory in multiples of 4GB
 - Can run on any server with free RAM
-- Logs status every 10 cycles (~100 seconds)
-**Note**: Use with `deploy/deploy-share-all.js` to deploy across entire network for maximum faction reputation gains
+- Minimal overhead for maximum efficiency
+**Note**: Use with `deploy/deploy-share-all.js` to deploy across entire network for maximum faction reputation gains. The 4GB optimization ensures perfect RAM utilization (e.g., 8GB = 2 instances, 16GB = 4 instances).
 
 ### test-formulas.js 🔮
 **Purpose**: Test Formulas.exe installation and functionality

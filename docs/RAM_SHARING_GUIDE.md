@@ -71,15 +71,11 @@ Total sharing threads: 200
 - **Available RAM**: Free RAM being used for sharing
 - **Total threads**: Your overall sharing capacity
 
-### share-ram.js Output
-```
-[home] Starting RAM sharing for faction reputation bonus...
-[home] Sharing RAM - Runtime: 10.5m, Cycles: 10
-[home] Sharing RAM - Runtime: 21.2m, Cycles: 20
-```
-
-- **Runtime**: How long the script has been sharing
-- **Cycles**: Number of share cycles completed (~10 seconds each)
+### share-ram.js Behavior
+The script runs silently in the background with minimal overhead. You can verify it's running by:
+- Checking your process list (`ps` or `utils/list-procs.js`)
+- Observing your faction reputation multiplier increase
+- Seeing RAM usage on the target server
 
 ## RAM Management
 
@@ -120,11 +116,15 @@ RAM sharing works alongside:
 
 ## Technical Details
 
-- **RAM Cost**: 1.6GB per thread for share-ram.js
+- **RAM Cost**: **Exactly 4.00GB** per instance (optimized for perfect memory utilization)
 - **Bonus Duration**: 10 seconds per share cycle
-- **Script Behavior**: Runs indefinitely until killed
+- **Script Behavior**: Runs silently and indefinitely until killed
 - **Network Scanning**: Uses recursive scan to find all servers
-- **Thread Calculation**: Automatically maximizes threads per server
+- **Thread Calculation**: Automatically maximizes instances per server
+- **Optimization**: Since server RAM comes in multiples of 4GB, this ensures zero waste:
+  - 8GB server = 2 instances (100% utilization)
+  - 16GB server = 4 instances (100% utilization)
+  - 64GB server = 16 instances (100% utilization)
 
 ## Example Scenarios
 
@@ -132,7 +132,7 @@ RAM sharing works alongside:
 You have 10 rooted servers with 100GB each = 1000GB total available
 ```bash
 run deploy/deploy-share-all.js
-# Output: ~625 total threads sharing across 10 servers
+# Output: ~250 total instances sharing across 10 servers (25 per server)
 # Massive reputation bonus!
 ```
 
