@@ -221,13 +221,18 @@ export async function main(ns) {
     let usedRam = ns.getServerUsedRam(h);
     let freeRam = Math.max(0, maxRam - usedRam);
 
-    const ramPerThread = ns.getScriptRam(hackScript, h);
+    // Get RAM cost for each script and use the maximum to ensure accurate thread calculation
+    const hackRam = ns.getScriptRam(hackScript, h);
+    const growRam = ns.getScriptRam(growScript, h);
+    const weakenRam = ns.getScriptRam(weakenScript, h);
+    const ramPerThread = Math.max(hackRam, growRam, weakenRam);
+    
     if (!ramPerThread || isNaN(ramPerThread) || ramPerThread <= 0) {
-      logError(`ERROR: cannot determine script RAM for ${hackScript} on ${h}.`);
+      logError(`ERROR: cannot determine script RAM on ${h}.`);
       continue;
     }
 
-    // Calculate total threads available
+    // Calculate total threads available using the largest script RAM cost
     let totalThreads = Math.floor(freeRam / ramPerThread);
     
     if (totalThreads < 3) {

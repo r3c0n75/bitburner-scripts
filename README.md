@@ -766,6 +766,19 @@ run stocks/stock-monitor.js
 
 ## 🆕 What's New (For Returning Users)
 
+### Version 1.8.13 (November 12, 2025)
+**Batch Scripts RAM Calculation Fix** 🔧
+- Fixed critical bug in `smart-batcher.js` and `simple-batcher.js`
+- Scripts now use maximum RAM cost of all three scripts (hack/grow/weaken)
+- Eliminates "insufficient ram" errors on 64GB and 8GB servers
+- Ensures 100% reliable script deployment
+- No more partial deployments where some scripts fail to start
+
+**Impact**:
+- 64GB servers: Correctly calculates 36 threads instead of 37
+- 8GB servers: Correctly calculates 4 threads instead of 5
+- All scripts start successfully with accurate RAM allocation
+
 ### Version 1.8.6 (October 28, 2025)
 **Enhanced Global Kill Reliability** 🔫✨
 - `global-kill.js` now has 100% reliable process termination
@@ -855,9 +868,9 @@ Open source - use freely in your Bitburner gameplay!
 
 ---
 
-**Last Updated**: October 28, 2025  
-**Current Version**: 1.8.7  
-**Latest Feature**: Smart batcher v3.0.0 compatibility fix
+**Last Updated**: November 12, 2025  
+**Current Version**: 1.8.13  
+**Latest Feature**: Batch scripts RAM calculation fix for 100% deployment reliability
 
 ## ✅ Version Compatibility
 

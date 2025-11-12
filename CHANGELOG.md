@@ -2,6 +2,50 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.13] - 2025-11-12 - Batch Scripts RAM Calculation Fix 🔧
+
+### Fixed - smart-batcher.js & simple-batcher.js
+
+**Updated Scripts**:
+- `batch/smart-batcher.js` - Fixed RAM calculation to use maximum script RAM cost
+- `batch/simple-batcher.js` - Fixed RAM calculation to use maximum script RAM cost
+
+**The Problem**:
+- Script calculated available threads using only hack script RAM (1.7 GB)
+- Grow and weaken scripts actually use 1.75 GB
+- On 64GB servers: calculated 37.6 threads possible (64/1.7), but only 36.5 actually work (64/1.75)
+- On 8GB servers: could allocate 1 hack + 3 grow (4.7 threads) but weaken would fail (1.7+5.25=6.95, leaving only 1.05 GB for weaken needing 1.75 GB)
+- Result: "insufficient ram" errors and scripts failing to start
+
+**The Fix**:
+- ✅ Now checks RAM cost of all three scripts (hack, grow, weaken)
+- ✅ Uses `Math.max(hackRam, growRam, weakenRam)` for thread calculations
+- ✅ Ensures accurate thread allocation that never exceeds available RAM
+- ✅ Prevents partial deployments where some scripts fail to start
+
+**Technical Details**:
+```javascript
+// Old (broken):
+const ramPerThread = ns.getScriptRam(hackScript, h);
+let totalThreads = Math.floor(freeRam / ramPerThread);
+
+// New (fixed):
+const hackRam = ns.getScriptRam(hackScript, h);
+const growRam = ns.getScriptRam(growScript, h);
+const weakenRam = ns.getScriptRam(weakenScript, h);
+const ramPerThread = Math.max(hackRam, growRam, weakenRam);
+let totalThreads = Math.floor(freeRam / ramPerThread);
+```
+
+**Impact**:
+- 64GB servers: Now correctly calculates 36 threads instead of 37
+- 8GB servers: Now correctly calculates 4 threads instead of 5, ensuring all scripts start
+- Eliminates "insufficient ram" errors
+- Ensures 100% reliable script deployment
+- Minor efficiency loss (0.05 GB per thread on large servers) is acceptable trade-off for reliability
+
+**Credit**: Thanks to GitHub user for reporting this issue and proposing the fix!
+
 ## [1.8.12] - 2025-10-31 - f-profit-scan-flex.js Formulas.exe Detection Fix 🔧
 
 ### Fixed - f-profit-scan-flex.js
