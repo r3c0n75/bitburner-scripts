@@ -58,14 +58,14 @@ run analysis/f-profit-scan-flex.js 50        # show top 50
 
 ### 2. f-estimate-production.js 💰 EXACT INCOME PREDICTION
 
-**Location**: `utils/f-estimate-production.js`
+**Location**: `analysis/f-estimate-production.js`
 
 **Purpose**: Calculate **guaranteed accurate** production rates before deploying
 
 **Usage**:
 ```bash
-run utils/f-estimate-production.js joesguns    # exact production estimate
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js joesguns    # exact production estimate
+run analysis/f-estimate-production.js silver-helix
 ```
 
 **What's Different from estimate-production.js**:
@@ -165,7 +165,7 @@ Output shows **exact fleet potential** with perfect calculations.
 
 ### Step 2: Estimate Production (EXACT)
 ```bash
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js silver-helix
 ```
 See **guaranteed accurate** income rates before deploying.
 

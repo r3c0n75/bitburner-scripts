@@ -425,7 +425,8 @@ scripts/
 │   ├── f-profit-scan-flex.js  🔮 EXACT (Formulas.exe)
 │   ├── profit-scan.js         Basic scanner
 │   ├── production-monitor.js  Track production
-│   └── estimate-production.js Production estimates
+│   ├── estimate-production.js Production estimates
+│   └── f-estimate-production.js 🔮 EXACT (Formulas.exe)
 ├── config/            # Configuration files
 │   └── default-targets.js     Default hacking targets
 ├── deploy/            # Deployment scripts
@@ -444,10 +445,9 @@ scripts/
 │   ├── stock-trader-momentum.js Momentum trading (no 4S!) 🆕
 │   ├── stock-momentum-analyzer.js Forecast intelligence analyzer 🆕✨
 │   ├── stock-monitor.js       Portfolio monitoring (realized P/L) 🆕
-│   ├── stock-close-all.js     Portfolio liquidation 🆕
+│   ├── close-all-stock.js     Portfolio liquidation 🆕
 │   └── check-stock-api.js     Verify TIX API access
 ├── utils/             # Utilities
-│   ├── f-estimate-production.js 🔮 EXACT (Formulas.exe)
 │   ├── global-kill.js         Kill all running scripts
 │   ├── list-procs.js          List running processes
 │   ├── list-pservs.js         List purchased servers
@@ -599,7 +599,7 @@ run stocks/stock-close-all.js --confirm # Actually close positions
 run analysis/f-profit-scan-flex.js --optimal
 
 # EXACT production predictions (100% accurate)
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js silver-helix
 ```
 
 **Why buy it?** No more switching targets only to find they're worse. Perfect information = confident decisions.

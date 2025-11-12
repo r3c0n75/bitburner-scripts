@@ -46,7 +46,8 @@ export async function main(ns) {
     ],
     
     analysis: [
-      { file: "estimate-production.js", folder: folders.analysis }
+      { file: "estimate-production.js", folder: folders.analysis },
+      { file: "f-estimate-production.js", folder: folders.analysis }
     ],
     
     utils: [
@@ -54,8 +55,7 @@ export async function main(ns) {
       { file: "list-procs.js", folder: folders.utils },
       { file: "list-pservs.js", folder: folders.utils },
       { file: "server-info.js", folder: folders.utils },
-      { file: "share-ram.js", folder: folders.utils },
-      { file: "f-estimate-production.js", folder: folders.utils }
+      { file: "share-ram.js", folder: folders.utils }
     ],
     
     deploy: [
@@ -77,7 +77,7 @@ export async function main(ns) {
       { file: "stock-trader-momentum.js", folder: folders.stocks },
       { file: "stock-momentum-analyzer.js", folder: folders.stocks },
       { file: "stock-monitor.js", folder: folders.stocks },
-      { file: "stock-close-all.js", folder: folders.stocks }
+      { file: "close-all-stock.js", folder: folders.stocks }
     ]
   };
 

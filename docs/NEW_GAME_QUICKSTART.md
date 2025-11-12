@@ -399,7 +399,7 @@ run analysis/f-profit-scan-flex.js --optimal
 #### f-estimate-production.js - Guaranteed Accurate Predictions
 ```bash
 # Instead of estimate-production.js, use this for PERFECT predictions
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js silver-helix
 
 # Shows both current AND optimal state with exact numbers
 # Predictions match actual production perfectly

@@ -406,15 +406,15 @@ OMGA @ $2.11k  | Momentum: 4↑ 0↓ | Change: +0.64%
 
 ---
 
-### 7. stock-close-all.js - Portfolio Liquidation 🆕
+### 7. close-all-stock.js - Portfolio Liquidation 🆕
 **Purpose**: Instantly close ALL stock positions and liquidate entire portfolio
 
 ```bash
 # Preview what would be sold (safe - no execution)
-run stocks/stock-close-all.js
+run stocks/close-all-stock.js
 
 # Actually close all positions (requires --confirm flag)
-run stocks/stock-close-all.js --confirm
+run stocks/close-all-stock.js --confirm
 ```
 
 **Features**:
@@ -447,7 +447,7 @@ Win Rate: 80.0%
 ════════════════════════════════════════════════════════════════════
 
 ⚠️  SAFETY: Add --confirm flag to execute liquidation
-Example: run stocks/stock-close-all.js --confirm
+Example: run stocks/close-all-stock.js --confirm
 ```
 
 **Requirements**:

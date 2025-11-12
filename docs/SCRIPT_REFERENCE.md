@@ -323,7 +323,7 @@ Previous version had timing issues causing some processes to survive. The enhanc
 
 ### f-estimate-production.js 🔮
 **Purpose**: EXACT production rate calculations using Formulas.exe
-**Usage**: `run utils/f-estimate-production.js [target]`
+**Usage**: `run analysis/f-estimate-production.js [target]`
 **Features**:
 - Perfect accuracy using `ns.formulas.hacking.*` API
 - Shows both current AND optimal state projections
@@ -586,7 +586,7 @@ For comprehensive documentation on the complete 7-script stock trading suite, se
 - `stock-trader-momentum.js` - Momentum trading (no 4S Data required!)
 - `stock-momentum-analyzer.js` - Preview with forecast intelligence
 - `stock-monitor.js` - Real-time portfolio dashboard with realized P/L
-- `stock-close-all.js` - Portfolio liquidation with safety confirmation
+- `close-all-stock.js` - Portfolio liquidation with safety confirmation
 
 ---
 

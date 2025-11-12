@@ -27,7 +27,7 @@ run analysis/production-monitor.js 60
 run analysis/f-profit-scan-flex.js --optimal
 
 # EXACT production predictions (zero error!)
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js silver-helix
 
 # See FORMULAS_ENHANCED_SCRIPTS.md for details
 ```
@@ -92,7 +92,7 @@ utils/list-procs.js        # List processes
 utils/list-pservs.js       # List pservs
 utils/server-info.js       # Server details
 utils/estimate-production.js   # Production estimates
-utils/f-estimate-production.js # 🔮 EXACT production (Formulas.exe)
+analysis/f-estimate-production.js # 🔮 EXACT production (Formulas.exe)
 utils/share-ram.js         # Share RAM for faction rep bonus
 utils/test-formulas.js     # Test Formulas.exe installation
 ```
@@ -116,7 +116,7 @@ stocks/stock-trader-advanced.js  # Advanced trading with dynamic sizing
 stocks/stock-trader-momentum.js  # Momentum trading: Ride rallies (NO 4S Data!) 🆕
 stocks/stock-momentum-analyzer.js # Preview with forecast intelligence (auto-detects 4S) 🆕✨
 stocks/stock-monitor.js          # Real-time monitor: forecasts + volatility + realized P/L 🆕✨
-stocks/stock-close-all.js        # Close ALL positions & liquidate portfolio 🆕
+stocks/close-all-stock.js        # Close ALL positions & liquidate portfolio 🆕
 ```
 
 ## 📊 Key Improvements Reference

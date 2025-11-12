@@ -45,7 +45,7 @@ These scripts will not work without Formulas.exe installed. They check for `ns.f
 ---
 
 ### 3. f-estimate-production.js 💰
-**Location**: `utils/f-estimate-production.js`  
+**Location**: `analysis/f-estimate-production.js`  
 **Purpose**: Guaranteed accurate production predictions  
 **Formulas Used**:
 - `ns.formulas.hacking.hackTime(server, player)` - Exact hack duration
@@ -103,7 +103,7 @@ run utils/test-formulas.js
 run analysis/f-profit-scan-flex.js --optimal
 
 # Step 3: Get EXACT production predictions
-run utils/f-estimate-production.js silver-helix
+run analysis/f-estimate-production.js silver-helix
 
 # Step 4: Deploy (existing smart-batcher works great)
 run batch/smart-batcher.js silver-helix
