@@ -2,6 +2,7 @@
 
 **Date**: November 12, 2025  
 **Issue**: Bug in `bitburner-update.js` causing failed downloads for `f-estimate-production.js` and `stock-close-all.js`
+
 **Reported By**: SkellyVamps (Issue #3: f-estimate-production.js )  
 **Status**: ✅ Fixed
 
