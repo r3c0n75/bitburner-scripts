@@ -4,11 +4,26 @@
  * Usage:
  *   run batch-manager.js [target] [hackPercent] [multiplier] [pservHost] [flags...]
  *
+ * Parameters:
+ *   target       - Server to hack (default: "joesguns")
+ *   hackPercent  - Percentage to steal per batch (default: 0.05 = 5%)
+ *                  This gets passed to smart-batcher.js for thread ratio calculations
+ *   multiplier   - Timing multiplier for deployment interval (default: 1.25)
+ *                  Controls how long to wait between smart-batcher deployments
+ *                  This stays with batch-manager and is NOT passed to smart-batcher
+ *   pservHost    - Server to run smart-batcher on (default: "home")
+ *
+ * Parameter Flow:
+ *   batch-manager uses: target, hackPercent (default: 0.05), multiplier (default: 1.25)
+ *   smart-batcher receives: target, hackPercent (+ flags)
+ *   Note: multiplier is batch-manager's internal scheduling parameter only
+ *
  * Examples:
- *   run batch-manager.js joesguns 0.05 1.25 home --quiet
- *   run batch-manager.js joesguns --quiet                 # flags tolerated anywhere
- *   run batch-manager.js --quiet                           # uses defaults, quiet
- *   run batch-manager.js --quiet --no-root                # disable auto-rooting
+ *   run batch-manager.js                                   # all defaults
+ *   run batch-manager.js joesguns --quiet                  # target + defaults, quiet
+ *   run batch-manager.js joesguns 0.10                     # 10% hack, default multiplier
+ *   run batch-manager.js joesguns 0.05 1.25 home --quiet   # all explicit
+ *   run batch-manager.js --quiet --no-root                 # defaults, disable auto-rooting
  *
  * Features:
  *   - Periodically scans and roots new servers (every 10 cycles by default)

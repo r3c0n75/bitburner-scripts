@@ -160,5 +160,5 @@ export async function main(ns) {
   ns.tprint("✓ Batch-manager should auto-detect the upgraded servers on its next cycle.");
   ns.tprint("  If it doesn't restart automatically, you can manually restart:");
   ns.tprint("  1. Kill all processes: run utils/global-kill.js");
-  ns.tprint("  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet");
+  ns.tprint("  2. Restart batch manager: run batch/batch-manager.js joesguns --quiet");
 }

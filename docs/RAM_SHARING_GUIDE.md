@@ -141,7 +141,7 @@ run deploy/deploy-share-all.js
 - 5 servers running RAM sharing (reputation)
 ```bash
 # Deploy batching to production servers
-run batch/batch-manager.js phantasy 0.05 1.25 home --quiet
+run batch/batch-manager.js phantasy --quiet
 
 # Deploy sharing to remaining servers
 # (manually select servers or modify deploy-share-all.js)

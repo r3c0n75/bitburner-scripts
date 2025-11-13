@@ -361,8 +361,8 @@ run deploy/replace-pservs-no-copy.js 128       # Upgrade to 128GB
 
 **Important**: Batch-manager should automatically detect the upgraded servers on its next cycle. If it doesn't restart automatically, you can manually restart:
 ```bash
-run utils/global-kill.js                                           # Kill all processes
-run batch/batch-manager.js joesguns 0.05 1.25 home --quiet        # Restart batch manager
+run utils/global-kill.js                                 # Kill all processes
+run batch/batch-manager.js joesguns --quiet              # Restart batch manager (uses defaults)
 ```
 
 **Note**: Does not preserve scripts on servers (they're redeployed automatically by batch-manager)

@@ -145,7 +145,7 @@ If you don't have enough capital yet, use these strategies:
 
 ```bash
 # Smart batching - Build capital fast
-run batch/batch-manager.js [target] 0.05 1.25 home --quiet
+run batch/batch-manager.js [target] --quiet
 
 # Automated expansion
 run deploy/auto-expand.js

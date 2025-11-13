@@ -187,7 +187,7 @@ run deploy/replace-pservs-no-copy.js 128          # Upgrades all servers
 # Batch-manager should auto-detect the upgraded servers
 # If it doesn't restart automatically, manually restart:
 run utils/global-kill.js                          # Kill all processes
-run batch/batch-manager.js joesguns 0.05 1.25 home --quiet  # Restart batch manager
+run batch/batch-manager.js joesguns --quiet       # Restart batch manager (uses defaults)
 ```
 
 ### Monitor Performance

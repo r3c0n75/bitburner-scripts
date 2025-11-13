@@ -204,7 +204,7 @@ Alternative: Use 'profit-scan-flex.js' for estimate-based analysis
 ```
 ⚠️  IMPORTANT: Restart your batch system to use the new RAM!
   1. Kill all processes: run utils/global-kill.js
-  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+  2. Restart batch manager: run batch/batch-manager.js joesguns --quiet
 ```
 
 **New Message**:
@@ -212,7 +212,7 @@ Alternative: Use 'profit-scan-flex.js' for estimate-based analysis
 ✓ Batch-manager should auto-detect the upgraded servers on its next cycle.
   If it doesn't restart automatically, you can manually restart:
   1. Kill all processes: run utils/global-kill.js
-  2. Restart batch manager: run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+  2. Restart batch manager: run batch/batch-manager.js joesguns --quiet
 ```
 
 **Why This Matters**:

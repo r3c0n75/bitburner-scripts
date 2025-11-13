@@ -176,7 +176,7 @@ When you install augmentations, you restart from scratch but with enhanced stats
 2. **Advanced Batch Management**
    ```bash
    # Once you have 3+ servers, use batch manager
-   run batch-manager.js joesguns 0.05 1.25 home --quiet
+   run batch-manager.js joesguns --quiet
    ```
 
 3. **Continuous Optimization**
@@ -299,7 +299,7 @@ run deploy/auto-expand.js joesguns
 **Best for**: Set-and-forget automation with 490x performance + auto-rooting
 
 ```bash
-run batch/batch-manager.js joesguns 0.05 1.25 home --quiet
+run batch/batch-manager.js joesguns --quiet
 # Disable auto-rooting if you prefer manual control:
 run batch/batch-manager.js joesguns --quiet --no-root
 ```
@@ -340,7 +340,7 @@ batch-manager.js        →  Continuous management + auto-rooting + advanced bat
 **Typical Workflow**:
 
 **Option 1: Quick Start (Recommended)**
-1. **Run continuously**: `batch-manager.js joesguns 0.05 1.25 home --quiet`
+1. **Run continuously**: `batch-manager.js joesguns --quiet`
    - Automatically roots new servers as you level up
    - Deploys smart-batcher with 490x performance
    - All-in-one solution
