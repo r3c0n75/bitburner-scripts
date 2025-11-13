@@ -1,6 +1,11 @@
 # bitburner-update.js Path Fix
 
-## Issue Report
+**Date**: November 12, 2025  
+**Issue**: Bug in `bitburner-update.js` causing failed downloads for `f-estimate-production.js` and `stock-close-all.js`
+**Reported By**: SkellyVamps (Issue #3: f-estimate-production.js )  
+**Status**: ✅ Fixed
+
+## Problem Description
 User reported two download failures in `bitburner-update.js`:
 1. `✗ utils/f-estimate-production.js - Download failed`
 2. `✗ stocks/stock-close-all.js - Download failed`
