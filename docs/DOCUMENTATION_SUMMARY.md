@@ -113,12 +113,13 @@ bitburner-scripts/
     │   ├── DEPLOYMENT_QUICKSTART.md   # Quick deploy guide
     │   └── official_remote_api.md     # Remote API basics
     │
+    ├── DOCUMENTATION_INDEX.md          # 📇 Main navigation & doc index
+    ├── DOCUMENTATION_SUMMARY.md        # 📋 Complete doc overview (this file)
+    │
     ├── Reference/                      # 📗 Quick lookups & core docs
     │   ├── SCRIPT_REFERENCE.md        # Complete script documentation
     │   ├── QUICK_REFERENCE.md         # Command quick reference
-    │   ├── PROJECT_STRUCTURE.md       # Directory organization
-    │   ├── DOCUMENTATION_INDEX.md     # Complete doc index
-    │   └── DOCUMENTATION_SUMMARY.md   # This file
+    │   └── PROJECT_STRUCTURE.md       # Directory organization
     │
     ├── Feature Guides/                 # 📙 Specific systems & features
     │   ├── FORMULAS_ENHANCED_SCRIPTS.md
@@ -161,7 +162,7 @@ bitburner-scripts/
 
 **Technical**: Version History/Enhancements/ERROR_HANDLING_IMPROVEMENTS.md → Version History/DETAILED_CHANGES.md
 
-**Reference**: Reference/DOCUMENTATION_INDEX.md → Specific docs
+**Reference**: DOCUMENTATION_INDEX.md → Specific docs
 
 **History**: CHANGELOG.md → Version History/DETAILED_CHANGES.md
 
