@@ -2,7 +2,7 @@
 
 **Date**: November 12, 2025  
 **Issue**: smart-batcher.js and simple-batcher.js RAM calculation bug  
-**Reported By**: GitHub user (Issue)  
+**Reported By**: Bertie690 (Issue #1: smart-batcher.js script exclusively uses hack script RAM for calculations, resulting in script errors)  
 **Status**: ✅ Fixed
 
 ---
@@ -148,36 +148,9 @@ The reliability gain far outweighs the minor efficiency loss.
 
 ---
 
-## GitHub Response Template
-
-```markdown
-Thank you for reporting this issue! You're absolutely correct - this was a critical bug causing deployment failures on both 64GB and 8GB servers.
-
-## Fixed in v1.8.13 ✅
-
-I've implemented your suggested fix in both `smart-batcher.js` and `simple-batcher.js`. The scripts now use the maximum RAM cost of all three scripts (hack/grow/weaken) for thread calculations, ensuring 100% reliable deployment.
-
-### Changes:
-- ✅ Both batch scripts now check RAM for all three scripts
-- ✅ Uses `Math.max(hackRam, growRam, weakenRam)` for calculations  
-- ✅ Eliminates "insufficient ram" errors completely
-- ✅ Prevents partial deployments (1/3/0 issue on 8GB servers)
-
-### Impact:
-- 64GB servers: Correctly calculates 36 threads (not 37)
-- 8GB servers: Correctly calculates 4 threads with all scripts starting
-- Minor efficiency loss (~2.9%) is acceptable for guaranteed reliability
-
-The fix is now live in the main branch. Thanks again for the detailed report and suggested solution! 🎉
-
-Feel free to open a pull request if you'd like to contribute other improvements!
-```
-
----
-
 ## Credit
 
-**Original Report**: GitHub user  
+**Original Report**: Bertie690  
 **Root Cause Analysis**: Identified RAM discrepancy between hack (1.7 GB) and grow/weaken (1.75 GB) scripts  
 **Suggested Fix**: Use maximum RAM cost of all three scripts  
 **Implementation**: Applied fix to both smart-batcher.js and simple-batcher.js with comprehensive testing
