@@ -56,12 +56,12 @@ All documentation has been created and updated to reflect the comprehensive chan
 
 ### User Guides (2 files)
 
-8. **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)** ✅ EXISTING
+8. **[docs/Getting Started Guides/GETTING_STARTED.md](Getting Started Guides/GETTING_STARTED.md)** ✅ EXISTING
    - Step-by-step setup
    - Game stage progression
    - Troubleshooting guide
 
-9. **[docs/SCRIPT_REFERENCE.md](docs/SCRIPT_REFERENCE.md)** ✅ EXISTING
+9. **[docs/SCRIPT_REFERENCE.md](SCRIPT_REFERENCE.md)** ✅ EXISTING
    - Complete script documentation
    - Usage examples for all scripts
    - Best practices
@@ -103,47 +103,84 @@ All documentation has been created and updated to reflect the comprehensive chan
 ```
 bitburner-scripts/
 ├── README.md                           # Main overview + version history
-├── CHANGELOG.md                        # Complete version history (NEW)
-├── PROJECT_STRUCTURE.md               # Directory organization
-├── INITIALIZATION_COMPLETE.md         # Project status (UPDATED)
-├── DOCUMENTATION_SUMMARY.md           # This file (NEW)
+├── CHANGELOG.md                        # Complete version history
 │
 └── docs/
-    ├── GETTING_STARTED.md             # User guide
-    ├── SCRIPT_REFERENCE.md            # Script documentation
-    ├── ERROR_HANDLING_IMPROVEMENTS.md # Error handling (NEW)
-    ├── DETAILED_CHANGES.md            # Script changes (NEW)
-    └── DOCUMENTATION_INDEX.md         # Doc index (NEW)
+    ├── Getting Started/                # 📘 Entry points for new users
+    │   ├── GETTING_STARTED.md         # Step-by-step setup guide
+    │   ├── NEW_GAME_QUICKSTART.md     # Fast recovery guide
+    │   ├── BeginnersGuide.md          # Absolute beginners
+    │   ├── DEPLOYMENT_QUICKSTART.md   # Quick deploy guide
+    │   └── official_remote_api.md     # Remote API basics
+    │
+    ├── Reference/                      # 📗 Quick lookups & core docs
+    │   ├── SCRIPT_REFERENCE.md        # Complete script documentation
+    │   ├── QUICK_REFERENCE.md         # Command quick reference
+    │   ├── PROJECT_STRUCTURE.md       # Directory organization
+    │   ├── DOCUMENTATION_INDEX.md     # Complete doc index
+    │   └── DOCUMENTATION_SUMMARY.md   # This file
+    │
+    ├── Feature Guides/                 # 📙 Specific systems & features
+    │   ├── FORMULAS_ENHANCED_SCRIPTS.md
+    │   ├── SCRIPTS_USING_FORMULAS.md
+    │   ├── PURCHASABLE_PROGRAMS_GUIDE.md
+    │   ├── RAM_SHARING_GUIDE.md
+    │   ├── STOCK_TRADING_GUIDE.md
+    │   └── DockerGuide.md
+    │
+    ├── Deployment/                     # 🚀 Setup & deployment methods
+    │   ├── REMOTE_API_SETUP.md
+    │   ├── REMOTE_API_DAILY_WORKFLOW.md
+    │   ├── GITHUB_DEPLOYMENT_GUIDE.md
+    │   ├── GITHUB_DEPLOYMENT_SUMMARY.md
+    │   ├── POWERSHELL_DEPLOYMENT_SUMMARY.md
+    │   └── POWERSHELL_GITHUB_WORKFLOW.md
+    │
+    ├── Version History/                # 📝 Changes & releases
+    │   ├── DETAILED_CHANGES.md
+    │   ├── INITIALIZATION_COMPLETE.md
+    │   ├── PROJECT_COMPLETE.md
+    │   └── Enhancements/
+    │       ├── ERROR_HANDLING_IMPROVEMENTS.md
+    │       ├── GLOBAL_KILL_ENHANCEMENT_SUMMARY.md
+    │       ├── HOME_BATCHER_ENHANCEMENTS.md
+    │       ├── PROFIT_SCAN_FLEX_ENHANCEMENT.md
+    │       └── PROFIT_SCAN_OPTIMAL_MODE.md
+    │
+    └── Bug Fixes/                      # 🔧 Troubleshooting & fixes
+        ├── BATCH_RAM_CALCULATION_FIX.md
+        ├── BITBURNER_UPDATE_FIX.md
+        └── RAM_SHARING_OPTIMIZATION.md
 ```
 
 ## 🔍 Quick Navigation
 
 ### By Purpose
 
-**Learning**: README.md → GETTING_STARTED.md → SCRIPT_REFERENCE.md
+**Learning**: README.md → Getting Started/GETTING_STARTED.md → Reference/SCRIPT_REFERENCE.md
 
-**Technical**: ERROR_HANDLING_IMPROVEMENTS.md → DETAILED_CHANGES.md
+**Technical**: Version History/Enhancements/ERROR_HANDLING_IMPROVEMENTS.md → Version History/DETAILED_CHANGES.md
 
-**Reference**: DOCUMENTATION_INDEX.md → Specific docs
+**Reference**: Reference/DOCUMENTATION_INDEX.md → Specific docs
 
-**History**: CHANGELOG.md → DETAILED_CHANGES.md
+**History**: CHANGELOG.md → Version History/DETAILED_CHANGES.md
 
 ### By User Type
 
 **New Users**:
 1. README.md (overview)
-2. GETTING_STARTED.md (setup)
-3. SCRIPT_REFERENCE.md (usage)
+2. Getting Started/GETTING_STARTED.md (setup)
+3. Reference/SCRIPT_REFERENCE.md (usage)
 
 **Experienced Users**:
-1. SCRIPT_REFERENCE.md (quick lookup)
-2. ERROR_HANDLING_IMPROVEMENTS.md (debugging)
-3. DETAILED_CHANGES.md (implementation)
+1. Reference/SCRIPT_REFERENCE.md (quick lookup)
+2. Version History/Enhancements/ERROR_HANDLING_IMPROVEMENTS.md (debugging)
+3. Version History/DETAILED_CHANGES.md (implementation)
 
 **Developers**:
-1. DETAILED_CHANGES.md (code changes)
-2. ERROR_HANDLING_IMPROVEMENTS.md (patterns)
-3. PROJECT_STRUCTURE.md (architecture)
+1. Version History/DETAILED_CHANGES.md (code changes)
+2. Version History/Enhancements/ERROR_HANDLING_IMPROVEMENTS.md (patterns)
+3. Reference/PROJECT_STRUCTURE.md (architecture)
 
 ## 📝 What's Documented
 
