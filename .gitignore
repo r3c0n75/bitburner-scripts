@@ -29,8 +29,19 @@ package-lock.json
 # Keep all JavaScript files
 !*.js
 
-# Keep all markdown documentation
+# Ignore all markdown files first
+*.md
+
+# Keep all other markdown documentation (un-ignore non-Claude docs)
 !*.md
+
+# Claude-related documentation (not synced to repo - explicitly ignored after un-ignore)
+# These patterns must come AFTER !*.md to take precedence
+**/*claude*.md
+**/*Claude*.md
+**/*CLAUDE*.md
+docs/**/CLAUDE_CODE*.md
+docs/**/claude-code*.md
 
 # Keep all directories
 !*/
