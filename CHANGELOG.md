@@ -10,28 +10,41 @@ All notable changes to this Bitburner script collection are documented in this f
 - `batch/smart-batcher.js` - Fixed deployment attempts on servers with insufficient RAM
 
 **The Problem**:
-- Script attempted to deploy to servers with 0 RAM or insufficient RAM for minimum threads
-- `Math.max(1, ...)` forced at least 1 thread per script even when RAM couldn't fit all three
-- Validation loop couldn't reduce threads below 1, leaving invalid allocations
-- Result: Multiple "ERROR: failed to start" messages for servers with insufficient RAM
+- Claude Code's PR improved RAM efficiency with weighted ratio-based calculation
+- However, the sophisticated calculation attempted deployments on servers with insufficient RAM
+- `Math.max(1, ...)` in the thread calculation (lines 243-245) forced at least 1 thread per script
+- When `scale` was low (e.g., `scale = 2` on 4GB server), it calculated `h1/g1/w1` needing 5.2GB
+- Validation loop (lines 249-259) couldn't reduce threads below 1, so it exited without catching the error
+- Missing pre-check allowed 0 RAM servers to proceed to deployment
+- Result: Multiple "ERROR: failed to start" messages on low-RAM servers
 
 **Example Failures**:
 ```bash
+# Server with 0 RAM - no pre-check to skip it
 darkweb: 0.00GB free => 3 threads => h1/g1/w1
 ERROR: failed to start core/attack-weaken.js on darkweb
 ERROR: failed to start core/attack-grow.js on darkweb
 ERROR: failed to start core/attack-hack.js on darkweb
 
+# Server with insufficient RAM - Math.max(1, ...) forces threads, validation loop exits
 n00dles: 4.00GB free => 3 threads => h1/g1/w1
 ✓ Started core/attack-weaken.js on n00dles (1 threads, pid 821)
 ✓ Started core/attack-grow.js on n00dles (1 threads, pid 822)
 ERROR: failed to start core/attack-hack.js on n00dles
+# (Needed 5.2GB but only had 4.0GB, first two scripts consumed 3.5GB)
 ```
 
-**The Fix**:
-- ✅ Added pre-check: Skip servers with RAM below minimum needed for any single script
-- ✅ Added post-check: Verify final thread allocation doesn't exceed available RAM
+**Claude Code's PR Changes** (introduced the issue):
+- Replaced simple max-RAM calculation with sophisticated weighted ratio-based calculation
+- Used `ramPerScaleUnit = (hackRatio × hackRam) + (growRatio × growRam) + (weakenRatio × weakenRam)`
+- Added verification loop to handle edge cases from rounding and `Math.max(1, ...)`
+- More efficient RAM utilization but lacked pre-deployment validation
+
+**The Fix** (v1.8.16):
+- ✅ Added pre-check: Skip servers with RAM below minimum needed for any single script (line 234-239)
+- ✅ Added post-check: Verify final thread allocation doesn't exceed available RAM (line 268-271)
 - ✅ Enhanced error messages showing required vs available RAM
+- ✅ Prevents the sophisticated calculation from attempting impossible deployments
 
 **Technical Implementation**:
 ```javascript
@@ -62,7 +75,9 @@ n00dles: insufficient RAM for minimum threads (need 5.20GB, have 4.00GB) - Skipp
 - ✅ Prevents partial deployments (some scripts succeed, others fail)
 - ✅ More professional output with proper validation
 
-**Credit**: Thanks to GitHub user for discovering this issue during PR testing!
+**Resolves**: [GitHub Issue #5](https://github.com/r3c0n75/bitburner-scripts/issues/5) - smart-batcher thread count overshoots
+
+**Credit**: Thanks to [@thomascury](https://github.com/thomascury) for reporting this issue!
 
 ---
 
