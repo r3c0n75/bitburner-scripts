@@ -221,30 +221,50 @@ export async function main(ns) {
     let usedRam = ns.getServerUsedRam(h);
     let freeRam = Math.max(0, maxRam - usedRam);
 
-    // Get RAM cost for each script and use the maximum to ensure accurate thread calculation
+    // Get RAM cost for each script
     const hackRam = ns.getScriptRam(hackScript, h);
     const growRam = ns.getScriptRam(growScript, h);
     const weakenRam = ns.getScriptRam(weakenScript, h);
-    const ramPerThread = Math.max(hackRam, growRam, weakenRam);
-    
-    if (!ramPerThread || isNaN(ramPerThread) || ramPerThread <= 0) {
+
+    if (!hackRam || !growRam || !weakenRam || isNaN(hackRam) || isNaN(growRam) || isNaN(weakenRam)) {
       logError(`ERROR: cannot determine script RAM on ${h}.`);
       continue;
     }
 
-    // Calculate total threads available using the largest script RAM cost
-    let totalThreads = Math.floor(freeRam / ramPerThread);
-    
-    if (totalThreads < 3) {
-      log(`${h}: insufficient RAM for minimum threads (need 3, have ${totalThreads}) - Skipping.`);
+    // Calculate thread allocation based on available RAM and ratios
+    // We need to solve for a scaling factor that maximizes threads while staying within RAM
+    // Total RAM = hackThreads * hackRam + growThreads * growRam + weakenThreads * weakenRam
+    // where hackThreads = scale * hackRatio, growThreads = scale * growRatio, etc.
+    // So: freeRam = scale * (hackRatio * hackRam + growRatio * growRam + weakenRatio * weakenRam)
+    const ramPerScaleUnit = (hackRatio * hackRam) + (growRatio * growRam) + (weakenRatio * weakenRam);
+    const scale = Math.floor(freeRam / ramPerScaleUnit);
+
+    // Calculate individual thread counts, ensuring at least 1 thread each
+    let hackThreads = Math.max(1, Math.floor(scale * hackRatio));
+    let growThreads = Math.max(1, Math.floor(scale * growRatio));
+    let weakenThreads = Math.max(1, Math.floor(scale * weakenRatio));
+
+    // Verify we don't exceed available RAM (adjust if needed due to rounding + Math.max)
+    let totalRamNeeded = (hackThreads * hackRam) + (growThreads * growRam) + (weakenThreads * weakenRam);
+    while (totalRamNeeded > freeRam && (hackThreads > 1 || growThreads > 1 || weakenThreads > 1)) {
+      // Reduce the largest thread count by 1
+      if (hackThreads * hackRam >= growThreads * growRam && hackThreads * hackRam >= weakenThreads * weakenRam && hackThreads > 1) {
+        hackThreads--;
+      } else if (growThreads * growRam >= weakenThreads * weakenRam && growThreads > 1) {
+        growThreads--;
+      } else if (weakenThreads > 1) {
+        weakenThreads--;
+      }
+      totalRamNeeded = (hackThreads * hackRam) + (growThreads * growRam) + (weakenThreads * weakenRam);
+    }
+
+    // Skip if we can't fit minimum threads
+    if (hackThreads < 1 || growThreads < 1 || weakenThreads < 1) {
+      log(`${h}: insufficient RAM for minimum threads - Skipping.`);
       continue;
     }
 
-    // Apply smart ratios to allocate threads
-    let hackThreads = Math.max(1, Math.floor(totalThreads * hackRatio));
-    let growThreads = Math.max(1, Math.floor(totalThreads * growRatio));
-    let weakenThreads = Math.max(1, totalThreads - hackThreads - growThreads);
-
+    const totalThreads = hackThreads + growThreads + weakenThreads;
     log(`${h}: ${freeRam.toFixed(2)}GB free => ${totalThreads} threads => h${hackThreads}/g${growThreads}/w${weakenThreads}`);
 
     // Start helpers on remote host
