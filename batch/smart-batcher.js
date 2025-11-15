@@ -231,6 +231,13 @@ export async function main(ns) {
       continue;
     }
 
+    // Skip servers with insufficient RAM for minimum deployment
+    const minRamNeeded = Math.max(hackRam, growRam, weakenRam);
+    if (freeRam < minRamNeeded) {
+      log(`${h}: insufficient RAM (${freeRam.toFixed(2)}GB < ${minRamNeeded.toFixed(2)}GB) - Skipping.`);
+      continue;
+    }
+
     // Calculate thread allocation based on available RAM and ratios
     // We need to solve for a scaling factor that maximizes threads while staying within RAM
     // Total RAM = hackThreads * hackRam + growThreads * growRam + weakenThreads * weakenRam
@@ -258,9 +265,9 @@ export async function main(ns) {
       totalRamNeeded = (hackThreads * hackRam) + (growThreads * growRam) + (weakenThreads * weakenRam);
     }
 
-    // Skip if we can't fit minimum threads
-    if (hackThreads < 1 || growThreads < 1 || weakenThreads < 1) {
-      log(`${h}: insufficient RAM for minimum threads - Skipping.`);
+    // Skip if we can't fit minimum threads or if final allocation exceeds available RAM
+    if (hackThreads < 1 || growThreads < 1 || weakenThreads < 1 || totalRamNeeded > freeRam) {
+      log(`${h}: insufficient RAM for minimum threads (need ${totalRamNeeded.toFixed(2)}GB, have ${freeRam.toFixed(2)}GB) - Skipping.`);
       continue;
     }
 

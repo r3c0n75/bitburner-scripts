@@ -2,6 +2,70 @@
 
 All notable changes to this Bitburner script collection are documented in this file.
 
+## [1.8.16] - 2025-11-15 - Smart Batcher Zero RAM Validation Fix 🔧
+
+### Fixed - smart-batcher.js
+
+**Updated Scripts**:
+- `batch/smart-batcher.js` - Fixed deployment attempts on servers with insufficient RAM
+
+**The Problem**:
+- Script attempted to deploy to servers with 0 RAM or insufficient RAM for minimum threads
+- `Math.max(1, ...)` forced at least 1 thread per script even when RAM couldn't fit all three
+- Validation loop couldn't reduce threads below 1, leaving invalid allocations
+- Result: Multiple "ERROR: failed to start" messages for servers with insufficient RAM
+
+**Example Failures**:
+```bash
+darkweb: 0.00GB free => 3 threads => h1/g1/w1
+ERROR: failed to start core/attack-weaken.js on darkweb
+ERROR: failed to start core/attack-grow.js on darkweb
+ERROR: failed to start core/attack-hack.js on darkweb
+
+n00dles: 4.00GB free => 3 threads => h1/g1/w1
+✓ Started core/attack-weaken.js on n00dles (1 threads, pid 821)
+✓ Started core/attack-grow.js on n00dles (1 threads, pid 822)
+ERROR: failed to start core/attack-hack.js on n00dles
+```
+
+**The Fix**:
+- ✅ Added pre-check: Skip servers with RAM below minimum needed for any single script
+- ✅ Added post-check: Verify final thread allocation doesn't exceed available RAM
+- ✅ Enhanced error messages showing required vs available RAM
+
+**Technical Implementation**:
+```javascript
+// Pre-check after RAM cost validation (line 234-239)
+const minRamNeeded = Math.max(hackRam, growRam, weakenRam);
+if (freeRam < minRamNeeded) {
+  log(`${h}: insufficient RAM (${freeRam.toFixed(2)}GB < ${minRamNeeded.toFixed(2)}GB) - Skipping.`);
+  continue;
+}
+
+// Post-check after thread calculation (line 268-271)
+if (hackThreads < 1 || growThreads < 1 || weakenThreads < 1 || totalRamNeeded > freeRam) {
+  log(`${h}: insufficient RAM for minimum threads (need ${totalRamNeeded.toFixed(2)}GB, have ${freeRam.toFixed(2)}GB) - Skipping.`);
+  continue;
+}
+```
+
+**Result**:
+```bash
+# Clean skips with no failed deployments
+darkweb: insufficient RAM (0.00GB < 1.75GB) - Skipping.
+n00dles: insufficient RAM for minimum threads (need 5.20GB, have 4.00GB) - Skipping.
+```
+
+**Impact**:
+- ✅ Eliminates all "failed to start" errors on low-RAM servers
+- ✅ Clean, informative skip messages
+- ✅ Prevents partial deployments (some scripts succeed, others fail)
+- ✅ More professional output with proper validation
+
+**Credit**: Thanks to GitHub user for discovering this issue during PR testing!
+
+---
+
 ## [1.8.15] - 2025-11-12 - bitburner-update.js Path Fix 🔧
 
 ### Fixed - bitburner-update.js Download Failures
