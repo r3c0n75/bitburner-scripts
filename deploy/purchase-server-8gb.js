@@ -43,9 +43,9 @@ export async function main(ns) {
                (ns.args[0] && !isNaN(ns.args[0]) && ns.args.length === 1 ? 8 : 
                (ns.args[0] === "--all" && ns.args[1] ? Number(ns.args[1]) : 8));
 
-  const cost = ns.getPurchasedServerCost(ram);
-  const maxServers = ns.getPurchasedServerLimit();
-  const currentServers = ns.getPurchasedServers().length;
+  const cost = ns.cloud.getServerCost(ram);
+  const maxServers = ns.cloud.getServerLimit();
+  const currentServers = ns.cloud.getServerNames().length;
   const availableSlots = maxServers - currentServers;
 
   ns.tprint("═══════════════════════════════════════════════════");
@@ -104,7 +104,7 @@ export async function main(ns) {
       serverName = `pserv-${serverNum}`;
     } while (ns.serverExists(serverName));
 
-    const success = ns.purchaseServer(serverName, ram);
+    const success = ns.cloud.purchaseServer(serverName, ram);
     if (success) {
       ns.tprint(`✓ Purchased ${serverName} (${ram}GB) - ${formatMoney(ns, cost, "$0.00a")}`);
       purchased++;
@@ -116,7 +116,7 @@ export async function main(ns) {
     await ns.sleep(50); // Small delay between purchases
   }
 
-  const newTotal = ns.getPurchasedServers().length;
+  const newTotal = ns.cloud.getServerNames().length;
   const spent = purchased * cost;
 
   ns.tprint("");
