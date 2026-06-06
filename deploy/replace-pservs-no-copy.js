@@ -31,13 +31,13 @@ export async function main(ns) {
   ns.disableLog("sleep");
   ns.disableLog("kill");
 
-  const pservs = ns.getPurchasedServers();
+  const pservs = ns.cloud.getServerNames();
   const currentMoney = ns.getPlayer().money;
 
   // Get current RAM size (check first server)
   let currentRAM = 0;
   if (pservs.length > 0) {
-    currentRAM = ns.getServerMaxRam(pservs[0]);
+    currentRAM = ns.cloud.getServerMaxRam(pservs[0]);
   }
 
   // Available RAM options (must be powers of 2)
@@ -64,7 +64,7 @@ export async function main(ns) {
     for (const ram of ramOptions) {
       if (ram <= currentRAM) continue; // Skip downgrades and same size
       
-      const cost = ns.getPurchasedServerCost(ram);
+      const cost = ns.cloud.getServerCost(ram);
       const totalCost = cost * pservs.length;
       const canAfford = currentMoney >= totalCost;
       const status = canAfford ? "✓ Can afford" : "✗ Too expensive";
@@ -96,7 +96,7 @@ export async function main(ns) {
   }
 
   // Calculate costs
-  const cost = ns.getPurchasedServerCost(targetRAM);
+  const cost = ns.cloud.getServerCost(targetRAM);
   const totalCost = cost * pservs.length;
 
   ns.tprint(`Upgrading to: ${targetRAM}GB RAM (${targetRAM / currentRAM}x increase)`);
@@ -127,7 +127,7 @@ export async function main(ns) {
       ns.killall(pserv);
       
       // Delete the server
-      const deleted = ns.deleteServer(pserv);
+      const deleted = ns.cloud.deleteServer(pserv);
       if (!deleted) {
         ns.tprint(`✗ Failed to delete ${pserv}`);
         failed++;
@@ -135,7 +135,7 @@ export async function main(ns) {
       }
 
       // Purchase new server with same name
-      const purchased = ns.purchaseServer(pserv, targetRAM);
+      const purchased = ns.cloud.purchaseServer(pserv, targetRAM);
       if (purchased) {
         ns.tprint(`✓ Upgraded ${pserv}: ${currentRAM}GB → ${targetRAM}GB`);
         replaced++;
