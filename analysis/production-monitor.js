@@ -12,13 +12,13 @@
  */
 function formatMoney(ns, value, format) {
   // Three-tier compatibility approach:
-  // 1. Try ns.formatNumber() (v3.0.0+ method)
-  // 2. Fall back to ns.nFormat() (v2.8.1 method - deprecated)
+  // 1. Try ns.format.number() (v3.x native)
+  // 2. Fall back to ns.nFormat() (v2.x fallback)
   // 3. Manual formatting fallback
   
   try {
-    if (ns.formatNumber) {
-      return ns.formatNumber(value, format);
+    if (ns.format && ns.format.number) {
+      return ns.format.number(value, format);
     }
   } catch (e) {}
   

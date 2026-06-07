@@ -7,7 +7,6 @@
 export async function main(ns) {
   ns.disableLog("sleep");
   ns.disableLog("scan");
-  ns.disableLog("killall");
 
   const visited = new Set();
   const q = ["home"];
@@ -32,12 +31,12 @@ export async function main(ns) {
     
     try {
       const procs = ns.ps(host);
-      const killed = ns.killall(host);
-      if (killed) {
-        totalKilled += procs.length;
-        serversProcessed++;
-        await ns.sleep(50); // Small delay to ensure kills are processed
+      for (const proc of procs) {
+        try { ns.kill(proc.pid); } catch(e) {}
+        totalKilled++;
       }
+      serversProcessed++;
+      await ns.sleep(50);
     } catch (e) {
       // Ignore errors for servers we can't access
     }

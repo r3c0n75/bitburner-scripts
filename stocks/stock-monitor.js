@@ -12,7 +12,13 @@
  * - 4S Market Data TIX API ($1 billion) - optional, for forecasts
  */
 
-function formatMoney(ns,v,f){try{return ns.nFormat(v,f);}catch(e){const u=['','k','m','b','t','q','Q','s','S','o','n'];let i=0,n=Math.abs(v);while(n>=1000&&i<u.length-1){n/=1000;i++;}return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];}}
+function formatMoney(ns,v,f){
+  try { if(ns.format && ns.format.number) return ns.format.number(v, f); } catch(e){}
+  try { return ns.nFormat(v,f); } catch(e) {}
+  const u=['','k','m','b','t','q','Q','s','S','o','n'];
+  let i=0,n=Math.abs(v);
+  while(n>=1000&&i<u.length-1){n/=1000;i++;}
+  return(v<0?'-$':'$')+n.toFixed(f.includes('.00')?2:f.includes('.000')?3:0)+u[i];
 
 /** @param {NS} ns */
 export async function main(ns) {

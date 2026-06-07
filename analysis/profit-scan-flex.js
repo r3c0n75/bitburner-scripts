@@ -305,13 +305,13 @@ export async function main(ns) {
  */
 function formatNumber(ns, v) {
   // Three-tier compatibility approach:
-  // 1. Try ns.formatNumber() (v3.0.0+ method)
-  // 2. Fall back to ns.nFormat() (v2.8.1 method - deprecated)
+  // 1. Try ns.format.number() (v3.x native)
+  // 2. Fall back to ns.nFormat() (v2.x fallback)
   // 3. Manual formatting fallback
   
   try {
-    if (ns.formatNumber) {
-      return ns.formatNumber(v, "$0.00a");
+    if (ns.format && ns.format.number) {
+      return ns.format.number(v, "$0.00a");
     }
   } catch (e) {}
   

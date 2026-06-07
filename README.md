@@ -15,7 +15,7 @@
 
 Before running any commands, you need to download the scripts:
 
-> **⚠️ Version Note**: Installer works on both v2.8.1 (Steam) and v3.0.0 (Web). All scripts are fully compatible with both versions! See [Version Compatibility](#✅-version-compatibility) at the bottom for details.
+> **⚠️ Version Note**: All scripts are fully compatible with Bitburner v3.0.1 (latest). Legacy support for v2.8.1 (Steam) is maintained. See [Version Compatibility](#✅-version-compatibility) below for details.
 
 ### Option 1: Quick Download (Recommended)
 ```bash
@@ -899,28 +899,29 @@ Open source - use freely in your Bitburner gameplay!
 
 ---
 
-**Last Updated**: November 25, 2025  
-**Current Version**: 1.8.18  
-**Latest Feature**: profit-scan-flex.js v3.0.0+ compatibility (eliminated ns.nFormat deprecation warning)
+**Last Updated**: June 7, 2026  
+**Current Version**: 2.0.0  
+**Latest Feature**: Full Bitburner 3.0.1 API compatibility
 
 ## ✅ Version Compatibility
 
-**Bitburner v2.8.1 (Steam)**: ✅ Fully Compatible  
-**Bitburner v3.0.0 (Web)**: ✅ Fully Compatible
+**Bitburner v3.0.1**: ✅ Fully Compatible  
+**Bitburner v2.8.1 (Steam)**: ✅ Fully Compatible (legacy)
 
-**All scripts updated with v2.x/v3.x compatibility:**
-- Added compatibility helper functions to all scripts
-- Intelligently tries new API (v3.x) with fallback to old API (v2.x)
-- **100% backward compatible** - works perfectly in both versions
+**All scripts updated with v3.x compatibility:**
+- Primary API: `ns.format.number()` (v3.x native)
+- Fallback: `ns.nFormat()` (v2.x backward compatibility)
+- Manual fallback for robust cross-version support
 
-**What Was Fixed:**
-- `ns.nFormat()` removed in v3.0.0 → replaced with `formatMoney()` helper
-- `ns.formatNumber()` removed in v3.0.0 → replaced with `formatNumber()` helper
-- Scripts now use compatibility layers that work in both versions
-- All scripts tested and confirmed working in v2.8.1 Steam and v3.0.0 Web
-
-**Latest v3.0.0 Fix (v1.8.7):**
-- ✅ `smart-batcher.js` - Fixed `formatNumber()` deprecation error
+**Deprecated APIs Removed:**
+- `ns.scriptKill()` → replaced with `ns.kill()` via `ns.ps()` iteration
+- `ns.scriptRunning()` → replaced with `ns.ps()` filtering
+- `ns.killall()` → replaced with per-process `ns.kill()` via `ns.ps()`
+- `ns.nFormat()` → replaced with 3-tier fallback (format.number → nFormat → manual)
+- `ns.formatNumber()` → replaced with `ns.format.number()`
+- `ns.getScriptRam(script)` → added host argument `ns.getScriptRam(script, host)`
+- `ns.scp(file, target)` → added source host `ns.scp(file, target, source)`
+- `ns.disableLog("killall")` → removed (no longer needed)
 
 ---
 

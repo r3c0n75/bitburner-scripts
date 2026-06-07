@@ -100,10 +100,13 @@ export async function main(ns) {
   // Kill existing helpers
   ns.tprint("Stopping any existing helper scripts...");
   let killedCount = 0;
+  // Use ns.ps() to find and kill helpers (v3.x safe)
+  const existingProcs = ns.ps(host);
   for (const helper of helpers) {
     try {
-      if (ns.scriptRunning(helper, host)) {
-        ns.kill(helper, host);
+      const match = existingProcs.find(p => p.filename === helper);
+      if (match) {
+        ns.kill(match.pid);
         killedCount++;
       }
     } catch (e) {

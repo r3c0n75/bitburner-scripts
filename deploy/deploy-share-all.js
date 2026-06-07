@@ -4,7 +4,7 @@ export async function main(ns) {
     // This maximizes faction reputation bonus by sharing RAM across your entire network
     
     const shareScript = "utils/share-ram.js";
-    const shareRam = ns.getScriptRam(shareScript);
+    const shareRam = ns.getScriptRam(shareScript, "home");
     
     if (!ns.fileExists(shareScript)) {
         ns.tprint(`ERROR: ${shareScript} not found! Make sure it exists on home.`);
@@ -48,12 +48,13 @@ export async function main(ns) {
         }
         
         // Kill any existing share-ram.js instances
-        if (ns.scriptRunning(shareScript, server)) {
-            ns.scriptKill(shareScript, server);
+        const runningProcs = ns.ps(server).filter(p => p.filename === shareScript);
+        for (const p of runningProcs) {
+            try { ns.kill(p.pid); } catch(e) {}
         }
         
         // Copy and run the script
-        await ns.scp(shareScript, server);
+        await ns.scp(shareScript, server, "home");
         const pid = ns.exec(shareScript, server, threads);
         
         if (pid > 0) {

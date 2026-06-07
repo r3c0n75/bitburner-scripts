@@ -10,24 +10,19 @@
  * @param {string} format
  */
 function formatMoney(ns, value, format) {
-  // Try old nFormat (v2.x) - it exists in v3.x but throws error when called
+  try {
+    if (ns.format && ns.format.number) return ns.format.number(value, format);
+  } catch(e) {}
   try {
     return ns.nFormat(value, format);
-  } catch (e) {
-    // nFormat removed or errored, use custom formatting for v3.x
-    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
-    let unitIndex = 0;
-    let num = Math.abs(value);
-    
-    while (num >= 1000 && unitIndex < units.length - 1) {
-      num /= 1000;
-      unitIndex++;
-    }
-    
-    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
-    const formatted = num.toFixed(decimals) + units[unitIndex];
-    return (value < 0 ? '-$' : '$') + formatted;
-  }
+  } catch(e) {}
+  const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+  let unitIndex = 0;
+  let num = Math.abs(value);
+  while (num >= 1000 && unitIndex < units.length - 1) { num /= 1000; unitIndex++; }
+  const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+  const formatted = num.toFixed(decimals) + units[unitIndex];
+  return (value < 0 ? '-$' : '$') + formatted;
 }
 
 /** @param {NS} ns */

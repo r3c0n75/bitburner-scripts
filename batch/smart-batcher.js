@@ -397,18 +397,14 @@ function formatNumber(ns, v) {
     if (ns.format && ns.format.number) {
       return ns.format.number(v, "$0.00a");
     }
-  } catch (e) {
-    // Fall through to old method
-  }
-  
-  // Try old formatNumber (v2.x)
+  } catch (e) {}
+  // Try old nFormat (v2.x) - was deprecated but may exist
   try {
-    return ns.formatNumber(v, 2);
-  } catch (e) {
-    // Manual fallback if both methods fail
-    if (v >= 1e9) return `$${(v/1e9).toFixed(2)}b`;
-    if (v >= 1e6) return `$${(v/1e6).toFixed(2)}m`;
-    if (v >= 1e3) return `$${(v/1e3).toFixed(2)}k`;
-    return `$${v.toFixed(2)}`;
-  }
+    return ns.nFormat(v, "$0.00a");
+  } catch (e) {}
+  // Manual fallback
+  if (v >= 1e9) return "$" + (v/1e9).toFixed(2) + "b";
+  if (v >= 1e6) return "$" + (v/1e6).toFixed(2) + "m";
+  if (v >= 1e3) return "$" + (v/1e3).toFixed(2) + "k";
+  return "$" + v.toFixed(2);
 }

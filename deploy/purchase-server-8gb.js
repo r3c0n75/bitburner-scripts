@@ -17,19 +17,18 @@
  */
 function formatMoney(ns, value, format) {
   try {
+    if (ns.format && ns.format.number) return ns.format.number(value, format);
+  } catch(e) {}
+  try {
     return ns.nFormat(value, format);
-  } catch (e) {
-    const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
-    let unitIndex = 0;
-    let num = Math.abs(value);
-    while (num >= 1000 && unitIndex < units.length - 1) {
-      num /= 1000;
-      unitIndex++;
-    }
-    const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
-    const formatted = num.toFixed(decimals) + units[unitIndex];
-    return (value < 0 ? '-$' : '$') + formatted;
-  }
+  } catch(e) {}
+  const units = ['', 'k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+  let unitIndex = 0;
+  let num = Math.abs(value);
+  while (num >= 1000 && unitIndex < units.length - 1) { num /= 1000; unitIndex++; }
+  const decimals = format.includes('.00') ? 2 : format.includes('.000') ? 3 : 0;
+  const formatted = num.toFixed(decimals) + units[unitIndex];
+  return (value < 0 ? '-$' : '$') + formatted;
 }
 
 /** @param {NS} ns */
