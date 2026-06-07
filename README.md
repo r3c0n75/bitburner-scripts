@@ -20,7 +20,7 @@ Before running any commands, you need to download the scripts:
 ### Option 1: Quick Download (Recommended)
 ```bash
 # Download the updater script first (copy/paste into Bitburner terminal)
-wget https://raw.githubusercontent.com/r3c0n75/bitburner-scripts/main/bitburner-update.js bitburner-update.js
+wget https://raw.githubusercontent.com/dead-sea-diver/bitburner/main/bitburner-update.js bitburner-update.js
 
 # Download essential scripts to get started
 run bitburner-update.js --essential
@@ -403,7 +403,7 @@ run batch/smart-batcher.js [target] 0.02  # Lower hack percentage (uses less RAM
 
 **Or see the [RAM Requirements section](#💾-ram-requirements--early-game-tips)** for script alternatives and upgrade tips.
 
-**Still stuck?** Check the detailed guides in the `docs/` folder or [open an issue on GitHub](https://github.com/r3c0n75/bitburner-scripts/issues).
+**Still stuck?** Check the detailed guides in the `docs/` folder or [open an issue on GitHub](https://github.com/dead-sea-diver/bitburner/issues).
 
 ---
 
@@ -877,7 +877,7 @@ run stocks/stock-monitor.js
 
 ## 🔗 Additional Resources
 
-- **GitHub Repository**: [bitburner-scripts](https://github.com/r3c0n75/bitburner-scripts)
+- **GitHub Repository**: [dead-sea-diver/bitburner](https://github.com/dead-sea-diver/bitburner)
 - **Official Bitburner Docs**: [Documentation](https://github.com/bitburner-official/bitburner-src)
 - **Remote API Development**: [Official Remote File API](https://github.com/bitburner-official/vscode-template)
 - **Game Discord**: Join the Bitburner community for help and discussion
